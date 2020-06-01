@@ -60,7 +60,7 @@ kXenocideResearchTime = 25
 /* Marine Weapons && Armor Research Time:
 Total time of 6.5 minutes reduced down to 5.4 minutes*/
 
-
+/*
 kWeapons2ResearchTime = 60
 kWeapons3ResearchTime = 110
 kArmor1ResearchTime = 45
@@ -74,3 +74,4 @@ kAdvancedArmoryResearchTime = 60
 //JP && Exo research time lowered from 90 to 70. 
 kJetpackTechResearchTime = 70
 kExosuitTechResearchTime = 70
+*/

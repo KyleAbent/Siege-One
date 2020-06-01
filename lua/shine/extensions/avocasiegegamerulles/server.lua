@@ -5,12 +5,8 @@ Plugin.Version = "1.0"
 function Plugin:Initialise()
 self.Enabled = true
 self:CreateCommands()
+kgameStartTime = 0
 return true
-end
-------------------------------------------------------------
-function Plugin:MapPostLoad()
-      Server.CreateEntity(Timer.kMapName)
-      GetDoorLengthByMapName()
 end
 ------------------------------------------------------------
 //Messy, Whatever. Deal with it. lol.
@@ -26,6 +22,15 @@ local siegeTime = 930
     elseif mapName == "ns1_csiege_2018" then
         frontTime = 420
         siegeTime = 1080
+    elseif mapName == "ns1_darksiege_2016b" then
+        frontTime = 420
+        siegeTime = 1020
+    elseif mapName == "ns1_supersiege_derp" then
+        frontTime = 360
+        siegeTime = 1200
+    elseif mapName == "ns1_siege005_2015c" then
+        frontTime = 360
+        siegeTime = 1100
     //elseif mapName == "ns2_chopsiege_2015" then
         //frontTime = 
         //siegeTime =
@@ -39,7 +44,7 @@ local siegeTime = 930
         frontTime = 420
         siegeTime = 1020
     elseif mapName == "ns1_space_cow_ranch_siege_2018" then
-        frontTime = 530
+        frontTime = 330
         siegeTime = 930
     elseif mapName == "ns1_herosiege_r2016" then
         frontTime = 330
@@ -65,6 +70,9 @@ local siegeTime = 930
     elseif mapName == "ns2_trainsiege2_2018" then
         frontTime = 420
         siegeTime = 1140
+    elseif mapName == "ns1_msiege_2017" then
+        frontTime = 330
+        siegeTime = 1080
     elseif mapName == "ns1_darksiege_2018" then
         frontTime =  420
         siegeTime = 1020
@@ -81,7 +89,7 @@ local siegeTime = 930
         frontTime = 330
         siegeTime = 1200
     elseif mapName == "ns2_hivesiege6_2017" then
-        frontTime = 530
+        frontTime = 330
         siegeTime = 960
     elseif mapName == "ns1_powersiege_2017" then
         frontTime = 360
@@ -98,6 +106,16 @@ local siegeTime = 930
 
 end
 ------------------------------------------------------------
+function Plugin:MapPostLoad()
+      Server.CreateEntity(Timer.kMapName)
+      GetDoorLengthByMapName()
+end
+function Plugin:OnFirstThink()
+      GetDoorLengthByMapName()
+end
+
+
+------------------------------------------------------------
 function Plugin:OnSiege() 
 Shared.ConsoleCommand("sh_csay Siege Door(s) now open!!!!") 
 self:NotifyTimer( nil, "Siege Door(s) now open!!!!", true)
@@ -113,20 +131,20 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePo
 ------------------------------------------------------------
 local function AddFrontTimer(who,NowToFront)
   if not NowToFront then 
-    NowToFront = kFrontTime - (Shared.GetTime() - GetGamerules():GetGameStartTime())
+    NowToFront = kFrontTime - (Shared.GetTime() - kgameStartTime)
   end
   Shine.ScreenText.Add( 1, {X = 0.40, Y = 0.75,Text = "Front: %s",Duration = NowToFront,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, who )
 end
 ------------------------------------------------------------
 local function AddSiegeTimer(who, NowToSiege)
     if not NowToSiege then 
-     NowToSiege = kSiegeTime - (Shared.GetTime() - GetGamerules():GetGameStartTime())
+     NowToSiege = kSiegeTime - (Shared.GetTime() - kgameStartTime)
      end
     Shine.ScreenText.Add( 2, {X = 0.40, Y = 0.95,Text = "Siege: %s",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, who )
 end
 ------------------------------------------------------------
 local function GiveTimersToAll()
-              GetDoorLengthByMapName()
+              //GetDoorLengthByMapName()
               local Players = Shine.GetAllPlayers()
 			   //AddFrontTimer(nil)
 			   //AddSiegeTimer(nil)
@@ -134,7 +152,7 @@ local function GiveTimersToAll()
                    local Player = Player[ i ]//:GetControllingPlayer()
                    AddFrontTimer(Player)
                    AddSiegeTimer(Player)
-               
+               end
 end
 ------------------------------------------------------------
 //Add timer on join if game started
@@ -160,6 +178,7 @@ end
 ------------------------------------------------------------
 function Plugin:SetGameState( Gamerules, State, OldState )
      if State == kGameState.Started then 
+         kgameStartTime = Shared.GetTime()
          GiveTimersToAll()
          OpenAllBreakableDoors()
       else

@@ -1,3 +1,24 @@
+//These are free and given
+kWeapons1ResearchCost = 999
+kWeapons2ResearchCost = 999
+kWeapons3ResearchCost = 999
+kArmor1ResearchCost = 999
+kArmor2ResearchCost = 999
+kArmor3ResearchCost = 999
+kChargeResearchCost = 999
+kLeapResearchCost = 999
+kBileBombResearchCost = 999
+kShadowStepResearchCost = 999
+kUmbraResearchCost = 999
+kBoneShieldResearchCost = 999
+kSporesResearchCost = 999
+kStompResearchCost = 999
+kStabResearchCost = 999
+kResearchBioMassOneCost = 999
+kResearchBioMassTwoCost = 999
+kResearchBioMassThreeCost = 999
+kResearchBioMassFourCost = 999
+
 kFrontTime = 300
 kSiegeTime = 930
 kJetpackUseFuelRate = .15

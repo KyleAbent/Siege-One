@@ -6,6 +6,7 @@ function Plugin:Initialise()
 self.Enabled = true
 self:CreateCommands()
 kgameStartTime = 0
+kReduceDoorTimeBy = 0
 return true
 end
 ------------------------------------------------------------
@@ -98,6 +99,11 @@ local siegeTime = 930
         frontTime = 360
         siegeTime = 1020
     end     
+    
+    //Calculate reduction here 6.15.20
+    print("frontTime was %s",frontTime)
+    kReduceDoorTimeBy = math.random(frontTime*0.15, frontTime*0.4)
+    frontTime = frontTime - kReduceDoorTimeBy
     print("mapName is %s", mapName)
     print("frontTime is %s",frontTime)
     print("siegeTime is %s", siegeTime)
@@ -191,10 +197,15 @@ function Plugin:SetGameState( Gamerules, State, OldState )
      
        elseif State == kGameState.Countdown then
        GetTimer():OnRoundStart()
+       self:NotifyTimer( nil, "Front Door time has been reduced by this many seconds: %s", true, kReduceDoorTimeBy)
        elseif State == kGameState.NotStarted then
        GetTimer():OnPreGame()
      end
      
+end
+------------------------------------------------------------
+function Plugin:NotifyOne( Player, String, Format, ... )
+Shine:NotifyDualColour( Player, 255, 165, 0,  "[Siege One]",  255, 0, 0, String, Format, ... )
 end
 ------------------------------------------------------------
 function Plugin:NotifyTimer( Player, String, Format, ... )
@@ -381,3 +392,34 @@ local BringAllCommand = self:BindCommand( "sh_bringall", "bringall", BringAll )
 BringAllCommand:Help( "sh_bringall - teleports everyone to the same spot" )
 ------------------------------------------------------------
 end//CreateCommands
+
+function Plugin:DontSpamCommanders(player)
+
+  local mist = GetEntitiesWithinRange("NutrientMist", player:GetOrigin(), 9)
+  local hasFailed = false
+  local string = "lol"
+  
+   if #mist >=1 then 
+    string = "Failed to buy: Found mist within radius"
+    hasFailed = true
+   end
+   
+   if not hasFailed then
+       if player:GetResources() == 0 then
+            string = "You're broke. Go to the bank. Get Res."
+            hasFailed = true
+       end
+    end  
+    
+    if not hasFailed then
+        string = "You have purchased mist for 1 resource"
+        player:GiveItem(NutrientMist.kMapName)
+        player:SetResources( player:GetResources() - 1 )
+    end
+    
+    local client = player:GetClient()
+    Shine.ScreenText.Add( "One", {X = 0.40, Y = 0.65,Text = string,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
+
+end
+
+Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMist", "DontSpamCommanders", "Replace" )

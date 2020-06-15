@@ -19,6 +19,8 @@ ModLoader.SetupFileHook( "lua/Globals.lua", "lua/Globals_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Clog.lua", "lua/Clog_Siege19.lua", "post" ) 
 
+ModLoader.SetupFileHook( "lua/NetworkMessages_Server.lua", "lua/NetworkMessages_Server_Siege19.lua", "post" ) 
+
 ModLoader.SetupFileHook( "lua/Exo.lua", "lua/Exo_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Egg.lua", "lua/Egg_Siege19.lua", "post" ) 

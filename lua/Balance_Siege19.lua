@@ -1,4 +1,5 @@
 //These are free and given
+/*
 kWeapons1ResearchCost = 999
 kWeapons2ResearchCost = 999
 kWeapons3ResearchCost = 999
@@ -18,6 +19,7 @@ kResearchBioMassOneCost = 999
 kResearchBioMassTwoCost = 999
 kResearchBioMassThreeCost = 999
 kResearchBioMassFourCost = 999
+*/
 
 kFrontTime = 300
 kSiegeTime = 930

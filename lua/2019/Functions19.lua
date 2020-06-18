@@ -1,3 +1,16 @@
+function notifycommander(who,techid)
+
+end
+
+/*
+
+function notifyglow(who)
+  
+end
+
+*/
+
+
 function GetNearestMixin(origin, mixinType, teamNumber, filterFunc)
     assert(type(mixinType) == "string")
     local nearest = nil

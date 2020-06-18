@@ -1,3 +1,4 @@
+ModLoader.SetupFileHook( "lua/shine/core/shared/hook.lua", "lua/shine/hook.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Balance.lua", "lua/Balance_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/BalanceMisc.lua", "lua/BalanceMisc_Siege19.lua", "post" )
@@ -13,6 +14,7 @@ ModLoader.SetupFileHook( "lua/DamageTypes.lua", "lua/DamageTypes_Siege19.lua", "
 
 ModLoader.SetupFileHook( "lua/VotingAddCommanderBots.lua", "lua/VoteAddCommanderBots_Siege19.lua", "post" )
 
+ModLoader.SetupFileHook( "lua/PowerPoint.lua", "lua/PowerPoint_Siege19.lua", "post" ) 
 ModLoader.SetupFileHook( "lua/PowerPointLightHandler.lua", "lua/PowerPointLightHandler_Siege19.lua", "post" ) 
 
 ModLoader.SetupFileHook( "lua/Globals.lua", "lua/Globals_Siege19.lua", "post" ) 

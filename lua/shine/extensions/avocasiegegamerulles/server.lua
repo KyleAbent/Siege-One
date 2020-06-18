@@ -1,5 +1,6 @@
 --Kyle 'Avoca' Abent
 Script.Load("lua/doors/timer.lua")
+Script.Load("lua/2019/Functions19.lua")//hook the notifycommander
 Plugin.Version = "1.0"
 ------------------------------------------------------------
 function Plugin:Initialise()
@@ -185,6 +186,8 @@ end
 function Plugin:SetGameState( Gamerules, State, OldState )
      if State == kGameState.Started then 
          kgameStartTime = Shared.GetTime()
+         GetTimer():OnRoundStart()
+         self:NotifyTimer( nil, "Front Door time has been reduced by this many seconds: %s", true, kReduceDoorTimeBy)
          GiveTimersToAll()
          OpenAllBreakableDoors()
       else
@@ -196,8 +199,8 @@ function Plugin:SetGameState( Gamerules, State, OldState )
      if State ==  kGameState.Team1Won  or State ==  kGameState.Team2Won then
      
        elseif State == kGameState.Countdown then
-       GetTimer():OnRoundStart()
-       self:NotifyTimer( nil, "Front Door time has been reduced by this many seconds: %s", true, kReduceDoorTimeBy)
+       //GetTimer():OnRoundStart()
+       //self:NotifyTimer( nil, "Front Door time has been reduced by this many seconds: %s", true, kReduceDoorTimeBy)
        elseif State == kGameState.NotStarted then
        GetTimer():OnPreGame()
      end
@@ -423,3 +426,23 @@ function Plugin:DontSpamCommanders(player)
 end
 
 Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMist", "DontSpamCommanders", "Replace" )
+
+
+function Plugin:lolcomm(who,techid)
+    //print("lolcommlolcommlolcommlolcommlolcomm")
+    //self:NotifyTimer(nil, "[A] Setup Time: Giving you free upgrade: %s", true, EnumToString(kTechId, techid) )
+    local commander = who:GetTeam():GetCommander()
+    if commander ~= nil then
+        local client = commander:GetClient()
+        self:NotifyOne(client, "Giving upgrade: %s", true, EnumToString(kTechId, techid) )
+    end
+end
+Shine.Hook.SetupGlobalHook( "notifycommander", "lolcomm", "Replace" )
+
+/*
+function Plugin:notifyglowlol(who,techid)
+        local client = who:GetClient()
+        self:NotifyOne(client, "[Pregame 10percent chance] You've been chosen to glow for this life. Spend it wisely. haha.", true)
+end
+Shine.Hook.SetupGlobalHook( "notifyglow", "notifyglowlol", "Replace" )
+*/

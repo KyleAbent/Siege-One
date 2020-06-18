@@ -1,4 +1,39 @@
 //Kyle 'Avoca' Abent
+local function doHiveRule(self, techIds)
+    for i = 1, #techIds do
+        local techId = techIds[i]
+        if techId then
+        //if not GetHasTech(self, techId)  then //removing this as test although biomass duplicates.. just to see if prevent bug?
+            local tree = GetTechTree(self:GetTeamNumber())
+            local techNode = tree:GetTechNode(techId)
+            if not self:GetIsResearching() then 
+                techNode:SetHasTech(true)
+                tree:SetTechNodeChanged(techNode, string.format("hasTech = %s", true ))
+                techNode:SetResearched(true)
+                tree:QueueOnResearchComplete(techId, self)
+                notifycommander(self,techId)
+            end
+        end
+    end
+end
+local function doArmsEvoRule(self, techIds)
+    for i = 1, #techIds do
+        local techId = techIds[i]
+        if techId then
+            if not GetHasTech(self, techId)  then
+                local tree = GetTechTree(self:GetTeamNumber())
+                local techNode = tree:GetTechNode(techId)
+                if not self:GetIsResearching() and tree:GetTechAvailable(techId)  then //biomass exception
+                    techNode:SetHasTech(true)
+                    tree:SetTechNodeChanged(techNode, string.format("hasTech = %s", true ))
+                    techNode:SetResearched(true)
+                    tree:QueueOnResearchComplete(techId, self)
+                    notifycommander(self,techId)
+                end
+            end
+        end
+    end
+end
 if Server then
     local function GimmeFree(self)
          
@@ -41,36 +76,17 @@ if Server then
                 Print(self:GetMapName())
                 return false 
             end 
-            
-            //print("DoResearches [D]")
-            //local techId = table.random(techIds)
-            for i = 1, #techIds do
-            local techId = techIds[i]
-            if techId and techId ~= kTechId.None and techId ~= kTechId.Recycle and techId ~= kTechId.Consume then
-                //print("DoResearches [E]")
-                if not GetHasTech(self, techId)  then
-                    //print("DoResearches [F]")
-                    local tree = GetTechTree(self:GetTeamNumber())
-                    local techNode = tree:GetTechNode(techId)
-                    if tree:GetTechAvailable(techId) or self:isa("Hive") then //biomass exception
-                         //print("DoResearches [G]")
-                        techNode:SetHasTech(true)
-                        tree:SetTechNodeChanged(techNode, string.format("hasTech = %s", true ))
-                        techNode:SetResearched(true)
-                        tree:QueueOnResearchComplete(techId, self)
-                   end
-               end
-            end
-           end
         
-        //Hold off on the "Not Being Researched" // duplication issue ... 
         local shouldStop = false
          if self:isa("ArmsLab") then
+            doArmsEvoRule(self, techIds)
             shouldStop = GetHasTech(self, kTechId.Armor3) and GetHasTech(self, kTechId.Weapons3)
          elseif self:isa("Hive") then
-            return self.bioMassLevel == 4 // ? hm lol. Biomasslevel == 3??? 
+             doHiveRule(self, techIds)
+            shouldStop = self.bioMassLevel == 4 // ? hm lol. Biomasslevel == 3??? 
          elseif self:isa("EvolutionChamber") then
-          shouldStop = GetHasTech(self, kTechId.Xenocide)
+            doArmsEvoRule(self, techIds)
+            shouldStop = GetHasTech(self, kTechId.Xenocide)
          end
         
         if shouldStop == true then
@@ -92,6 +108,8 @@ if Server then
                 self:AddTimedCallback(GimmeFree, 4) 
             end
     end
+    
+
 
 
 

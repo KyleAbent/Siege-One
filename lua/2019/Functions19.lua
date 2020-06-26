@@ -1,3 +1,14 @@
+function GetIsInFrontDoorRoom(who)
+
+    local door = GetNearest(who:GetOrigin(), "FrontDoor", nil,  function(ent) return ent:isa("FrontDoor") and GetLocationForPoint(who:GetOrigin()) == GetLocationForPoint(ent:GetOrigin()) end ) // or within range a room over?
+    if door then
+        return true
+    end
+
+    return false 
+                
+end
+
 function notifycommander(who,techid)
 
 end

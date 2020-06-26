@@ -95,9 +95,9 @@ function Plugin:ShouldPlayerBeUnstuck( Player )
 
     //During Setup forbid unstuck in same room as front door 
     //IF for some reason front door is one room over, the radius to look for a front door during setup has doubled to prevent unstuck near
-	if not GetSetupConcluded() then
+	if not GetSetupConcluded()
 	
-        if  GetIsInFrontDoorRoom(Player) then
+        if  GetIsInFrontDoorRoom() then
 	        self:NotifyTranslatedError( Player:GetClient(), "Unstuck in front door room during setup is disabled" )
 	        return false
 	     end

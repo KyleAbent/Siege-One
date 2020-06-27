@@ -42,9 +42,6 @@ ModLoader.SetupFileHook( "lua/Alien_Upgrade.lua", "lua/Alien_Upgrade_Siege19.lua
 
 ModLoader.SetupFileHook( "lua/ResourceTower_Server.lua", "lua/ResourceTower_Server_Siege19.lua", "post" ) --hmm?
 
-ModLoader.SetupFileHook( "lua/AchievementGiverMixin.lua", "lua/AchievementGiverMixin_Siege19.lua", "replace" ) --hmm?
-ModLoader.SetupFileHook( "lua/AchievementReceiverMixin.lua", "lua/AchievementReceiverMixin_Siege19.lua", "replace" ) --hmm?
-
 ModLoader.SetupFileHook( "lua/ConstructMixin.lua", "lua/ConstructMixin_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/RolloutMixin_Siege19.lua", "post" ) --hmm?
@@ -56,7 +53,6 @@ ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.l
 ModLoader.SetupFileHook( "lua/Hydra.lua", "lua/Hydra_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/Player.lua", "lua/Player_Siege19.lua", "post" ) --hmm?
-
 
 ModLoader.SetupFileHook( "lua/RoboticsFactory.lua", "lua/RoboticsFactory_Siege19.lua", "post" ) --hmm?
 

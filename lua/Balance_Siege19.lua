@@ -29,8 +29,6 @@ kJetpackUseFuelRate = .15
 //kMinWeightJetpackFuelFactor = 0 --Min factor that gets applied on fuel usage of jetpack
 
 kPlayingTeamInitialTeamRes = 120
-
-
 kHarvesterMaturationTime = 30
 kWhipMaturationTime = 30 --120
 kCragMaturationTime = 30 --30
@@ -44,8 +42,6 @@ kCystMaturationTime  = 30 --
 kHydraMaturationTime  = 30
 kEggMaturationTime  = 30
 kTunnelEntranceMaturationTime = 45
-
-
 kAlienEggsPerHive = 5
 kEggGenerationRate = 9
 

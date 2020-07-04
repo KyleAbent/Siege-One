@@ -127,6 +127,7 @@ ModLoader.SetupFileHook( "lua/Harvester.lua", "lua/Harvester_Siege19.lua", "post
 ModLoader.SetupFileHook( "lua/Sentry.lua", "lua/Sentry_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/SentryBattery_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/MarineCommander.lua", "lua/MarineCommander_Siege19.lua", "post" ) 
+ModLoader.SetupFileHook( "lua/AlienCommander.lua", "lua/AlienCommander_Siege19.lua", "post" ) 
 
 
 

@@ -1,6 +1,10 @@
 //*Judge me for this all you want. IT's necessary. Yes, messy as well. Because it's complete replacement with code that should never need to be changed
 //YET FOR SOME REASON SOME PEOPLE KEEP CHANGING IT. WWWWWWWWWWWWWWHHHHHHHHHHHYYYYYYYYYYYYY
 
+Script.Load("lua/2019/EggBeacon.lua")
+Script.Load("lua/2019/StructureBeacon.lua")
+Script.Load("lua/2019/Wall.lua")
+
 local kCachedTechCategories
 local kCachedMapNameTechIds
 local kCachedTechData
@@ -38,7 +42,7 @@ function BuildTechDataCache()
 end
 
 -- Deprecated
--- No, NOT deprecated.  Beige needs it for tutorials! :(
+-- No, NOT deprecated.  Beige needs it for tutorials! :( --all this just to set CC anywhere haha. Set cached. redic.
 function SetCachedTechData(techId, fieldName, data, force)
 
     if kCachedTechData == nil then
@@ -89,5 +93,132 @@ function GetTechForCategory(techId)
     end
     
     return kCachedTechCategories[techId] or {}
+
+end
+
+
+function GetCheckEggBeacon(techId, origin, normal, commander)
+    local num = 0
+
+        
+        for index, shell in ientitylist(Shared.GetEntitiesWithClassname("EggBeacon")) do
+        
+           -- if not spur:isa("StructureBeacon") then 
+                num = num + 1
+          --  end
+            
+    end
+    
+    return num < 1 and not GetWhereIsInSiege(origin)
+    
+end
+
+function GetWallInRoom(origin)
+
+    local location = GetLocationForPoint(origin)
+    local locationName = location and location:GetName() or nil
+    
+    if locationName then
+    
+        local walls = Shared.GetEntitiesWithClassname("Wall")
+        for b = 0, walls:GetSize() - 1 do
+        
+            local wall = walls:GetEntityAtIndex(b)
+            if wall and wall:GetLocationName() == locationName then
+                return wall
+            end
+            
+        end
+        
+    end
+    
+    return nil
+    
+end
+
+function GetCheckMarineWall(techId, origin, normal, commander)
+
+    local wall = GetWallInRoom(origin)
+    if wall then
+        return false
+    else
+        return true
+    end       
+end
+
+local kSiege_TechData =
+{  
+
+
+    { [kTechDataId] = kTechId.EggBeacon, 
+    [kTechDataCooldown] = kEggBeaconCoolDown, 
+    [kTechDataTooltipInfo] = "Eggs Spawn approximately at the placed Egg Beacon. Be careful as infestation is required.", 
+    [kTechDataGhostModelClass] = "AlienGhostModel",   
+    [kTechDataBuildRequiresMethod] = GetCheckEggBeacon,
+    [kTechDataMapName] = EggBeacon.kMapName,        
+    [kTechDataDisplayName] = "Egg Beacon",
+    [kTechDataCostKey] = kEggBeaconCost,   
+    [kTechDataRequiresInfestation] = true, 
+    [kTechDataHotkey] = Move.C,   
+    [kTechDataBuildTime] = kEggBeaconBuildTime, 
+    [kTechDataModel] = EggBeacon.kModelName,   
+    [kTechDataBuildMethodFailedMessage] = "1 at a time not in siege",
+    [kVisualRange] = 8,
+    [kTechDataMaxHealth] = kEggBeaconHealth, [kTechDataMaxArmor] = kEggBeaconArmor},
+    
+    { [kTechDataId] = kTechId.StructureBeacon, 
+    [kTechDataCooldown] = kStructureBeaconCoolDown, 
+    [kTechDataTooltipInfo] = "Structures move approximately at the placed location", 
+    [kTechDataGhostModelClass] = "AlienGhostModel",   
+    [kTechDataMapName] = StructureBeacon.kMapName,        
+    [kTechDataDisplayName] = "Structure Beacon",  [kTechDataCostKey] = kStructureBeaconCost,   
+    [kTechDataRequiresInfestation] = true, [kTechDataHotkey] = Move.C,   
+    [kTechDataBuildTime] = kStructureBeaconBuildTime, 
+    [kTechDataModel] = StructureBeacon.kModelName,  
+    [kTechDataBuildMethodFailedMessage] = "1 at a time not in siege",
+    [kVisualRange] = 8,
+    [kTechDataMaxHealth] = kStructureBeaconHealth, [kTechDataMaxArmor] = kStructureBeaconArmor},
+    
+    
+    { [kTechDataId] = kTechId.Wall,  
+    [kTechDataMapName] = Wall.kMapName, 
+    [kTechDataDisplayName] = "Wall", 
+    [kTechIDShowEnables] = false, 
+    [kTechDataTooltipInfo] =  "Create your own obstacle with a wall rather than a armory or proto!", 
+    [kTechDataModel] = Wall.kModelName, 
+    [kTechDataBuildTime] = kWallBuildTime,
+    [kTechDataMaxHealth] = kMarineWallHealth,
+    [kTechDataMaxArmor] = 0,
+    [kTechDataBuildRequiresMethod] = GetCheckMarineWall,
+    [kTechDataBuildMethodFailedMessage] = "Limit per room reached", 
+    [kTechDataCostKey] = kWallTresCost, 
+    [kTechDataSpecifyOrientation] = true,
+    [kTechDataPointValue] = 3,
+    [kTechDataSupply] = 0},
+    
+  }
+    
+    
+local buildTechData = BuildTechData
+function BuildTechData()
+
+    local defaultTechData = buildTechData()
+    local moddedTechData = {}
+    local usedTechIds = {}
+    
+    for i = 1, #kSiege_TechData do
+        local techEntry = kSiege_TechData[i]
+        table.insert(moddedTechData, techEntry)
+        table.insert(usedTechIds, techEntry[kTechDataId])
+    end
+    
+    for i = 1, #defaultTechData do
+        local techEntry = defaultTechData[i]
+        if not table.contains(usedTechIds, techEntry[kTechDataId]) then
+            table.insert(moddedTechData, techEntry)
+        end
+    end
+    
+    return moddedTechData
 
 end

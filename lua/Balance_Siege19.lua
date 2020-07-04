@@ -1,34 +1,14 @@
-//These are free and given
-/*
-kWeapons1ResearchCost = 999
-kWeapons2ResearchCost = 999
-kWeapons3ResearchCost = 999
-kArmor1ResearchCost = 999
-kArmor2ResearchCost = 999
-kArmor3ResearchCost = 999
-kChargeResearchCost = 999
-kLeapResearchCost = 999
-kBileBombResearchCost = 999
-kShadowStepResearchCost = 999
-kUmbraResearchCost = 999
-kBoneShieldResearchCost = 999
-kSporesResearchCost = 999
-kStompResearchCost = 999
-kStabResearchCost = 999
-kResearchBioMassOneCost = 999
-kResearchBioMassTwoCost = 999
-kResearchBioMassThreeCost = 999
-kResearchBioMassFourCost = 999
-*/
+kHiveInfestationRadius = 10 // Common for hive infestation to leech over in siege  ... 
 
 kFrontTime = 300
 kSiegeTime = 930
-kJetpackUseFuelRate = .15
-//kSwipeDamageType = kDamageType.Normal
-//kJetpackWeightLiftForce = 0.13 --How much weight the jetpack lifts
-//kMinWeightJetpackFuelFactor = 0 --Min factor that gets applied on fuel usage of jetpack
+
+
+kJetpackUseFuelRate = .15 //I'm really not happy about this.
+
 
 kPlayingTeamInitialTeamRes = 120
+
 kHarvesterMaturationTime = 30
 kWhipMaturationTime = 30 --120
 kCragMaturationTime = 30 --30
@@ -46,51 +26,13 @@ kAlienEggsPerHive = 5
 kEggGenerationRate = 9
 
 
-/*
-Alien Weapon Upgrade Research Times:
-Total Time  of 10.1 minutes reduced down to 5.4 minutes*/
---kGorgeTunnelResearchCost = 15
-kGorgeTunnelResearchTime = 25
---kChargeResearchCost = 15
-kChargeResearchTime = 25
---kLeapResearchCost = 15
-kLeapResearchTime = 25
---kBileBombResearchCost = 15
-kBileBombResearchTime = 25
---kShadowStepResearchCost = 15
-kShadowStepResearchTime = 25
---kUmbraResearchCost = 20
-kUmbraResearchTime = 25
---kBoneShieldResearchCost = 20
-kBoneShieldResearchTime = 25
---kSporesResearchCost = 20
-kSporesResearchTime = 25
---kStompResearchCost = 25
-kStompResearchTime = 25
---kStabResearchCost = 25
-kStabResearchTime = 25
---kMetabolizeEnergyResearchCost = 20
-kMetabolizeEnergyResearchTime = 25
---kMetabolizeHealthResearchCost = 20
-kMetabolizeHealthResearchTime =25 
---kXenocideResearchCost = 25
-kXenocideResearchTime = 25
-
-/* Marine Weapons && Armor Research Time:
-Total time of 6.5 minutes reduced down to 5.4 minutes*/
-
-/*
-kWeapons2ResearchTime = 60
-kWeapons3ResearchTime = 110
-kArmor1ResearchTime = 45
-kArmor2ResearchTime = 60
-kArmor3ResearchTime = 110
-
-
-//AA Research time 90 to 60
-kAdvancedArmoryResearchTime = 60
-
-//JP && Exo research time lowered from 90 to 70. 
-kJetpackTechResearchTime = 70
-kExosuitTechResearchTime = 70
-*/
+kEggBeaconCost = 50
+kEggBeaconCoolDown = 12
+kStructureBeaconCoolDown = 25
+kStructureBeaconCost = 50
+kEggBeaconBuildTime = 10
+kEggBeaconIntervalDelay = 2 -- was 1
+kEggBeaconLifeSpan = 10 --was 8
+kWallBuildTime = 14
+kWallTresCost = 50
+//kWallsPerRoom = 1 hardcoded, would have to be rewritten to allow more than 1. not a problem. just. another time. lol.

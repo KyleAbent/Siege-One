@@ -36,3 +36,21 @@ kEggBeaconLifeSpan = 10 --was 8
 kWallBuildTime = 14
 kWallTresCost = 50
 //kWallsPerRoom = 1 hardcoded, would have to be rewritten to allow more than 1. not a problem. just. another time. lol.
+
+
+kExoFlamerDamage = 16 --disabled -- uses default flamethrower right now
+kExoWelderDamagePerSecond = 28
+kExoPlayerWeldRate = 15
+kExoStructureWeldRate = 65
+
+
+kPrimalScreamEnergyCost = 20
+kPrimalScreamROF = 1
+kPrimalScreamTeamEnergyBoost = 10
+
+
+kAcidRocketDamage = 28
+kAcidRocketDamageType = kDamageType.Corrode
+kAcidRocketFireDelay = 0.5
+kAcidRocketEnergyCost = 9
+kAcidRocketRadius = 6

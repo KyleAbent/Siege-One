@@ -195,9 +195,11 @@ function GetTimer() --it washed away
 end
 
 function GetGameStarted()
-     local gamestarted = false
-   if GetGamerules():GetGameState() == kGameState.Started or GetGamerules():GetGameState() == kGameState.Countdown then gamestarted = true end
-   return gamestarted
+  if Server then
+    local gamestarted = false
+    if GetGamerules():GetGameState() == kGameState.Started or GetGamerules():GetGameState() == kGameState.Countdown then gamestarted = true end
+    return gamestarted
+   end
 end
 function GetIsInSiege(who)
 local locationName = GetLocationForPoint(who:GetOrigin())
@@ -214,3 +216,4 @@ local locationName = GetLocationForPoint(where)
 if string.find(locationName, "siege") or string.find(locationName, "Siege") then return true end
 return false
 end
+

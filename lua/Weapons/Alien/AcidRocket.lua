@@ -24,7 +24,7 @@ function AcidRocket:OnCreate()
 
     Blink.OnCreate(self)
     self.lastPrimaryAttackTime = 0
-    self.firingPrimary = false
+    
 end
 
 function AcidRocket:GetAnimationGraphName()
@@ -35,12 +35,11 @@ function AcidRocket:GetEnergyCost(player)
     return kAcidRocketEnergyCost
 end
 
-function AcidRocket:GetPrimaryAttackDelay()
-    local parent = self:GetParent()
-    local attackSpeed = parent:GetIsEnzymed() and (kAcidRocketFireDelay*0.75) or kAcidRocketFireDelay
-    attackSpeed = attackSpeed + ( parent.electrified and (attackSpeed*0.8) or 0 )
-    attackSpeed = attackSpeed - ( parent:GetHasPrimalScream() and attackSpeed * 0.7 or 0)
-    --Print("attackSpeed is %s", attackSpeed)
+function AcidRocket:GetPrimaryAttackDelay(player) --  Alien:OnUpdateAnimationInput(modelMixin)
+    local attackSpeed = kAcidRocketFireDelay 
+    local bonus = player:GetIsEnzymed() and kEnzymeAttackSpeed or 1
+    attackSpeed = attackSpeed - (attackSpeed * bonus) + attackSpeed -- dont add time lol 
+    attackSpeed = attackSpeed * ( player.electrified and kElectrifiedAttackSpeed or 1 )
     return attackSpeed
 end
 
@@ -54,10 +53,9 @@ end
 
 function AcidRocket:OnPrimaryAttack(player)
 
-       if player:GetEnergy() >= self:GetEnergyCost() and Shared.GetTime() > (self.lastPrimaryAttackTime + self:GetPrimaryAttackDelay()) and not self:GetIsBlinking() then
+       if player:GetEnergy() >= self:GetEnergyCost() and Shared.GetTime() > (self.lastPrimaryAttackTime + self:GetPrimaryAttackDelay(player)) and not self:GetIsBlinking() then
         if Server or (Client and Client.GetIsControllingPlayer()) then
             self:FireRocketProjectile(player)
-            self.firingPrimary = true
         end
         self.lastPrimaryAttackTime = Shared.GetTime()
         self:TriggerEffects("acidrocket_attack")
@@ -65,13 +63,7 @@ function AcidRocket:OnPrimaryAttack(player)
     end  
     
 end
-function AcidRocket:OnPrimaryAttackEnd(player)
 
-    Ability.OnPrimaryAttackEnd(self, player)
-    
-    self.firingPrimary = false
-    
-end
 function AcidRocket:GetPrimaryAttackRequiresPress()
     return false
 end
@@ -92,7 +84,6 @@ function AcidRocket:FireRocketProjectile(player)
         local velocity = player:GetVelocity()
         local viewCoords = viewAngles:GetCoords()
         local scale = 1
---        if player.modelsize > 1 then scale = player.modelsize end 
         local startPoint = player:GetEyePos() + (viewCoords.zAxis * scale)
         local startVelocity = velocity * kPlayerVelocityFraction + viewCoords.zAxis * kRocketVelocity
         
@@ -103,12 +94,7 @@ function AcidRocket:FireRocketProjectile(player)
 end
 
 function AcidRocket:OnUpdateAnimationInput(modelMixin)
-    PROFILE("AcidRocket:OnUpdateAnimationInput")   
-    local activityString = "none"
-    if self.firingPrimary then
-        activityString = "primary"
-    end
-    modelMixin:SetAnimationInput("activity", activityString)
+    PROFILE("AcidRocket:OnUpdateAnimationInput")    
 end
 
 Shared.LinkClassToMap("AcidRocket", AcidRocket.kMapName, AcidRocket.networkVars )

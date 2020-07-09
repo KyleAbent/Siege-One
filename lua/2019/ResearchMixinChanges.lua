@@ -52,10 +52,12 @@ if Server then
                 table.insert(techIds, kTechId.MetabolizeEnergy )
                 table.insert(techIds, kTechId.Leap )
                 table.insert(techIds, kTechId.Spores )
+                table.insert(techIds, kTechId.PrimalScream )
                 table.insert(techIds, kTechId.Umbra )
                 table.insert(techIds, kTechId.MetabolizeHealth )
                 table.insert(techIds, kTechId.BoneShield )
                 table.insert(techIds, kTechId.Stab )
+                table.insert(techIds, kTechId.AcidRocket )
                 table.insert(techIds, kTechId.Stomp )
                 table.insert(techIds, kTechId.Xenocide )
             elseif self:isa("Hive") then

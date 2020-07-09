@@ -14,6 +14,9 @@ ModLoader.SetupFileHook( "lua/DamageTypes.lua", "lua/DamageTypes_Siege19.lua", "
 
 ModLoader.SetupFileHook( "lua/VotingAddCommanderBots.lua", "lua/VoteAddCommanderBots_Siege19.lua", "post" )
 
+
+--ModLoader.SetupFileHook( "lua/GUIChat.lua", "lua/GUIChat_Siege20.lua", "post" ) 
+
 ModLoader.SetupFileHook( "lua/PowerPoint.lua", "lua/PowerPoint_Siege19.lua", "post" ) 
 ModLoader.SetupFileHook( "lua/PowerPointLightHandler.lua", "lua/PowerPointLightHandler_Siege19.lua", "post" ) 
 
@@ -70,6 +73,7 @@ ModLoader.SetupFileHook( "lua/Exosuit.lua", "lua/Exosuit_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Skulk.lua", "lua/Skulk_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Lerk.lua", "lua/Lerk_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/Fade.lua", "lua/Fade_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Gorge.lua", "lua/Gorge_Siege19.lua", "post" )
 
 --ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/2019/BackupBattery.lua", "post" )
@@ -104,7 +108,9 @@ ModLoader.SetupFileHook( "lua/TechTreeButtons.lua", "lua/TechTreeButtons_Siege19
 ModLoader.SetupFileHook( "lua/TechTreeConstants.lua", "lua/TechTreeConstants_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/TechData.lua", "lua/TechData_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/AlienTeam.lua", "lua/AlienTeam_Siege19.lua", "post" )
---ModLoader.SetupFileHook( "lua/Alien.lua", "lua/Alien_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/Alien.lua", "lua/Alien_Siege19.lua", "post" )
+
+ModLoader.SetupFileHook( "lua/NS2Utility_Server.lua", "lua/NS2Utility_Server_Siege20.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Whip.lua", "lua/Whip_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Shift.lua", "lua/Shift_Siege19.lua", "post" )
@@ -118,7 +124,7 @@ ModLoader.SetupFileHook( "lua/Crag.lua", "lua/Crag_Siege19.lua", "post" )
 
 
 
-ModLoader.SetupFileHook( "lua/Fade.lua", "lua/Fade_Siege19.lua", "post" )
+
 
 
 ModLoader.SetupFileHook( "lua/Extractor.lua", "lua/Extractor_Siege19.lua", "post" )

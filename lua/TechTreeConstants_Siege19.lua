@@ -29,6 +29,10 @@ local kSiege_TechIds =
     'EggBeacon',
     'StructureBeacon',
     'Wall',
+    'DualWelderExosuit',
+    'DualFlamerExosuit',
+    'PrimalScream',
+    'AcidRocket',
 
 }
 

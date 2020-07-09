@@ -1,9 +1,10 @@
-//*Judge me for this all you want. IT's necessary. Yes, messy as well. Because it's complete replacement with code that should never need to be changed
-//YET FOR SOME REASON SOME PEOPLE KEEP CHANGING IT. WWWWWWWWWWWWWWHHHHHHHHHHHYYYYYYYYYYYYY
-
 Script.Load("lua/2019/EggBeacon.lua")
 Script.Load("lua/2019/StructureBeacon.lua")
 Script.Load("lua/2019/Wall.lua")
+Script.Load("lua/2019/ExoWelder.lua")
+Script.Load("lua/2019/ExoFlamer.lua")
+Script.Load("lua/Weapons/Alien/PrimalScream.lua")
+Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 
 local kCachedTechCategories
 local kCachedMapNameTechIds
@@ -196,6 +197,46 @@ local kSiege_TechData =
     [kTechDataPointValue] = 3,
     [kTechDataSupply] = 0},
     
+    { [kTechDataId] = kTechId.DualWelderExosuit,    
+    [kTechIDShowEnables] = false,     
+    [kTechDataDisplayName] = "Dual Exo Welders", 
+    [kTechDataMapName] = "exo",         
+    [kTechDataCostKey] = kDualExosuitCost - 10, 
+    [kTechDataHotkey] = Move.E,
+    [kTechDataMaxExtents] = Vector(0.55, 1.2, 0.55),
+    [kTechDataTooltipInfo] = "Dual Welders yo", 
+    [kTechDataSpawnHeightOffset] = kCommanderEquipmentDropSpawnHeight},
+
+
+    { [kTechDataId] = kTechId.DualFlamerExosuit,    
+    [kTechIDShowEnables] = false,     
+    [kTechDataDisplayName] = "Dual Exo Flamer", 
+    [kTechDataMapName] = "exo",         
+   [kTechDataMaxExtents] = Vector(0.55, 1.2, 0.55),
+    [kTechDataCostKey] = kDualExosuitCost - 5, 
+    [kTechDataHotkey] = Move.E,
+    [kTechDataTooltipInfo] = "Dual Flamers yo", 
+    [kTechDataSpawnHeightOffset] = kCommanderEquipmentDropSpawnHeight},
+    
+    --Thanks dragon ns2c
+    { [kTechDataId] = kTechId.PrimalScream,  
+    [kTechDataCategory] = kTechId.Lerk,
+    [kTechDataDisplayName] = "Primal Scream",
+    [kTechDataMapName] =  Primal.kMapName,
+    --[kTechDataCostKey] = kPrimalScreamCostKey, 
+    -- [kTechDataResearchTimeKey] = kPrimalScreamTimeKey, 
+    [kTechDataTooltipInfo] = "+Energy to teammates, enzyme cloud"},
+ 
+    
+    { [kTechDataId] = kTechId.AcidRocket,        
+    [kTechDataCategory] = kTechId.Fade,   
+    [kTechDataMapName] = AcidRocket.kMapName,  
+    [kTechDataCostKey] = kStabResearchCost,
+    [kTechDataResearchTimeKey] = kStabResearchTime, 
+    [kTechDataDamageType] = kAcidRocketDamageType,  
+    [kTechDataDisplayName] = "AcidRocket",
+    [kTechDataTooltipInfo] = "Ranged Projectile dealing damage only to armor and structures"},
+ 
   }
     
     

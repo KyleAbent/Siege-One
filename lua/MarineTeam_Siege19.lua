@@ -9,8 +9,8 @@ function MarineTeam:SpawnExtraIPS(techPoint)
 end
 local origSpawnStruct = MarineTeam.SpawnInitialStructures
 function MarineTeam:SpawnInitialStructures(techPoint)
-    origSpawnStruct(self, techPoint)
     self:SpawnExtraIPS(techPoint)
+    return origSpawnStruct(self, techPoint)
 end
 
 
@@ -25,6 +25,8 @@ function MarineTeam:InitTechTree()
     self.techTree.SetComplete = orig_TechTree_SetComplete
     
       self.techTree:AddBuildNode(kTechId.Wall,     kTechId.None, kTechId.None)
+      self.techTree:AddBuyNode(kTechId.DualWelderExosuit, kTechId.ExosuitTech, kTechId.None)
+      self.techTree:AddBuyNode(kTechId.DualFlamerExosuit, kTechId.ExosuitTech, kTechId.None)
       
     self.techTree:SetComplete()
     PlayingTeam.InitTechTree = orig_PlayingTeam_InitTechTree

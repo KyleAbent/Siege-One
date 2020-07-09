@@ -10,6 +10,8 @@ function AlienTeam:InitTechTree()
     
 self.techTree:AddBuildNode(kTechId.EggBeacon, kTechId.CragHive)
 self.techTree:AddBuildNode(kTechId.StructureBeacon, kTechId.ShiftHive)
+self.techTree:AddResearchNode(kTechId.PrimalScream, kTechId.BioMassFive, kTechId.None, kTechId.AllAliens)
+self.techTree:AddResearchNode(kTechId.AcidRocket, kTechId.BioMassSeven, kTechId.None, kTechId.AllAliens)
 
 
     self.techTree:SetComplete()

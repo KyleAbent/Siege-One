@@ -24,6 +24,7 @@ function AcidRocket:OnCreate()
 
     Blink.OnCreate(self)
     self.lastPrimaryAttackTime = 0
+    self.firingPrimary = false
     
 end
 
@@ -56,9 +57,10 @@ function AcidRocket:OnPrimaryAttack(player)
        if player:GetEnergy() >= self:GetEnergyCost() and Shared.GetTime() > (self.lastPrimaryAttackTime + self:GetPrimaryAttackDelay(player)) and not self:GetIsBlinking() then
         if Server or (Client and Client.GetIsControllingPlayer()) then
             self:FireRocketProjectile(player)
+            self.firingPrimary = true
         end
         self.lastPrimaryAttackTime = Shared.GetTime()
-        self:TriggerEffects("acidrocket_attack")
+        --self:TriggerEffects("acidrocket_attack")
         player:DeductAbilityEnergy(self:GetEnergyCost())
     end  
     
@@ -67,7 +69,13 @@ end
 function AcidRocket:GetPrimaryAttackRequiresPress()
     return false
 end
+function AcidRocket:OnPrimaryAttackEnd(player)
 
+    Ability.OnPrimaryAttackEnd(self, player)
+    
+    self.firingPrimary = false
+    
+end
 function AcidRocket:GetBlinkAllowed()
     return true
 end
@@ -94,7 +102,12 @@ function AcidRocket:FireRocketProjectile(player)
 end
 
 function AcidRocket:OnUpdateAnimationInput(modelMixin)
-    PROFILE("AcidRocket:OnUpdateAnimationInput")    
+    PROFILE("AcidRocket:OnUpdateAnimationInput")   
+    local activityString = "none"
+    if self.firingPrimary then
+        activityString = "primary"
+    end
+    modelMixin:SetAnimationInput("activity", activityString)  
 end
 
 Shared.LinkClassToMap("AcidRocket", AcidRocket.kMapName, AcidRocket.networkVars )

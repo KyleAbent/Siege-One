@@ -41,7 +41,7 @@ kWallTresCost = 50
 kExoFlamerDamage = 16 --disabled -- uses default flamethrower right now
 kExoWelderDamagePerSecond = 28
 kExoPlayerWeldRate = 15
-kExoStructureWeldRate = 65
+kExoStructureWeldRate = 30
 
 
 kPrimalScreamEnergyCost = 20

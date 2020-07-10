@@ -17,6 +17,8 @@ ModLoader.SetupFileHook( "lua/VotingAddCommanderBots.lua", "lua/VoteAddCommander
 
 --ModLoader.SetupFileHook( "lua/GUIChat.lua", "lua/GUIChat_Siege20.lua", "post" ) 
 
+ModLoader.SetupFileHook( "lua/GUIInsight_PlayerHealthbars.lua", "lua/GUIInsight_PlayerHealthbars_Siege20.lua", "post" ) 
+
 ModLoader.SetupFileHook( "lua/PowerPoint.lua", "lua/PowerPoint_Siege19.lua", "post" ) 
 ModLoader.SetupFileHook( "lua/PowerPointLightHandler.lua", "lua/PowerPointLightHandler_Siege19.lua", "post" ) 
 

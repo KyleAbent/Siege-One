@@ -1,3 +1,49 @@
+----------------------------Fade Trail-----------------------------------------------------------
+if Server then
+
+   local function CreateEffectModified(player, effectName, parent, coords, attachPoint)
+            local kMapName = "particleeffect"
+            local entity = Server.CreateEntity(effectName)
+            local assetIndex = Shared.GetCinematicIndex(effectName)
+                  entity.assetIndex = assetIndex
+                  entity:SetCoords(coords)
+                  entity.lifeTime = 0.2
+   end
+
+end
+
+if Client then
+
+
+    local function CreateEffectModified(player, effectName, parent, coords, attachPoint, view)
+    
+        local zone = RenderScene.Zone_Default
+        if view then
+            zone = RenderScene.Zone_ViewModel
+        end
+        
+        local cinematic = Client.CreateCinematic(zone)
+        if not cinematic then return end -- Out of memory / invalid zone
+        
+        cinematic:SetCinematic(effectName)
+        cinematic:SetParent(parent)
+        
+        if coords ~= nil then
+            cinematic:SetCoords(coords)
+        end
+        
+        
+    end
+    
+    
+    function Shared.CreateEffectModified(player, effectName, parent, coords)
+        if player == nil or not Shared.GetIsRunningPrediction() then
+            CreateEffectModified(player, effectName, parent, coords)
+        end
+    end
+    
+end
+------------------------------------------------------------------------------------------------------
 function FindFreeSpace(where, mindistance, maxdistance, infestreq)    
      if not mindistance then mindistance = 2 end
      if not maxdistance then maxdistance = 24 end

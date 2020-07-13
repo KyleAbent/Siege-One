@@ -49,8 +49,11 @@ kPrimalScreamROF = 1
 kPrimalScreamTeamEnergyBoost = 10
 
 
-kAcidRocketDamage = 28
-kAcidRocketDamageType = kDamageType.Corrode
-kAcidRocketFireDelay = 0.5
-kAcidRocketEnergyCost = 9
-kAcidRocketRadius = 6
+kAcidRocketDamage = 55
+kAcidRocketDamageType = kDamageType.Structural
+kAcidRocketFireDelay = 0.7
+kAcidRocketEnergyCost = 10
+kAcidRocketRadius = 2.4
+
+
+kXenocideRange = 13 -- was 14

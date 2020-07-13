@@ -4,6 +4,7 @@
 Script.Load("lua/Weapons/Projectile.lua")
 Script.Load("lua/TeamMixin.lua")
 Script.Load("lua/DamageMixin.lua")
+Script.Load("lua/Weapons/DotMarker.lua")
 Script.Load("lua/Weapons/PredictedProjectile.lua")
 
 class 'Rocket' (PredictedProjectile)
@@ -12,9 +13,10 @@ Rocket.kMapName            = "rocket"
 Rocket.kModelName          = PrecacheAsset("models/alien/babbler/babbler.model")
 
 // The max amount of time a Rocket can last for
-Rocket.kClearOnImpact = true
+Rocket.kRadius             = 0.05
+Rocket.kDetonateRadius     = 0.35
+Rocket.kClearOnImpact      = true
 Rocket.kClearOnEnemyImpact = true
-Rocket.kRadius = 0.15
 
 local kRocketLifetime = 0.5
 
@@ -27,7 +29,7 @@ AddMixinNetworkVars(TeamMixin, networkVars)
 
 function Rocket:TimeUp()
         self:TriggerEffects("bilebomb_hit")
-        self:Detonate(nil)
+        self:ProcessHit(nil)
         return false
 end
 function Rocket:OnCreate()
@@ -57,33 +59,37 @@ function Rocket:GetDamageType()
     return kAcidRocketDamageType
 end
 
-function Rocket:ProcessHit(targetHit, surface, normal, endPoint)
-    self:TriggerEffects("bilebomb_hit")
-    if Server and self:GetOwner() ~= targetHit and GetAreEnemies(self, targetHit) then
-        self:Detonate(targetHit, surface) 
-    else
-       return true
-    end      
-    
-    
-end
-
 if Server then
 
-    function Rocket:Detonate(targetHit, surface)
-        
-        if not self:GetIsDestroyed() then
-            local hitEntities = GetEntitiesWithMixinForTeamWithinRange("Live", 1, self:GetOrigin(), kAcidRocketRadius)
-            // full damage on direct impact
+    local function SineFalloff(distanceFraction)
+        local piFraction = Clamp(distanceFraction, 0, 1) * math.pi / 2
+        return math.cos(piFraction + math.pi) + 1 
+    end
+    
+    function Rocket:ProcessHit(targetHit, surface, normal, endPoint)
+             -- Do damage to nearby targets.
+            local hitEntities = GetEntitiesWithMixinWithinRange("Live", self:GetOrigin(), kAcidRocketRadius)
+            
+            -- Remove rocket and firing player.
+            local player = self:GetOwner()
+            if player then
+              table.removevalue(hitEntities, player)
+            end
+            table.removevalue(hitEntities, self)
+            
+            -- full damage on direct impact
             if targetHit then
                 table.removevalue(hitEntities, targetHit)
                 self:DoDamage(kAcidRocketDamage, targetHit, targetHit:GetOrigin(), GetNormalizedVector(targetHit:GetOrigin() - self:GetOrigin()), "none")
             end
-            RadiusDamage(hitEntities, self:GetOrigin(), kAcidRocketRadius, kAcidRocketDamage, self)
-            DestroyEntity(self)
-        end
+            --          (entities,    centerOrigin,     radius,                  fullDamage,        doer, ignoreLOS, fallOffFunc)
+            RadiusDamage(hitEntities, self:GetOrigin(), kAcidRocketRadius, kAcidRocketDamage, self, false, function() return 0 end )
 
+            self:TriggerEffects("bilebomb_hit")
+            DestroyEntity(self)
+           
     end
+
 
 end
 

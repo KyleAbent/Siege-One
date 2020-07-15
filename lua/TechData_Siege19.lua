@@ -10,6 +10,20 @@ local kCachedTechCategories
 local kCachedMapNameTechIds
 local kCachedTechData
 
+
+function GetCheckObsLimit(techId, origin, normal, commander)
+    local num = 0
+
+        
+        for index, obs in ientitylist(Shared.GetEntitiesWithClassname("Observatory")) do
+                num = num + 1
+        end
+    
+    return num < 10
+    
+end
+
+
 -- Remap techdata for faster lookups
 function BuildTechDataCache()
     kCachedTechData = {}
@@ -19,7 +33,7 @@ function BuildTechDataCache()
     if kTechData == nil then
         kTechData = BuildTechData()
     end
-    
+
     for i = 1, #kTechData do
         local data = kTechData[i]
         local techId = data[kTechDataId]
@@ -263,3 +277,6 @@ function BuildTechData()
     return moddedTechData
 
 end
+
+
+

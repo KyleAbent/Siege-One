@@ -1,4 +1,5 @@
 --thank you last stand
+
 local gTechIdToString = {}
 
 local function createTechIdEnum(table)

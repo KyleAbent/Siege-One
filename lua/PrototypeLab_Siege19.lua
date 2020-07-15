@@ -14,7 +14,8 @@ local table = {}
 
 table = origbuttons(self, techId)
 
- table[2] = kTechId.DropExosuit
+ table[1] = kTechId.DropExosuit
+ table[5] = kTechId.None
  
  return table
 

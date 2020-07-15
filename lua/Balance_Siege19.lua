@@ -7,7 +7,7 @@ kSiegeTime = 930
 kJetpackUseFuelRate = .15 //I'm really not happy about this.
 
 
-kPlayingTeamInitialTeamRes = 120
+kPlayingTeamInitialTeamRes = 200
 
 kHarvesterMaturationTime = 30
 kWhipMaturationTime = 30 --120
@@ -56,4 +56,4 @@ kAcidRocketEnergyCost = 10
 kAcidRocketRadius = 2.4
 
 
-kXenocideRange = 13 -- was 14
+kXenocideRange = 9 -- was 14

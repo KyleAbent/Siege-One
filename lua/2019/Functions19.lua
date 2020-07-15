@@ -108,7 +108,8 @@ function FindFreeIPSpace(where, mindistance, maxdistance, infestreq)
              sameLocation = sameLocation and GetIsPointOnInfestation(spawnPoint)
            end
         
-           if spawnPoint ~= nil and sameLocation  and spawnPoint ~= where then
+           local ipinrange = GetEntitiesWithinRange("InfantryPortal", spawnPoint, 3)
+           if spawnPoint ~= nil and sameLocation  and spawnPoint ~= where and #ipinrange == 0 then
               return spawnPoint
            end
        end

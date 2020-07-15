@@ -155,6 +155,11 @@ end
 ------------------------------------------------------------
 //Add timer on join if game started
 function Plugin:ClientConfirmConnect(Client)
+    --REMOvE ME LOL DEBUGGING 
+Shared.ConsoleCommand("cheats 1") 
+Shared.ConsoleCommand("alltech") 
+Shared.ConsoleCommand("autobuild") 
+Shared.ConsoleCommand("sh_forceroundstart") 
   if Client:GetIsVirtual() then return end
     if GetGamerules():GetGameStarted() then
        if not GetTimer():GetIsFrontOpen() then
@@ -430,171 +435,10 @@ function Plugin:lolcomm(who,techid)
 end
 Shine.Hook.SetupGlobalHook( "notifycommander", "lolcomm", "Replace" )
 
-function Plugin:AddMessageReplace(playerColor, playerName, messageColor, messageText, isCommander, isRookie)
 
-    local style = GetStyle()
-    local commanderText = "[C] "
-    local rookieText = Locale.ResolveString("ROOKIE_CHAT") .. " "
-
-    local insertMessage = { Background = nil, Player = nil, Message = nil, Message2 = nil, Commander = nil, Rookie = nil, Time = 0 }
-
-    -- Check if we can reuse an existing message.
-    if table.icount(self.reuseMessages) > 0 then
-
-        insertMessage = self.reuseMessages[1]
-        insertMessage["Time"] = 0
-        insertMessage["Background"]:SetIsVisible(self.visible)
-        table.remove(self.reuseMessages, 1)
-
-    end
-
-    if insertMessage["Commander"] == nil then
-        insertMessage["Commander"] = GUIManager:CreateTextItem()
-    end
-
-    insertMessage["Commander"]:SetFontName(kFontName)
-    insertMessage["Commander"]:SetScale(GetScaledVector())
-    GUIMakeFontScale(insertMessage["Commander"])
-    insertMessage["Commander"]:SetAnchor(GUIItem.Left, GUIItem.Center)
-    insertMessage["Commander"]:SetTextAlignmentX(GUIItem.Align_Min)
-    insertMessage["Commander"]:SetTextAlignmentY(GUIItem.Align_Center)
-    insertMessage["Commander"]:SetColor(ColorIntToColor(kCommanderColor))
-    insertMessage["Commander"]:SetPosition(Vector(0, 0, 0))
-    insertMessage["Commander"]:SetIsVisible(isCommander)
-    insertMessage["Commander"]:SetText(commanderText)
-
-    if insertMessage["Rookie"] == nil then
-        insertMessage["Rookie"] = GUIManager:CreateTextItem()
-    end
-
-    local commTextWidth = ConditionalValue(isCommander, insertMessage["Commander"]:GetTextWidth(commanderText) * insertMessage["Commander"]:GetScale().x, 0)
-
-    insertMessage["Rookie"]:SetFontName(kFontName)
-    insertMessage["Rookie"]:SetScale(GetScaledVector())
-    GUIMakeFontScale(insertMessage["Rookie"])
-    insertMessage["Rookie"]:SetAnchor(GUIItem.Left, GUIItem.Center)
-    insertMessage["Rookie"]:SetTextAlignmentX(GUIItem.Align_Min)
-    insertMessage["Rookie"]:SetTextAlignmentY(GUIItem.Align_Center)
-    insertMessage["Rookie"]:SetColor(ColorIntToColor(kNewPlayerColor))
-    insertMessage["Rookie"]:SetPosition(Vector(commTextWidth, 0, 0))
-    insertMessage["Rookie"]:SetIsVisible(isRookie)
-    insertMessage["Rookie"]:SetText(rookieText)
-
-    if insertMessage["Player"] == nil then
-        insertMessage["Player"] = GUIManager:CreateTextItem()
-    end
-
-    local rookieTextWidth = ConditionalValue(isRookie, insertMessage["Rookie"]:GetTextWidth(rookieText) * insertMessage["Rookie"]:GetScale().x, 0)
-
-    insertMessage["Player"]:SetFontName(kFontName)
-    insertMessage["Player"]:SetScale(GetScaledVector())
-    GUIMakeFontScale(insertMessage["Player"])
-    insertMessage["Player"]:SetAnchor(GUIItem.Left, GUIItem.Center)
-    insertMessage["Player"]:SetTextAlignmentX(GUIItem.Align_Min)
-    insertMessage["Player"]:SetTextAlignmentY(GUIItem.Align_Center)
-    insertMessage["Player"]:SetColor(ColorIntToColor(playerColor))
-    insertMessage["Player"]:SetPosition(Vector(commTextWidth + rookieTextWidth, 0, 0))
-    insertMessage["Player"]:SetText(playerName)
-
-    if insertMessage["Message"] == nil then
-        insertMessage["Message"] = GUIManager:CreateTextItem()
-    end
-
-    local playerTextWidth = insertMessage["Player"]:GetTextWidth(playerName) * insertMessage["Player"]:GetScale().x
-    local messagePrefix = playerTextWidth + commTextWidth + rookieTextWidth
-    local defaultHeight = insertMessage["Player"]:GetTextHeight("!") * insertMessage["Player"]:GetScale().x
-    local messagePos = ConditionalValue(messagePrefix > 0, messagePrefix + GUIScale(kChatTextBuffer), 0)
-
-    insertMessage["Message"]:SetFontName(kFontName)
-    insertMessage["Message"]:SetScale(GetScaledVector())
-    GUIMakeFontScale(insertMessage["Message"])
-    insertMessage["Message"]:SetAnchor(GUIItem.Left, GUIItem.Center)
-    insertMessage["Message"]:SetTextAlignmentX(GUIItem.Align_Min)
-    insertMessage["Message"]:SetTextAlignmentY(GUIItem.Align_Center)
-    insertMessage["Message"]:SetPosition(Vector(messagePos, 0, 0))
-    insertMessage["Message"]:SetColor(messageColor)
-
-    local cutoff = Client.GetScreenWidth() * (cutoffAmount/100)
-    -- Account for the width of the player's name and other stuff in the first line for the line break
-    local textWrap1, textWrap2
-    if messagePos / cutoff > kForceNewLineFraction then
-        -- The prefix text is too long, force the message onto a new line.
-        textWrap1 = ""
-        textWrap2 = messageText
-    else
-        textWrap1, textWrap2 = WordWrap(insertMessage["Message"], messageText, messagePos, cutoff, 1)
-    end
-
-    if textWrap2 then
-        -- Get the substring for the text after the first one and redo the word wrap without the offset
-        textWrap2 = WordWrap(insertMessage["Message"], textWrap2, 0, cutoff)
-    end
-
-    insertMessage["Message"]:SetText(textWrap1)
-
-    if insertMessage["Message2"] == nil then
-        insertMessage["Message2"] = GUIManager:CreateTextItem()
-    end
-
-    insertMessage["Message2"]:SetFontName(kFontName)
-    insertMessage["Message2"]:SetScale(GetScaledVector())
-    GUIMakeFontScale(insertMessage["Message2"])
-    insertMessage["Message2"]:SetAnchor(GUIItem.Left, GUIItem.Center)
-    insertMessage["Message2"]:SetPosition(Vector(0, math.max(defaultHeight, insertMessage["Message"]:GetTextHeight(textWrap1) * insertMessage["Message"]:GetScale().x), 0))
-    insertMessage["Message2"]:SetTextAlignmentX(GUIItem.Align_Min)
-    insertMessage["Message2"]:SetTextAlignmentY(GUIItem.Align_Center)
-    insertMessage["Message2"]:SetColor(messageColor)
-
-    insertMessage["Message2"]:SetText(textWrap2)
-
-    local textWrap1Height = math.max(insertMessage["Message"]:GetTextHeight(textWrap1) * insertMessage["Message"]:GetScale().x, defaultHeight)
-    local textWrap2Height
-    if textWrap2 == "" then
-        textWrap2Height = 0
-    else
-        textWrap2Height = insertMessage["Message2"]:GetTextHeight(textWrap2) * insertMessage["Message2"]:GetScale().x
-    end
-    
-    local textHeight = textWrap1Height + textWrap2Height
-    local textWidth = math.max(insertMessage["Message"]:GetTextWidth(textWrap1) * insertMessage["Message"]:GetScale().x + messagePrefix, insertMessage["Message2"]:GetTextWidth(textWrap2) * insertMessage["Message2"]:GetScale().x)
-    
-    -- If we had to wrap the text, we have to reposition as anchors are set up for one line only
-    if textWrap2 ~= "" then
-        insertMessage["Commander"]:SetPosition(Vector(0, textWrap1Height/2-textHeight/2, 0))
-        insertMessage["Rookie"]:SetPosition(Vector(commTextWidth, textWrap1Height/2-textHeight/2, 0))
-        insertMessage["Player"]:SetPosition(Vector(commTextWidth + rookieTextWidth, textWrap1Height/2-textHeight/2, 0))
-        insertMessage["Message"]:SetPosition(Vector(messagePos, textWrap1Height/2-textHeight/2, 0))
-
-        insertMessage["Message2"]:SetPosition(Vector(0, textWrap1Height*1.5-textHeight/2, 0))
-    end
-
-    if insertMessage["Background"] == nil then
-
-        insertMessage["Background"] = GUIManager:CreateGraphicItem()
-        insertMessage["Background"]:SetLayer(kGUILayerChat)
-        insertMessage["Background"]:AddChild(insertMessage["Player"])
-        insertMessage["Background"]:AddChild(insertMessage["Message"])
-        insertMessage["Background"]:AddChild(insertMessage["Message2"])
-        insertMessage["Background"]:AddChild(insertMessage["Commander"])
-        insertMessage["Background"]:AddChild(insertMessage["Rookie"])
-
-    end
-
-    insertMessage["Background"]:SetSize(Vector(textWidth + GUIScale(kChatTextBuffer), textHeight, 0))
-    insertMessage["Background"]:SetAnchor(GUIItem.Left, GUIItem.Bottom)
-    insertMessage["Background"]:SetPosition(kOffset * GUIScale(1))
-    insertMessage["Background"]:SetColor(kBackgroundColor)
-
-    table.insert(self.messages, insertMessage)
-    
+local function NewUpdateBatteryState( self )
+        return -- lol no
 end
 
-Shine.Hook.SetupClassHook( "Player", "AddMessage", "AddMessageReplace", "Replace" )
 
-/*
-function Plugin:notifyglowlol(who,techid)
-        local client = who:GetClient()
-        self:NotifyOne(client, "[Pregame 10percent chance] You've been chosen to glow for this life. Spend it wisely. haha.", true)
-end
-Shine.Hook.SetupGlobalHook( "notifyglow", "notifyglowlol", "Replace" )
-*/
+OldUpdateBatteryState = Shine.Hook.ReplaceLocalFunction( Sentry.OnUpdate, "UpdateBatteryState", NewUpdateBatteryState )

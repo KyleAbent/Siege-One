@@ -37,7 +37,7 @@ ModLoader.SetupFileHook( "lua/Egg.lua", "lua/Egg_Siege19.lua", "post" )
 
 
 
-ModLoader.SetupFileHook( "lua/BuildUtility.lua", "lua/BuildUtility_Siege19.lua", "pre" ) 
+
 
 ModLoader.SetupFileHook( "lua/Embryo.lua", "lua/Embryo_Siege19.lua", "post" )
 
@@ -90,7 +90,7 @@ ModLoader.SetupFileHook( "lua/Weapons/Marine/Flamethrower.lua", "lua/Weapons/Mar
 ModLoader.SetupFileHook( "lua/CommAbilities/Alien/Contamination.lua", "lua/CommAbilities/Alien/Contamination_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Drifter.lua", "lua/Drifter_Stack.lua", "post" )
-ModLoader.SetupFileHook( "lua/MAC.lua", "lua/MAC_Siege20.lua", "post" )
+ModLoader.SetupFileHook( "lua/MAC.lua", "lua/BigMac.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/NS2Gamerules.lua", "lua/NS2Gamerules_Siege19.lua", "post" )
 
@@ -136,7 +136,6 @@ ModLoader.SetupFileHook( "lua/Extractor.lua", "lua/Extractor_Siege19.lua", "post
 ModLoader.SetupFileHook( "lua/Harvester.lua", "lua/Harvester_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Sentry.lua", "lua/Sentry_Siege19.lua", "post" )
-ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/SentryBattery_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/MarineCommander.lua", "lua/MarineCommander_Siege19.lua", "post" ) 
 ModLoader.SetupFileHook( "lua/AlienCommander.lua", "lua/AlienCommander_Siege19.lua", "post" ) 
 
@@ -149,3 +148,4 @@ ModLoader.SetupFileHook( "lua/TechTree.lua", "lua/TechTree_Siege20.lua", "post" 
 
 
 
+ModLoader.SetupFileHook( "lua/BuildUtility.lua", "lua/BuildUtility_Siege19.lua", "post" ) 

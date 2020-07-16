@@ -34,6 +34,7 @@ local kSiege_TechIds =
     'DualFlamerExosuit',
     'PrimalScream',
     'AcidRocket',
+    'BigMac',
 
 }
 

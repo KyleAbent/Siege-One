@@ -5,7 +5,7 @@ kARCSupply = 14--25
 kRoboticsFactorySupply = 4--5
 kMACSupply = 4 --5
 kArmorySupply = 4 --5
-kObservatorySupply = 24--25  -- COME BACK HERE
+kObservatorySupply = 1--25  -- COME BACK HERE
 kSentryBatterySupply = 14--15
 kDrifterSupply = 7--10
 kWhipSupply = 4--5
@@ -20,3 +20,8 @@ kSentrySupply = 5--10
 kWhipCost = 10--13
 kShadeCost = 10
 kShiftCost = 10
+
+kCommandStationBuildTime = 20 -- 15
+
+kSentryBatteryCost = 15
+kSentryBatteryBuildTime = 10

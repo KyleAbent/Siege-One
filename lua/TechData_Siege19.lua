@@ -5,6 +5,7 @@ Script.Load("lua/2019/ExoWelder.lua")
 Script.Load("lua/2019/ExoFlamer.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
+Script.Load("lua/BigMac.lua")
 
 local kCachedTechCategories
 local kCachedMapNameTechIds
@@ -250,6 +251,34 @@ local kSiege_TechData =
     [kTechDataDamageType] = kAcidRocketDamageType,  
     [kTechDataDisplayName] = "AcidRocket",
     [kTechDataTooltipInfo] = "Ranged Projectile dealing damage only to armor and structures"},
+    
+    {
+    [kTechDataId] = kTechId.BigMac,
+   -- [kTechDataSupply] = kMACSupply,
+    [kTechDataHint] = "Comes with Fries",
+    [kTechDataMapName] = BigMac.kMapName,
+    [kTechDataDisplayName] = "Big Mac",
+    [kTechDataMaxHealth] = MAC.kHealth, --come back to these
+    [kTechDataMaxArmor] = MAC.kArmor,
+    [kTechDataCostKey] = 15,
+    --[kTechDataResearchTimeKey] = kMACBuildTime,
+    [kTechDataModel] = MAC.kModelName,
+    [kTechDataDamageType] = kMACAttackDamageType,
+    [kTechDataInitialEnergy] = kMACInitialEnergy,
+    [kTechDataMaxEnergy] = kMACMaxEnergy,
+    [kTechDataMenuPriority] = 2,
+    [kTechDataPointValue] = kMACPointValue,
+    [kTechDataHotkey] = Move.M,
+    [kTechDataTooltipInfo] = "One Mac, make it Big",
+     [kTechDataBuildTime] = 8,
+     [kTechDataGhostModelClass] = "MarineGhostModel", 
+     [kStructureAttachRange] = 8,
+     [kStructureBuildNearClass] = "RoboticsFactory",
+      [kStructureAttachId] = kTechId.RoboticsFactory,
+     -- [kTechDataGhostGuidesMethod] = GetMacGhostGuides, -- ahh
+      [kTechDataBuildMethodFailedMessage] = "Testing 1 GIANT Mac as powerful as 5",
+    [kTechDataBuildRequiresMethod] = GetCheckMacLimit,
+    },
  
   }
     

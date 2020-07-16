@@ -1,3 +1,26 @@
+
+function AlienTeam:SpawnHives(techPoint)
+    for _, ent in ientitylist(Shared.GetEntitiesWithClassname("TechPoint")) do
+        if ent:GetAttached() == nil then 
+            local location = GetLocationForPoint(ent:GetOrigin())
+            local mylocation = GetLocationForPoint(techPoint:GetOrigin())
+            if location and mylocation and location == mylocation then
+                local hive = ent:SpawnCommandStructure(2) 
+                      hive:SetConstructionComplete()
+            end
+        end
+    end
+
+end
+
+local origSpawnStruct = AlienTeam.SpawnInitialStructures
+function AlienTeam:SpawnInitialStructures(techPoint)
+    self:SpawnHives(techPoint)
+    return origSpawnStruct(self, techPoint)
+end
+
+
+
 local orig_AlienTeam_InitTechTree = AlienTeam.InitTechTree
 function AlienTeam:InitTechTree()
     local orig_PlayingTeam_InitTechTree = PlayingTeam.InitTechTree

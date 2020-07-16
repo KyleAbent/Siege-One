@@ -82,6 +82,7 @@ ModLoader.SetupFileHook( "lua/Fade.lua", "lua/Fade_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Gorge.lua", "lua/Gorge_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/SentryBattery_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/BackupBattery.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Weapons/Marine/ExoWeaponHolder.lua", "lua/Weapons/Marine/ExoWeaponHolder_Siege19.lua", "post" )
 
@@ -91,6 +92,7 @@ ModLoader.SetupFileHook( "lua/CommAbilities/Alien/Contamination.lua", "lua/CommA
 
 ModLoader.SetupFileHook( "lua/Drifter.lua", "lua/Drifter_Stack.lua", "post" )
 ModLoader.SetupFileHook( "lua/MAC.lua", "lua/BigMac.lua", "post" )
+ModLoader.SetupFileHook( "lua/MAC.lua", "lua/MAC_Siege20.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/NS2Gamerules.lua", "lua/NS2Gamerules_Siege19.lua", "post" )
 

@@ -32,11 +32,17 @@ local kDualWelderAnimationGraph = PrecacheAsset("models/marine/exosuit/exosuit_r
 local kHoloMarineMaterialname = PrecacheAsset("cinematics/vfx_materials/marine_ip_spawn.material")
 
 
+local function HealSelf(self)
+
+
+    self:SetArmor(self:GetArmor() + 3, true) 
+    return self.layout == "WelderWelder"
+end
 
 local origcreate = Exo.OnCreate
 function Exo:OnCreate()
     origcreate(self)
-
+    self:AddTimedCallback(function() HealSelf(self) return true end, 1) 
 end
 
 

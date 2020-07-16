@@ -82,6 +82,85 @@ function FindFreeSpace(where, mindistance, maxdistance, infestreq)
           
            return where
 end
+
+function FindFreeMarineBaseConsSpace(where, mindistance, maxdistance, infestreq)    
+     if not mindistance then mindistance = 2 end
+     if not maxdistance then maxdistance = 24 end
+        for index = 1, 75 do //#math.random(4,8) do
+           local extents = LookupTechData(kTechId.CommandStation, kTechDataMaxExtents, nil)
+           local capsuleHeight, capsuleRadius = GetTraceCapsuleFromExtents(extents)  
+           //local spawnPoint = GetRandomSpawnForCapsule(capsuleHeight, capsuleRadius, where, mindistance, maxdistance, EntityFilterAll())
+           local spawnPoint = GetRandomPointsWithinRadius(GetGroundAtPosition(where, nil, PhysicsMask.AllButPCs, extents), mindistance, maxdistance, 20, 1, 1, nil, validationFunc)
+            if #spawnPoint >= 1 then
+                spawnPoint = spawnPoint[1]
+           end
+        
+           if spawnPoint ~= nil then
+             spawnPoint = GetGroundAtPosition(spawnPoint, nil, PhysicsMask.AllButPCs, extents)
+           end
+        
+           local location = spawnPoint and GetLocationForPoint(spawnPoint)
+           local locationName = location and location:GetName() or ""
+           local wherelocation = GetLocationForPoint(where)
+           wherelocation = wherelocation and wherelocation.name or nil
+           local sameLocation = spawnPoint ~= nil and locationName == wherelocation
+           
+           if infestreq then
+             sameLocation = sameLocation and GetIsPointOnInfestation(spawnPoint)
+           end
+            
+           local consInRange = GetEntitiesWithMixinWithinRange("Construct", spawnPoint, 4)
+           if spawnPoint ~= nil and sameLocation  and spawnPoint ~= where and #consInRange == 0 then
+              return spawnPoint
+           end
+       end
+--           Print("No valid spot found for FindFreeSpace")
+         -- if infestreq and not GetIsPointOnInfestation(where) then
+            -- if Server then CreateEntity(Cyst.kMapName, FindFreeSpace(where,1, 6),  2) end
+             --For now anyway, bite me. Remove later? :X or tres spend. Who knows right now. I wanna see this in action.
+        --  end
+          
+           return where
+end
+function FindFreeIPSpace(where, mindistance, maxdistance, infestreq)    
+     if not mindistance then mindistance = 2 end
+     if not maxdistance then maxdistance = 24 end
+        for index = 1, 50 do //#math.random(4,8) do
+           local extents = LookupTechData(kTechId.ReadyRoomExo, kTechDataMaxExtents, nil)
+           local capsuleHeight, capsuleRadius = GetTraceCapsuleFromExtents(extents)  
+           //local spawnPoint = GetRandomSpawnForCapsule(capsuleHeight, capsuleRadius, where, mindistance, maxdistance, EntityFilterAll())
+           local spawnPoint = GetRandomPointsWithinRadius(GetGroundAtPosition(where, nil, PhysicsMask.AllButPCs, extents), mindistance, maxdistance, 20, 1, 1, nil, validationFunc)
+            if #spawnPoint >= 1 then
+                spawnPoint = spawnPoint[1]
+           end
+        
+           if spawnPoint ~= nil then
+             spawnPoint = GetGroundAtPosition(spawnPoint, nil, PhysicsMask.AllButPCs, extents)
+           end
+        
+           local location = spawnPoint and GetLocationForPoint(spawnPoint)
+           local locationName = location and location:GetName() or ""
+           local wherelocation = GetLocationForPoint(where)
+           wherelocation = wherelocation and wherelocation.name or nil
+           local sameLocation = spawnPoint ~= nil and locationName == wherelocation
+           
+           if infestreq then
+             sameLocation = sameLocation and GetIsPointOnInfestation(spawnPoint)
+           end
+        
+           local ipinrange = GetEntitiesWithinRange("InfantryPortal", spawnPoint, 3)
+           if spawnPoint ~= nil and sameLocation  and spawnPoint ~= where and #ipinrange == 0 then
+              return spawnPoint
+           end
+       end
+--           Print("No valid spot found for FindFreeSpace")
+         -- if infestreq and not GetIsPointOnInfestation(where) then
+            -- if Server then CreateEntity(Cyst.kMapName, FindFreeSpace(where,1, 6),  2) end
+             --For now anyway, bite me. Remove later? :X or tres spend. Who knows right now. I wanna see this in action.
+        --  end
+          
+           return where
+end
 function FindFreeIPSpace(where, mindistance, maxdistance, infestreq)    
      if not mindistance then mindistance = 2 end
      if not maxdistance then maxdistance = 24 end

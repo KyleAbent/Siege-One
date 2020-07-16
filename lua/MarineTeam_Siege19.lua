@@ -7,9 +7,35 @@ function MarineTeam:SpawnExtraIPS(techPoint)
         ip:SetConstructionComplete()
     end
 end
+function MarineTeam:SpawnEverythingElse(techPoint)
+            --if spawnpoint then? will spawnpoint ever bill nill? UGH.
+    local techPointOrigin = techPoint:GetOrigin() + Vector(0, 2, 0)
+
+    local spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
+    local armory = CreateEntity(Armory.kMapName, spawnOrigin,  1) --adv
+          armory:SetConstructionComplete()
+          
+          spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
+    local obs = CreateEntity(Observatory.kMapName, spawnOrigin,  1)
+          obs:SetConstructionComplete()
+          
+          spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
+    local proto = CreateEntity(PrototypeLab.kMapName, spawnOrigin,  1)
+          proto:SetConstructionComplete()
+          
+          spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
+    local pg = CreateEntity(PhaseGate.kMapName, spawnOrigin,  1)
+          pg:SetConstructionComplete()
+          
+          spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
+    local bigmac = CreateEntity(BigMac.kMapName, spawnOrigin,  1)
+          bigmac:SetConstructionComplete()
+
+end
 local origSpawnStruct = MarineTeam.SpawnInitialStructures
 function MarineTeam:SpawnInitialStructures(techPoint)
     self:SpawnExtraIPS(techPoint)
+    self:SpawnEverythingElse(techPoint)
     return origSpawnStruct(self, techPoint)
 end
 
@@ -25,6 +51,7 @@ function MarineTeam:InitTechTree()
     self.techTree.SetComplete = orig_TechTree_SetComplete
     
       self.techTree:AddBuildNode(kTechId.Wall,     kTechId.None, kTechId.None)
+      self.techTree:AddBuildNode(kTechId.BackupBattery,     kTechId.None, kTechId.None)
       self.techTree:AddBuildNode(kTechId.BigMac,     kTechId.None, kTechId.None)
       self.techTree:AddBuyNode(kTechId.DualWelderExosuit, kTechId.ExosuitTech, kTechId.None)
       self.techTree:AddBuyNode(kTechId.DualFlamerExosuit, kTechId.ExosuitTech, kTechId.None)

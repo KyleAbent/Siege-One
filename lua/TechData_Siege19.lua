@@ -6,6 +6,7 @@ Script.Load("lua/2019/ExoFlamer.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 Script.Load("lua/BigMac.lua")
+Script.Load("lua/BackupBattery.lua")
 
 local kCachedTechCategories
 local kCachedMapNameTechIds
@@ -258,8 +259,8 @@ local kSiege_TechData =
     [kTechDataHint] = "Comes with Fries",
     [kTechDataMapName] = BigMac.kMapName,
     [kTechDataDisplayName] = "Big Mac",
-    [kTechDataMaxHealth] = MAC.kHealth, --come back to these
-    [kTechDataMaxArmor] = MAC.kArmor,
+    [kTechDataMaxHealth] = kMACHealth, --come back to these
+    [kTechDataMaxArmor] = kMACArmor,
     [kTechDataCostKey] = 15,
     --[kTechDataResearchTimeKey] = kMACBuildTime,
     [kTechDataModel] = MAC.kModelName,
@@ -267,7 +268,7 @@ local kSiege_TechData =
     [kTechDataInitialEnergy] = kMACInitialEnergy,
     [kTechDataMaxEnergy] = kMACMaxEnergy,
     [kTechDataMenuPriority] = 2,
-    [kTechDataPointValue] = kMACPointValue,
+    [kTechDataPointValue] = kMACPointValue * 1.3,
     [kTechDataHotkey] = Move.M,
     [kTechDataTooltipInfo] = "One Mac, make it Big",
      [kTechDataBuildTime] = 8,
@@ -279,6 +280,30 @@ local kSiege_TechData =
       [kTechDataBuildMethodFailedMessage] = "Testing 1 GIANT Mac as powerful as 5",
     [kTechDataBuildRequiresMethod] = GetCheckMacLimit,
     },
+    
+    
+        {
+            [kTechDataId] = kTechId.BackupBattery,
+            [kTechDataSupply] = kSentryBatterySupply,
+            [kTechDataBuildRequiresMethod] = GetRoomHasNoBackupBattery,
+            [kTechDataBuildMethodFailedMessage] = "COMMANDERERROR_ONLY_ONE_BATTERY_PER_ROOM",
+            [kTechDataHint] = "Backup Power",
+            [kTechDataGhostModelClass] = "MarineGhostModel",
+            [kTechDataMapName] = BackupBattery.kMapName,
+            [kTechDataDisplayName] = "SENTRY_BATTERY",
+            [kTechDataCostKey] = kSentryBatteryCost,
+            [kTechDataPointValue] = kSentryBatteryPointValue,
+            [kTechDataModel] = BackupBattery.kModelName,
+            [kTechDataEngagementDistance] = 2,
+            [kTechDataBuildTime] = kSentryBatteryBuildTime, --adjusted
+            [kTechDataMaxHealth] = kSentryBatteryHealth, --adjusted
+            [kTechDataMaxArmor] = kSentryBatteryArmor, --adjusted
+            [kTechDataTooltipInfo] = "Provides power when PowerPoint is down",
+            [kTechDataHotkey] = Move.S,
+            [kTechDataNotOnInfestation] = kPreventMarineStructuresOnInfestation,
+            [kVisualRange] = 8,
+            [kTechDataObstacleRadius] = 0.25,
+        },
  
   }
     

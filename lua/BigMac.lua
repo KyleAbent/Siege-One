@@ -31,13 +31,21 @@ AddMixinNetworkVars(ResearchMixin, networkVars)
 AddMixinNetworkVars(RecycleMixin, networkVars)
 AddMixinNetworkVars(GhostStructureMixin, networkVars)
 
+local function HealSelf(self)
+
+
+    self:SetArmor(self:GetArmor() + 10, true) 
+    self:SetHealth(self:GetHealth() + 10, true)
+    return true
+end
+
 function BigMac:OnCreate()
 MAC.OnCreate(self)
 InitMixin(self, ConstructMixin)
 InitMixin(self, GhostStructureMixin)
 InitMixin(self, ResearchMixin)
 InitMixin(self, RecycleMixin)
-
+self:AddTimedCallback(function() HealSelf(self) return true end, 1) 
 end
 
 
@@ -83,17 +91,7 @@ function GetMacGhostGuides(commander)
 end
 
 function BigMac:OnConstructionComplete()
-MAC.kConstructRate = 0.4 * 5
-MAC.kWeldRate = 0.5 * 5
-MAC.kOrderScanRadius = 12
-MAC.kRepairHealthPerSecond = 50 * 5
-MAC.kHealth = kMACHealth * 5
-MAC.kArmor = kMACArmor * 5
-MAC.kMoveSpeed = 6
-MAC.kHoverHeight = 0.5
-MAC.kStartDistance = 3
-MAC.kWeldDistance = 2
-MAC.kBuildDistance = 2 
+    self:AdjustValues()
 end
 
 

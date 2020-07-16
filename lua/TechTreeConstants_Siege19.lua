@@ -35,6 +35,7 @@ local kSiege_TechIds =
     'PrimalScream',
     'AcidRocket',
     'BigMac',
+    'BackupBattery',
 
 }
 

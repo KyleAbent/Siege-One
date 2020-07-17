@@ -157,8 +157,8 @@ end
 function Plugin:ClientConfirmConnect(Client)
     --REMOvE ME LOL DEBUGGING 
 Shared.ConsoleCommand("cheats 1") 
-Shared.ConsoleCommand("alltech") 
-Shared.ConsoleCommand("autobuild") 
+--Shared.ConsoleCommand("alltech") 
+--Shared.ConsoleCommand("autobuild") 
 Shared.ConsoleCommand("sh_forceroundstart") 
   if Client:GetIsVirtual() then return end
     if GetGamerules():GetGameStarted() then

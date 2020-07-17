@@ -121,12 +121,40 @@ function BackupBattery:OnInitialized()
     
         InitMixin(self, UnitStatusMixin)
         InitMixin(self, HiveVisionMixin)
+        self:MakeLight()
         
     end
     
     self:SetModel(BackupBattery.kModelName, kAnimationGraph)
 
 end
+
+if Client then
+
+    function BackupBattery:MakeLight() --ExoSuit
+        self.flashlight = Client.CreateRenderLight()
+        self.flashlight:SetType(RenderLight.Type_Point)
+        self.flashlight:SetCastsShadows(false)
+        self.flashlight:SetSpecular(true)
+        self.flashlight:SetRadius(8)
+        self.flashlight:SetIntensity(15)
+        self.flashlight:SetColor(Color(0, .2, 0.9))
+        
+        self.flashlight:SetIsVisible(true) -- will have to make this oncons
+
+        local coords = self:GetCoords()
+        coords.origin = coords.origin + coords.zAxis * 0.75 + coords.yAxis * 4
+
+        self.flashlight:SetCoords(coords)
+       -- self.flashlight:SetAngles( Angles(180,88,180) ) --face down shine light
+            
+        
+    end
+
+
+end
+
+
 function BackupBattery:GetReceivesStructuralDamage()
     return true
 end
@@ -218,6 +246,18 @@ function BackupBattery:OnGetMapBlipInfo()
         blipTeam = self:GetTeamNumber()
     
     return blipType, blipTeam, isAttacked, isParasited
+end
+
+function BackupBattery:OnDestroy()
+    ScriptActor.OnDestroy( self )
+        
+    if Client then
+        if self.flashlight then
+            Client.DestroyRenderLight(self.flashlight)
+            self.flashlight = nil
+        end
+    end
+    
 end
 
 Shared.LinkClassToMap("BackupBattery", BackupBattery.kMapName, networkVars)

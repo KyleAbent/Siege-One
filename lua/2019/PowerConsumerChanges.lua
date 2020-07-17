@@ -1,5 +1,5 @@
 local function GetHasSentryBatteryInRadius(self)
-      local backupbattery = GetEntitiesWithinRange("SentryBattery", self:GetOrigin(), 8)
+      local backupbattery = GetEntitiesWithinRange("BackupBattery", self:GetOrigin(), 8)
           for index, battery in ipairs(backupbattery) do
             if GetIsUnitActive(battery) then return true end
            end      

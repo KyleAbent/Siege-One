@@ -1,4 +1,7 @@
 
+ModLoader.SetupFileHook( "lua/AchievementGiverMixin.lua", "lua/AchievementGiverMixin_Siege19.lua", "replace" ) --hmm?
+ModLoader.SetupFileHook( "lua/AchievementReceiverMixin.lua", "lua/AchievementReceiverMixin_Siege19.lua", "replace" ) --hmm?
+
 ModLoader.SetupFileHook( "lua/shine/core/shared/hook.lua", "lua/shine/hook.lua", "post" )
 --ModLoader.SetupFileHook( "lua/shine/extensions/unstuck/server.lua", "lua/shine/unstuckhook.lua", "post" )
 

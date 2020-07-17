@@ -1,7 +1,7 @@
 
 function AlienTeam:SpawnHives(techPoint)
     for _, ent in ientitylist(Shared.GetEntitiesWithClassname("TechPoint")) do
-        if ent:GetAttached() == nil then 
+        if ent ~= techPoint and ent:GetAttached() == nil then 
             local location = GetLocationForPoint(ent:GetOrigin())
             local mylocation = GetLocationForPoint(techPoint:GetOrigin())
             if location and mylocation and location == mylocation then
@@ -15,6 +15,7 @@ end
 
 local origSpawnStruct = AlienTeam.SpawnInitialStructures
 function AlienTeam:SpawnInitialStructures(techPoint)
+
     self:SpawnHives(techPoint)
     return origSpawnStruct(self, techPoint)
 end

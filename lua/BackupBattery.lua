@@ -106,7 +106,7 @@ function BackupBattery:OnInitialized()
     InitMixin(self, WeldableMixin)
     InitMixin(self, NanoShieldMixin)
     self:SetOrigin(self:GetOrigin() + Vector(0,1,0) )
-    self:SetAngles(Angles(0,-90,0))
+    --self:SetAngles(Angles(0,-90,0))
     
     if Server then
     
@@ -134,18 +134,36 @@ end
 if Client then
 
     function BackupBattery:MakeLight() --ExoSuit
+    /*
+        self.blueLight = Client.CreateRenderLight()
+        self.blueLight:SetType(RenderLight.Type_Point)
+        self.blueLight:SetCastsShadows(false)
+        self.blueLight:SetSpecular(true)
+        self.blueLight:SetRadius(12)
+        self.blueLight:SetIntensity(15)
+        self.blueLight:SetColor(Color(0, .2, 0.9))
+        
+        self.blueLight:SetIsVisible(true) -- will have to make this oncons
+
+        local coords = self:GetCoords()
+        coords.origin = coords.origin  + (coords.yAxis + 4 )
+
+        self.blueLight:SetCoords(coords)
+       -- self.flashlight:SetAngles( Angles(180,88,180) ) --face down shine light
+       */
         self.flashlight = Client.CreateRenderLight()
-        self.flashlight:SetType(RenderLight.Type_Point)
-        self.flashlight:SetCastsShadows(false)
-        self.flashlight:SetSpecular(true)
-        self.flashlight:SetRadius(8)
-        self.flashlight:SetIntensity(15)
-        self.flashlight:SetColor(Color(0, .2, 0.9))
+        self.flashlight:SetType(RenderLight.Type_Spot)
+        self.flashlight:SetColor(Color(.8, .8, 1))
+        self.flashlight:SetInnerCone(math.rad(50))
+        self.flashlight:SetOuterCone(math.rad(65))
+        self.flashlight:SetIntensity(10)
+        self.flashlight:SetRadius(15)
+        self.flashlight:SetAtmosphericDensity(0.2)
         
         self.flashlight:SetIsVisible(true) -- will have to make this oncons
 
-        local coords = self:GetCoords()
-        coords.origin = coords.origin  + (coords.yAxis + 1 )
+        coords = self:GetCoords()
+        coords.origin = coords.origin + coords.yAxis * 1
 
         self.flashlight:SetCoords(coords)
        -- self.flashlight:SetAngles( Angles(180,88,180) ) --face down shine light
@@ -258,8 +276,16 @@ function BackupBattery:OnDestroy()
             Client.DestroyRenderLight(self.flashlight)
             self.flashlight = nil
         end
+       -- if self.bluelight then
+        --    Client.DestroyRenderLight(self.bluelight)
+        --    self.bluelight = nil
+       -- end
     end
     
+end
+
+function BackupBattery:OnRecycled()
+    self:Kill()--Easy way to get rid of the lights because onrecycle isn't called by client to clear them. ugh.
 end
 
 Shared.LinkClassToMap("BackupBattery", BackupBattery.kMapName, networkVars)

@@ -156,10 +156,10 @@ end
 //Add timer on join if game started
 function Plugin:ClientConfirmConnect(Client)
     --REMOvE ME LOL DEBUGGING 
-Shared.ConsoleCommand("cheats 1") 
+--Shared.ConsoleCommand("cheats 1") 
 --Shared.ConsoleCommand("alltech") 
 --Shared.ConsoleCommand("autobuild") 
-Shared.ConsoleCommand("sh_forceroundstart") 
+--Shared.ConsoleCommand("sh_forceroundstart") 
   if Client:GetIsVirtual() then return end
     if GetGamerules():GetGameStarted() then
        if not GetTimer():GetIsFrontOpen() then

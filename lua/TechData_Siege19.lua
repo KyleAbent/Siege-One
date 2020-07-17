@@ -303,6 +303,7 @@ local kSiege_TechData =
             [kTechDataNotOnInfestation] = kPreventMarineStructuresOnInfestation,
             [kVisualRange] = 8,
             [kTechDataObstacleRadius] = 0.25,
+            [kTechDataSpecifyOrientation] = true,
         },
  
   }

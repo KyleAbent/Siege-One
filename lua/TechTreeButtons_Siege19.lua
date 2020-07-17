@@ -3,7 +3,7 @@ function GetMaterialXYOffset(techId)
     if techId == kTechId.BigMac then
         return origIndex(kTechId.MAC)
     elseif techId == kTechId.BackupBattery then
-         return origIndex(kTechId.SentryBattery) 
+         return origIndex(kTechId.PowerPoint) 
     elseif techId == kTechId.EggBeacon then
          return origIndex(kTechId.Shell)
     elseif techId == kTechId.Wall then

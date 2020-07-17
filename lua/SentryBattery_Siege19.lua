@@ -34,15 +34,12 @@ if Client then
 
     function SentryBattery:MakeLight() --ExoSuit
         self.flashlight = Client.CreateRenderLight()
-        
-        self.flashlight:SetType(RenderLight.Type_Spot)
-        self.flashlight:SetColor(Color(.8, .8, 1))
-        self.flashlight:SetInnerCone(math.rad(70))
-        self.flashlight:SetOuterCone(math.rad(85))
-        self.flashlight:SetIntensity(10)
-        self.flashlight:SetRadius(25)
-        self.flashlight:SetAtmosphericDensity(0.2)
-        --self.flashlight:SetGoboTexture("models/marine/male/flashlight.dds")
+        self.flashlight:SetType(RenderLight.Type_Point)
+        self.flashlight:SetCastsShadows(false)
+        self.flashlight:SetSpecular(true)
+        self.flashlight:SetRadius(64)
+        self.flashlight:SetIntensity(15)
+        self.flashlight:SetColor(Color(0, .2, 0.9))
         
         self.flashlight:SetIsVisible(true) -- will have to make this oncons
 

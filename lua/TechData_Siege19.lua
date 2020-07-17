@@ -284,7 +284,7 @@ local kSiege_TechData =
     
         {
             [kTechDataId] = kTechId.BackupBattery,
-            [kTechDataSupply] = kSentryBatterySupply,
+            [kTechDataSupply] = 0,
             [kTechDataBuildRequiresMethod] = GetRoomHasNoBackupBattery,
             [kTechDataBuildMethodFailedMessage] = "COMMANDERERROR_ONLY_ONE_BATTERY_PER_ROOM",
             [kTechDataHint] = "Backup Power",

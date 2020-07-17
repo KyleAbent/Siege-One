@@ -34,8 +34,8 @@ class 'BackupBattery' (ScriptActor)
 
 BackupBattery.kMapName = "backupbattery"
 
-BackupBattery.kModelName = PrecacheAsset("models/marine/portable_node/portable_node.model")
-local kAnimationGraph = PrecacheAsset("models/marine/portable_node/portable_node.animation_graph")
+BackupBattery.kModelName = PrecacheAsset("models/system/editor/power_node.model")
+local kAnimationGraph = PrecacheAsset("models/system/editor/power_node.animation_graph")
 
 local networkVars =
 {
@@ -105,6 +105,8 @@ function BackupBattery:OnInitialized()
     
     InitMixin(self, WeldableMixin)
     InitMixin(self, NanoShieldMixin)
+    self:SetOrigin(self:GetOrigin() + Vector(0,1,0) )
+    self:SetAngles(Angles(0,-90,0))
     
     if Server then
     
@@ -143,7 +145,7 @@ if Client then
         self.flashlight:SetIsVisible(true) -- will have to make this oncons
 
         local coords = self:GetCoords()
-        coords.origin = coords.origin + coords.zAxis * 0.75 + coords.yAxis * 4
+        coords.origin = coords.origin  + (coords.yAxis + 1 )
 
         self.flashlight:SetCoords(coords)
        -- self.flashlight:SetAngles( Angles(180,88,180) ) --face down shine light

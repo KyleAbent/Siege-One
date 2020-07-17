@@ -11,17 +11,6 @@ class 'BigMac' (MAC)
 BigMac.kMapName = "bigmac"
 
 
-MAC.kConstructRate = 0
-MAC.kWeldRate = 0
-MAC.kOrderScanRadius = 0
-MAC.kRepairHealthPerSecond = 0
-MAC.kMoveSpeed = 0
-MAC.kInfestationMoveSpeed = 0
-MAC.kHoverHeight = 0
-MAC.kStartDistance = 0
-MAC.kWeldDistance = 0
-MAC.kBuildDistance = 0    // Distance at which bot can start building a structure. 
-
 local networkVars =
 {
 }

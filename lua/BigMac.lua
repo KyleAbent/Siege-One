@@ -109,5 +109,17 @@ function BigMac:OnGetMapBlipInfo()
     return blipType, blipTeam, isAttacked, isParasited
 end
 
+function BigMac:OnOrderComplete(currentOrder)
+
+ if Server then    
+            
+           if (   GetIsInSiege(self)    and not GetTimer():GetIsSiegeOpen() ) then
+          self:Kill() 
+           end
+
+
+      end
+    
+end
 
 Shared.LinkClassToMap("BigMac", BigMac.kMapName, networkVars)

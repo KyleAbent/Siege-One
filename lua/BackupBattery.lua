@@ -154,10 +154,10 @@ if Client then
         self.flashlight = Client.CreateRenderLight()
         self.flashlight:SetType(RenderLight.Type_Spot)
         self.flashlight:SetColor(Color(.8, .8, 1))
-        self.flashlight:SetInnerCone(math.rad(50))
-        self.flashlight:SetOuterCone(math.rad(65))
+        self.flashlight:SetInnerCone(math.rad(70))
+        self.flashlight:SetOuterCone(math.rad(85))
         self.flashlight:SetIntensity(10)
-        self.flashlight:SetRadius(15)
+        self.flashlight:SetRadius(25)
         self.flashlight:SetAtmosphericDensity(0.2)
         
         self.flashlight:SetIsVisible(true) -- will have to make this oncons

@@ -22,9 +22,10 @@ AddMixinNetworkVars(GhostStructureMixin, networkVars)
 
 local function HealSelf(self)
 
-
-    self:SetArmor(self:GetArmor() + 10, true) 
-    self:SetHealth(self:GetHealth() + 10, true)
+    if self:GetIsBuilt() then
+        self:SetArmor(self:GetArmor() + 10, true) 
+        self:SetHealth(self:GetHealth() + 10, true)
+    end
     return true
 end
 

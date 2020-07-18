@@ -1,4 +1,4 @@
-
+ModLoader.SetupFileHook( "lua/TargetCache.lua", "lua/TargetCache_Siege.lua", "post" )
 ModLoader.SetupFileHook( "lua/AchievementGiverMixin.lua", "lua/AchievementGiverMixin_Siege19.lua", "replace" ) --hmm?
 ModLoader.SetupFileHook( "lua/AchievementReceiverMixin.lua", "lua/AchievementReceiverMixin_Siege19.lua", "replace" ) --hmm?
 

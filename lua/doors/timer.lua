@@ -160,9 +160,72 @@ function Timer:SiegeDoorTimer()
        end
 end
 
+local function getLists()
+    --local marineList,alienList = {} -- why does this say alienList is nil? wtf?
+    local marineList = {}
+    local alienList = {}
+    --local totalThisIteration = 10 //make sure its even lol
+    --local currentMarineCount = 0
+    --local currentAlienCount = 0
+    
+    for index, entity in ipairs(GetEntitiesWithMixin("Construct")) do
+    
+        if not entity:GetIsBuilt() then
+        
+            if entity:GetTeamNumber() == 1 then
+                        --PowerPoints..
+                if entity.GetIsPowered and entity:GetIsPowered() then --not sure if this works unbuilt 
+                    table.insert(marineList,entity)
+                end
+                                                            --or if somehow is a comm struct lol
+            elseif entity:GetTeamNumber() == 2 and not entity:isa("Cyst") and not entity:isa("TunnelEntrance") and not entity:isa("GorgeTunnel") and not entity:isa("Hydra") then
+            
+                  if entity:GetGameEffectMask(kGameEffect.OnInfestation) then
+                        table.insert(alienList, entity)
+                  end
+                --I want to do make sure power not build, but that's a lot of calculation inside a for loop like this.
+                
+        
+            end
+            
+        end
+        
+    end
+    
+    return marineList,alienList
+
+end
+function Timer:BuildSpeedBonus()
+        --powered unbuilt
+        local marineList,alienList = getLists()
+        
+        if marineList and #marineList >= 1 then
+            for i = 1, #marineList do
+                local ent = marineList[i]
+                ent:SetConstructionComplete()
+                helpcommander(ent, ent:GetTechId())
+            end
+        end
+        
+        if alienList and #alienList >= 1 then
+            for i = 1, #alienList do
+                local ent = alienList[i]
+                ent:SetConstructionComplete()
+                helpcommander(ent, ent:GetTechId())
+            end
+        end
+        --infested unbuilt
+end
+
 function Timer:FrontDoorTimer()
+
     if self:GetIsFrontOpen() then
        self:OpenFrontDoors()
+    else
+        if not self.timelastBonus or self.timelastBonus + 10 <= Shared.GetTime() then
+            self:BuildSpeedBonus()
+            self.timelastBonus = Shared.GetTime()
+        end
      end
 end
 

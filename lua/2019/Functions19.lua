@@ -211,10 +211,12 @@ function GetIsInFrontDoorRoom(who)
                 
 end
 
-function notifycommander(who,techid)
+function notifycommander(who,techid,order)
 
 end
+function helpcommander(who,techid)
 
+end
 /*
 
 function notifyglow(who)

@@ -7,6 +7,7 @@ Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 Script.Load("lua/Weapons/Alien/GorillaGlue.lua")
 Script.Load("lua/BigMac.lua")
+Script.Load("lua/ARC_Siege19.lua")
 Script.Load("lua/BackupBattery.lua")
 
 local kCachedTechCategories
@@ -291,6 +292,35 @@ local kSiege_TechData =
     [kTechDataBuildRequiresMethod] = GetCheckMacLimit,
     },
     
+    
+    
+        {
+            [kTechDataId] = kTechId.DropArc,
+            [kTechDataSupply] = kARCSupply,
+            [kTechDataHint] = "Requires construction. Is STATIONARY. Cannot MOVE. Must be recycled to be repositioned.",
+            [kTechDataDisplayName] = "Drop-ARC_(Stationary)",
+            [kTechDataTooltipInfo] = "Must be constructed. Cannot move.",
+            [kTechDataMapName] = DropARC.kMapName,
+            [kTechDataCostKey] = kARCCost,
+            [kTechDataDamageType] = kARCDamageType,
+            [kTechDataBuildTime] = kARCBuildTime,
+            [kTechDataMaxHealth] = kARCHealth,
+            [kTechDataEngagementDistance] = kARCEngagementDistance,
+            [kVisualRange] = ARC.kFireRange,
+            [kTechDataMaxArmor] = kARCArmor,
+            [kTechDataModel] = ARC.kModelName,
+            [kTechDataBuildTime] = 12,
+            [kStructureBuildNearClass] = "ARCRoboticsFactory",
+            [kTechDataGhostModelClass] = "MarineGhostModel", 
+            [kStructureAttachRange] = 8,
+            [kStructureAttachId] = kTechId.ARCRoboticsFactory,
+            [kTechDataMaxHealth] = kARCHealth,
+            [kTechDataPointValue] = kARCPointValue,
+            [kTechDataHotkey] = Move.T,
+        [kTechDataBuildMethodFailedMessage] = "Limit Reached",
+        [kTechDataBuildRequiresMethod] = GetCheckArcLimit,
+        },
+        
     
         {
             [kTechDataId] = kTechId.BackupBattery,

@@ -37,6 +37,7 @@ local kSiege_TechIds =
     'BigMac',
     'BackupBattery',
     'GorillaGlue',
+    'DropArc',
 
 }
 

@@ -62,3 +62,8 @@ kXenocideRange = 9 -- was 14
 kRedemptionCooldown = 45
 kRedemptionEHPThresholdMin = 15
 kRedemptionEHPThresholdMax = 30
+
+
+
+kMarineInitialIndivRes = 40--15
+kAlienInitialIndivRes = 70 --12

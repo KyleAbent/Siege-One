@@ -94,7 +94,7 @@ local siegeTime = 930
     
     //Calculate reduction here 6.15.20
     print("frontTime was %s",frontTime)
-    kReduceDoorTimeBy = math.random(frontTime*0.15, frontTime*0.4)
+    kReduceDoorTimeBy = math.random(frontTime*0.5, frontTime*0.7)
     frontTime = frontTime - kReduceDoorTimeBy
     print("mapName is %s", mapName)
     print("frontTime is %s",frontTime)
@@ -155,11 +155,12 @@ end
 ------------------------------------------------------------
 //Add timer on join if game started
 function Plugin:ClientConfirmConnect(Client)
+--function Plugin:ClientConnect(Client)
     --REMOvE ME LOL DEBUGGING 
 --Shared.ConsoleCommand("cheats 1") 
 --Shared.ConsoleCommand("alltech") 
 --Shared.ConsoleCommand("autobuild") 
---Shared.ConsoleCommand("sh_forceroundstart") 
+Shared.ConsoleCommand("sh_forceroundstart") 
   if Client:GetIsVirtual() then return end
     if GetGamerules():GetGameStarted() then
        if not GetTimer():GetIsFrontOpen() then
@@ -424,16 +425,30 @@ end
 Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMist", "DontSpamCommanders", "Replace" )
 
 
-function Plugin:lolcomm(who,techid)
+function Plugin:lolcomm(who,techid,order)
     //print("lolcommlolcommlolcommlolcommlolcomm")
     //self:NotifyTimer(nil, "[A] Setup Time: Giving you free upgrade: %s", true, EnumToString(kTechId, techid) )
     local commander = who:GetTeam():GetCommander()
     if commander ~= nil then
         local client = commander:GetClient()
-        self:NotifyOne(client, "Giving upgrade: %s", true, EnumToString(kTechId, techid) )
+        self:NotifyOne(client, "Blocking Order for %s : %s", true, EnumToString(kTechId, techid), EnumToString(kTechId, order) )
     end
 end
+
 Shine.Hook.SetupGlobalHook( "notifycommander", "lolcomm", "Replace" )
+
+
+function Plugin:doitcomm(who,techid)
+    //print("lolcommlolcommlolcommlolcommlolcomm")
+    //self:NotifyTimer(nil, "[A] Setup Time: Giving you free upgrade: %s", true, EnumToString(kTechId, techid) )
+    local commander = who:GetTeam():GetCommander()
+    if commander ~= nil then
+        local client = commander:GetClient()
+        self:NotifyOne(client, "[Setup-Owned_Territory] Constructing: %s", true, EnumToString(kTechId, techid) )
+    end
+end
+
+Shine.Hook.SetupGlobalHook( "helpcommander", "doitcomm", "Replace" )
 
 
 local function NewUpdateBatteryState( self )
@@ -448,7 +463,7 @@ OldUpdateBatteryState = Shine.Hook.ReplaceLocalFunction( Sentry.OnUpdate, "Updat
 
 function Plugin:ShowRebirthRedemptionSettings(player)
 
-
+  if not player:GetTeamNumber() == 2 or not player:GetIsAlive() then return end
   local rebirth = "Rebirth: Disabled"
   local redemption = "Redemption: Disabled"
     
@@ -470,7 +485,7 @@ Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRebirthRedemptionS
 
 
   function Plugin:OnRedemedHook(player) 
-        
+        if not player:GetTeamNumber() == 2 or not player:GetIsAlive() then return end
         if player:GetEligableForRebirth() then
             Shine.ScreenText.End(35)
             return
@@ -486,6 +501,7 @@ end
 Shine.Hook.SetupClassHook( "Onos", "TriggerRebirthRedeemCountdown", "OnRedemedHook", "Replace" )
 
   function Plugin:TellThemToGetOutOfCombat(player) 
+            if not player:GetTeamNumber() == 2 or not player:GetIsAlive() then return end
             Shine.ScreenText.Add( 25, {X = 0.50, Y = 0.65,Text = "Get out of Combat!!!",Duration = 2,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, player ) 
  end
  

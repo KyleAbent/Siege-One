@@ -25,3 +25,6 @@ kCommandStationBuildTime = 20 -- 15
 
 kSentryBatteryCost = 15
 kSentryBatteryBuildTime = 10
+
+
+kAlienSpawnTime = 7--10

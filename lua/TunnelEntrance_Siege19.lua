@@ -124,7 +124,7 @@ end
         
         -- register if a tunnel entity already exists or a free tunnel has been found
         for _, tunnel in ientitylist( Shared.GetEntitiesWithClassname("TunnelEntrance") ) do
-            if not tunnel.open and tunnel ~= self and tunnel:GetOwnerClientId() == self:GetOwnerClientId() then
+            if not tunnel:isa("ParticleEffect") and not tunnel.open and tunnel ~= self and tunnel:GetOwnerClientId() == self:GetOwnerClientId() then
                 if  self:GetTechId() == kTechId.BuildTunnelEntryOne and tunnel:GetTechId() == kTechId.BuildTunnelExitOne or
                     self:GetTechId() == kTechId.BuildTunnelEntryTwo and tunnel:GetTechId() == kTechId.BuildTunnelExitTwo or
                     self:GetTechId() == kTechId.BuildTunnelEntryThree and tunnel:GetTechId() == kTechId.BuildTunnelExitThree or
@@ -136,13 +136,14 @@ end
             end
         end
     
-        if foundTunnel then
+        if foundTunnel and not foundTunnel:isa("ParticleEffect") then
             self.otherEntranceId = foundTunnel:GetId()
             --foundTunnel.otherEntranceId = self:GetId()
         
             --self:SetOtherEntrance(foundTunnel)
              if foundTunnel.otherEntranceId == Entity.invalidId or foundTunnel.otherEntranceId == nil then
-                foundTunnel:SetOtherEntrance(self)
+                --foundTunnel:SetOtherEntrance(self) -- ParticleEffect ???? UGH 
+                  foundTunnel:UpdateConnectedTunnel()
              end
         end
         

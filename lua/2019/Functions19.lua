@@ -86,8 +86,8 @@ end
 function FindFreeMarineBaseConsSpace(where, mindistance, maxdistance, infestreq)    
      if not mindistance then mindistance = 2 end
      if not maxdistance then maxdistance = 24 end
-        for index = 1, 75 do //#math.random(4,8) do
-           local extents = LookupTechData(kTechId.CommandStation, kTechDataMaxExtents, nil)
+        for index = 1, 100 do //#math.random(4,8) do
+           local extents = LookupTechData(kTechId.Harvester, kTechDataMaxExtents, nil)
            local capsuleHeight, capsuleRadius = GetTraceCapsuleFromExtents(extents)  
            //local spawnPoint = GetRandomSpawnForCapsule(capsuleHeight, capsuleRadius, where, mindistance, maxdistance, EntityFilterAll())
            local spawnPoint = GetRandomPointsWithinRadius(GetGroundAtPosition(where, nil, PhysicsMask.AllButPCs, extents), mindistance, maxdistance, 20, 1, 1, nil, validationFunc)
@@ -109,7 +109,7 @@ function FindFreeMarineBaseConsSpace(where, mindistance, maxdistance, infestreq)
              sameLocation = sameLocation and GetIsPointOnInfestation(spawnPoint)
            end
             
-           local consInRange = GetEntitiesWithMixinWithinRange("Construct", spawnPoint, 4)
+           local consInRange = GetEntitiesWithMixinWithinRange("Construct", spawnPoint, 3)
            if spawnPoint ~= nil and sameLocation  and spawnPoint ~= where and #consInRange == 0 then
               return spawnPoint
            end

@@ -8,26 +8,26 @@ function MarineTeam:SpawnExtraIPS(techPoint)
     end
 end
 function MarineTeam:SpawnEverythingElse(techPoint)
-            --if spawnpoint then? will spawnpoint ever bill nill? UGH.
+            --if not spawnpoint is in techpoint location :/  --error prone if not written well lol
     local techPointOrigin = techPoint:GetOrigin() + Vector(0, 2, 0)
 
     local spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
     local armory = CreateEntity(Armory.kMapName, spawnOrigin,  1) --adv
           armory:SetConstructionComplete()
           
-          spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
+          spawnOrigin = FindFreeMarineBaseConsSpace(armory:GetOrigin(), 4, 20)
     local obs = CreateEntity(Observatory.kMapName, spawnOrigin,  1)
           obs:SetConstructionComplete()
           
-          spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
+          spawnOrigin = FindFreeMarineBaseConsSpace(obs:GetOrigin(), 4, 20)
     local proto = CreateEntity(PrototypeLab.kMapName, spawnOrigin,  1)
           proto:SetConstructionComplete()
           
-          spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
+          spawnOrigin = FindFreeMarineBaseConsSpace(proto:GetOrigin(), 4, 20)
     local pg = CreateEntity(PhaseGate.kMapName, spawnOrigin,  1)
           pg:SetConstructionComplete()
           
-          spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
+          spawnOrigin = FindFreeMarineBaseConsSpace(pg:GetOrigin(), 4, 20)
     local bigmac = CreateEntity(BigMac.kMapName, spawnOrigin,  1)
           bigmac:SetConstructionComplete()
 

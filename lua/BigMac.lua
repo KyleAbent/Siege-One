@@ -38,7 +38,6 @@ InitMixin(self, RecycleMixin)
 self:AddTimedCallback(function() HealSelf(self) return true end, 1) 
 end
 
-
 function GetMacGhostGuides(commander)
 
     local RoboticsFactories = GetEntitiesForTeam("RoboticsFactory", commander:GetTeamNumber())
@@ -93,22 +92,6 @@ function BigMac:GetTechButtons(techId)
 end
 
 
-
-function BigMac:OnGetMapBlipInfo()
-
-    local success = false
-    local blipType = kMinimapBlipType.MAC
-    local blipTeam = -1
-    local isAttacked = HasMixin(self, "Combat") and self:GetIsInCombat()
-    local isParasited = HasMixin(self, "ParasiteAble") and self:GetIsParasited()
-    
-    
-        blipType = kMinimapBlipType.Door
-        blipTeam = self:GetTeamNumber()
-    
-    return blipType, blipTeam, isAttacked, isParasited
-end
-
 function BigMac:OnOrderComplete(currentOrder)
 
  if Server then    
@@ -121,5 +104,37 @@ function BigMac:OnOrderComplete(currentOrder)
       end
     
 end
+
+function BigMac:GetMapBlipType()
+    return kMinimapBlipType.MAC
+end
+
+function BigMac:OnGetMapBlipInfo()
+
+    local success = false
+    local blipType = kMinimapBlipType.MAC
+    local blipTeam = -1
+    local isAttacked = HasMixin(self, "Combat") and self:GetIsInCombat()
+    local isParasited = HasMixin(self, "ParasiteAble") and self:GetIsParasited()
+    
+    
+        blipType = kMinimapBlipType.MAC
+        blipTeam = self:GetTeamNumber()
+    
+    return true, blipType, blipTeam, isAttacked, isParasited
+end
+
+/*
+local ughReally = MapBlipMixin.GetMapBlipInfo
+function BigMac:GetMapBlipInfo()
+
+    local success, blipType, blipTeam, isAttacked, isParasited = ughReally(self)
+    
+    blipType = kMinimapBlipType.MAC
+    
+    return success, blipType, blipTeam, isAttacked, isParasited 
+
+end
+*/
 
 Shared.LinkClassToMap("BigMac", BigMac.kMapName, networkVars)

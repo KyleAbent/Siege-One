@@ -5,6 +5,7 @@ Script.Load("lua/2019/ExoWelder.lua")
 Script.Load("lua/2019/ExoFlamer.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
+Script.Load("lua/Weapons/Alien/GorillaGlue.lua")
 Script.Load("lua/BigMac.lua")
 Script.Load("lua/BackupBattery.lua")
 
@@ -252,6 +253,15 @@ local kSiege_TechData =
     [kTechDataDamageType] = kAcidRocketDamageType,  
     [kTechDataDisplayName] = "AcidRocket",
     [kTechDataTooltipInfo] = "Ranged Projectile dealing damage only to armor and structures"},
+    
+    { [kTechDataId] = kTechId.GorillaGlue,        
+    [kTechDataCategory] = kTechId.Onos,   
+    [kTechDataMapName] = GorillaGlue.kMapName,  
+    [kTechDataCostKey] = kStabResearchCost,
+    [kTechDataResearchTimeKey] = kStabResearchTime, 
+    --   [kTechDataDamageType] = kStabDamageType,  
+    [kTechDataDisplayName] = "GorillaGlue",
+    [kTechDataTooltipInfo] = "Woohoo"},
     
     {
     [kTechDataId] = kTechId.BigMac,

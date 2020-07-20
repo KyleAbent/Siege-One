@@ -442,3 +442,80 @@ end
 
 
 OldUpdateBatteryState = Shine.Hook.ReplaceLocalFunction( Sentry.OnUpdate, "UpdateBatteryState", NewUpdateBatteryState )
+
+
+
+
+function Plugin:ShowRebirthRedemptionSettings(player)
+
+
+  local rebirth = "Rebirth: Disabled"
+  local redemption = "Redemption: Disabled"
+    
+    if player.hasRedeem then
+        redemption = "Redemption: Enabled"
+    end
+    if player.hasRebirth then
+        rebirth = "Rebirth: Enabled"
+    end
+    
+    local client = player:GetClient()
+    Shine.ScreenText.Add( 94, {X = 0.50, Y = 0.80,Text = rebirth,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
+    Shine.ScreenText.Add( 54, {X = 0.30, Y = 0.80,Text = redemption,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
+     Shine.ScreenText.End(25)
+end
+
+Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRebirthRedemptionSettings", "Replace" )
+--Shine.Hook.SetupClassHook( "Onos", "ShowRedemptionSetting", "ShowRebirthRedemptionSettings", "Replace" )
+
+
+  function Plugin:OnRedemedHook(player) 
+        local NowToCoolDownOver = player:GetRedemptionCoolDown() - (Shared.GetTime() - player.lastredeemorrebirthtime)
+        --Shine.ScreenText.End("Countdown")
+        Shine.ScreenText.Add( 35, {X = 0.40, Y = 0.85,Text = "GorillaGlue Cooldown: %s",Duration = NowToCoolDownOver,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
+       -- Shine.ScreenText.Add( 27, {X = 0.85, Y = 0.90,Text = "uhhhhhhh",Duration = 6,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
+end
+ 
+ 
+Shine.Hook.SetupClassHook( "Onos", "TriggerRebirthRedeemCountdown", "OnRedemedHook", "Replace" )
+
+  function Plugin:TellThemToGetOutOfCombat(player) 
+            Shine.ScreenText.Add( 25, {X = 0.50, Y = 0.65,Text = "Get out of Combat!!!",Duration = 2,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, player ) 
+ end
+ 
+ 
+Shine.Hook.SetupClassHook( "Onos", "GetOutOfComebat", "TellThemToGetOutOfCombat", "PassivePre" )
+
+
+
+Shine.Hook.SetupClassHook( "Alien", "TriggerRebirthCountDown", "DoCountdown", "PassivePre" )
+
+
+
+/*
+function Plugin:ShowRedemptionSetting(player)
+
+  local redemption = "Redemption: Disabled"
+    
+    if player.hasRedeem then
+        redemption = "Redemption: Enabled"
+    end
+    
+    local client = player:GetClient()
+    Shine.ScreenText.Add( "Foures", {X = 0.40, Y = 0.75,Text = redemption,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
+end
+function Plugin:ShowRebirthSetting(player)
+
+  local rebirth = "Rebirth: Disabled"
+    
+    if player.hasRebirth then
+        rebirth = "Rebirth: Enabled"
+    end
+    
+    local client = player:GetClient()
+    Shine.ScreenText.Add( "Tres", {X = 0.50, Y = 0.65,Text = rebirth,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
+end
+Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRedemptionSetting", "Replace" )
+Shine.Hook.SetupClassHook( "Onos", "ShowRedemptionSetting", "ShowRebirthSetting", "Replace" )
+
+*/

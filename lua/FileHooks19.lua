@@ -60,6 +60,7 @@ ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/RolloutMixin_Siege19.lua",
 ModLoader.SetupFileHook( "lua/LiveMixin.lua", "lua/LiveMixin_Siege19.lua", "post" ) 
 
 ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
+ModLoader.SetupFileHook( "lua/NS2_GorgeTunnel/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
 
 ModLoader.SetupFileHook( "lua/Hydra.lua", "lua/Hydra_Siege19.lua", "post" ) --hmm?
 

@@ -146,6 +146,12 @@ function Marine:AttemptToBuy(techIds)
 
 end
 
+if Server then
 
+    function Marine:GetCanEnterTunnel()
+        return false
+    end
+
+end
 
 Shared.LinkClassToMap("Marine", Marine.kMapName, networkVars)

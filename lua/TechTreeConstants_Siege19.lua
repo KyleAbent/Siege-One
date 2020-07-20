@@ -36,6 +36,7 @@ local kSiege_TechIds =
     'AcidRocket',
     'BigMac',
     'BackupBattery',
+    'GorillaGlue',
 
 }
 

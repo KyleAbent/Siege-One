@@ -57,3 +57,8 @@ kAcidRocketRadius = 2.4
 
 
 kXenocideRange = 9 -- was 14
+
+
+kRedemptionCooldown = 45
+kRedemptionEHPThresholdMin = 15
+kRedemptionEHPThresholdMax = 30

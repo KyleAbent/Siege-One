@@ -470,8 +470,14 @@ Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRebirthRedemptionS
 
 
   function Plugin:OnRedemedHook(player) 
+        
+        if player:GetEligableForRebirth() then
+            Shine.ScreenText.End(35)
+            return
+        end
         local NowToCoolDownOver = player:GetRedemptionCoolDown() - (Shared.GetTime() - player.lastredeemorrebirthtime)
-        --Shine.ScreenText.End("Countdown")
+        --Shine.ScreenText.End("Countdown") 
+                        --settext? not addtext? ugh.
         Shine.ScreenText.Add( 35, {X = 0.40, Y = 0.85,Text = "GorillaGlue Cooldown: %s",Duration = NowToCoolDownOver,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
        -- Shine.ScreenText.Add( 27, {X = 0.85, Y = 0.90,Text = "uhhhhhhh",Duration = 6,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
 end

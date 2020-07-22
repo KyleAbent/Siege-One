@@ -38,7 +38,7 @@ InitMixin(self, RecycleMixin)
 self:AddTimedCallback(function() HealSelf(self) return true end, 1) 
 end
 
-function GetMacGhostGuides(commander)
+function GetBigMacGhostGuides(commander)
 
     local RoboticsFactories = GetEntitiesForTeam("RoboticsFactory", commander:GetTeamNumber())
     local attachRange = 8 --LookupTechData(kTechId.BigMac, kStructureAttachRange, 1)

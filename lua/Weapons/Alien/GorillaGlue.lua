@@ -17,10 +17,10 @@ function GorillaGlue:OnCreate()
     Ability.OnCreate(self)
     
     --InitMixin(self, StompMixin)
-    local player = self:GetParent()
-    if player then
-        player:DoBothShows(player)
-    end
+   -- local player = self:GetParent()
+   -- if player then
+   --     player:DoBothShows(player)
+   -- end
 
 end
 
@@ -156,8 +156,8 @@ function GorillaGlue:OnHolster(player)
     Ability.OnHolster(self, player)
     
     self:OnPrimaryAttackEnd(player)
-    player:DoBothShows(player)
-    player:TriggerRebirthRedeemCountdown(player)
+  --  player:DoBothShows(player)
+    --player:TriggerRebirthRedeemCountdown(player)
     
 end
 

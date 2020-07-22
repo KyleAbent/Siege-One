@@ -207,6 +207,9 @@ end
 function Plugin:NotifyOne( Player, String, Format, ... )
 Shine:NotifyDualColour( Player, 255, 165, 0,  "[Siege One]",  255, 0, 0, String, Format, ... )
 end
+function Plugin:NotifyGorilla( Player, String, Format, ... )
+Shine:NotifyDualColour( Player, 255, 165, 0,  "[GorillaGlue]",  255, 0, 0, String, Format, ... )
+end
 ------------------------------------------------------------
 function Plugin:NotifyTimer( Player, String, Format, ... )
 Shine:NotifyDualColour( Player, 255, 165, 0,  "[Timer]",  255, 0, 0, String, Format, ... )
@@ -475,9 +478,11 @@ function Plugin:ShowRebirthRedemptionSettings(player)
     end
     
     local client = player:GetClient()
-    Shine.ScreenText.Add( 94, {X = 0.50, Y = 0.80,Text = rebirth,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
-    Shine.ScreenText.Add( 54, {X = 0.30, Y = 0.80,Text = redemption,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
-     Shine.ScreenText.End(25)
+    self:NotifyGorilla(player:GetClient(), "%s", true, redemption )
+    self:NotifyGorilla(player:GetClient(), "%s", true, rebirth )
+    --Shine.ScreenText.Add( 94, {X = 0.50, Y = 0.80,Text = rebirth,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
+    --Shine.ScreenText.Add( 54, {X = 0.30, Y = 0.80,Text = redemption,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
+     --Shine.ScreenText.End(25)
 end
 
 Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRebirthRedemptionSettings", "Replace" )
@@ -493,8 +498,9 @@ Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRebirthRedemptionS
         local NowToCoolDownOver = player:GetRedemptionCoolDown() - (Shared.GetTime() - player.lastredeemorrebirthtime)
         --Shine.ScreenText.End("Countdown") 
                         --settext? not addtext? ugh.
-        Shine.ScreenText.Add( 35, {X = 0.40, Y = 0.85,Text = "GorillaGlue Cooldown: %s",Duration = NowToCoolDownOver,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
+        --Shine.ScreenText.Add( 35, {X = 0.40, Y = 0.85,Text = "GorillaGlue Cooldown: %s",Duration = NowToCoolDownOver,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
        -- Shine.ScreenText.Add( 27, {X = 0.85, Y = 0.90,Text = "uhhhhhhh",Duration = 6,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
+        self:NotifyGorilla(player:GetClient(), "GorillaGlue Cooldown : %s", true, NowToCoolDownOver )
 end
  
  
@@ -502,8 +508,9 @@ Shine.Hook.SetupClassHook( "Onos", "TriggerRebirthRedeemCountdown", "OnRedemedHo
 
   function Plugin:TellThemToGetOutOfCombat(player) 
             if not player:GetTeamNumber() == 2 or not player:GetIsAlive() then return end
-            Shine.ScreenText.Add( 25, {X = 0.50, Y = 0.65,Text = "Get out of Combat!!!",Duration = 2,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, player ) 
- end
+            --Shine.ScreenText.Add( 25, {X = 0.50, Y = 0.65,Text = "Get out of Combat!!!",Duration = 2,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, player ) 
+            self:NotifyGorilla(player:GetClient(), "Get out of Combat!!!", true )
+end
  
  
 Shine.Hook.SetupClassHook( "Onos", "GetOutOfComebat", "TellThemToGetOutOfCombat", "PassivePre" )

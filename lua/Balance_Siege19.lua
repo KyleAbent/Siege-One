@@ -56,7 +56,7 @@ kAcidRocketEnergyCost = 10
 kAcidRocketRadius = 2.4
 
 
-kXenocideRange = 9 -- was 14
+kXenocideRange = 12 -- was 14
 
 
 kRedemptionCooldown = 45

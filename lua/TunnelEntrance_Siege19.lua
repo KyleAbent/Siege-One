@@ -23,7 +23,27 @@ function TunnelEntrance:GetInfestationMaxRadius()
     return 7
    end
 end
-
+function TunnelEntrance:SetOtherEntrance(otherEntranceEnt)
+    
+    -- Convert the entity to an id (or to invalid id if nil).
+    local otherEntranceId = Entity.invalidId
+    if otherEntranceEnt then
+        otherEntranceId = otherEntranceEnt:GetId()
+    end
+    
+    -- Skip if the other entrance is already setup.
+    if otherEntranceId == self.otherEntranceId then
+        return
+    end
+    
+    self.otherEntranceId = otherEntranceId
+    
+    -- Have the other entrance set its 'other' entrance to this entrance.
+  -- - if otherEntranceEnt then
+    --    otherEntranceEnt:SetOtherEntrance(self)
+    --end
+    
+end
 function TunnelEntrance:GetGorgeOwner()
     return self.ownerId and self.ownerId ~= Entity.invalidId
 end
@@ -124,7 +144,7 @@ end
         
         -- register if a tunnel entity already exists or a free tunnel has been found
         for _, tunnel in ientitylist( Shared.GetEntitiesWithClassname("TunnelEntrance") ) do
-            if not tunnel:isa("ParticleEffect") and not tunnel.open and tunnel ~= self and tunnel:GetOwnerClientId() == self:GetOwnerClientId() then
+            if not tunnel.open and tunnel ~= self and tunnel:GetOwnerClientId() == self:GetOwnerClientId() then
                 if  self:GetTechId() == kTechId.BuildTunnelEntryOne and tunnel:GetTechId() == kTechId.BuildTunnelExitOne or
                     self:GetTechId() == kTechId.BuildTunnelEntryTwo and tunnel:GetTechId() == kTechId.BuildTunnelExitTwo or
                     self:GetTechId() == kTechId.BuildTunnelEntryThree and tunnel:GetTechId() == kTechId.BuildTunnelExitThree or
@@ -135,16 +155,12 @@ end
                 end
             end
         end
-    
-        if foundTunnel and not foundTunnel:isa("ParticleEffect") then
-            self.otherEntranceId = foundTunnel:GetId()
-            --foundTunnel.otherEntranceId = self:GetId()
         
-            --self:SetOtherEntrance(foundTunnel)
-             if foundTunnel.otherEntranceId == Entity.invalidId or foundTunnel.otherEntranceId == nil then
-                --foundTunnel:SetOtherEntrance(self) -- ParticleEffect ???? UGH 
-                  foundTunnel:UpdateConnectedTunnel()
-             end
+        self:SetOtherEntrance(foundTunnel)
+        
+        if (foundTunnel) then
+            --foundTunnel:SetOtherEntrance(self)
+            foundTunnel:UpdateConnectedTunnel()
         end
         
         
@@ -167,7 +183,27 @@ end
     end
     
     
-end
+    local origUpdate = TunnelEntrance.OnUpdate
+    function TunnelEntrance:OnUpdate(deltaTime)
+            --Why is it being set to other entities? ParticleEffect, d
+        local otherEntrance = self:GetOtherEntrance()
+        if otherEntrance then 
+            if not otherEntrance:isa("TunnelEntrance") or not otherEntrance.GetIsBuilt then
+                Print("UHHH")
+                self.otherEntranceId = Entity.invalidId 
+            else
+                origUpdate(self, deltaTime)
+            end
+        else
+            origUpdate(self, deltaTime)
+        end
+        
+    end
+    
+    
+    
+    
+end //Server
 
 
 function TunnelEntrance:GetMinimapYawOffset()
@@ -180,4 +216,39 @@ function TunnelEntrance:GetMinimapYawOffset()
     end
     
 end
+
+/*
+local origDestroy = TunnelEntrance.OnDestroy
+function TunnelEntrance:OnDestroy()
+
+
+    if Server then
+        local otherEntrance = self:GetOtherEntrance()
+        if otherEntrance then
+            otherEntrance.otherEntranceId = Entity.invalidId
+            self.otherEntranceId = Entity.invalidId
+             --otherEntrance:UpdateConnectedTunnel()
+        end
+    end
+    
+        origDestroy(self)
+    
+end
+*/
+    local origKill = TunnelEntrance.OnKill
+    function TunnelEntrance:OnKill(attacker, doer, point, direction)
+    
+        local otherEntrance = self:GetOtherEntrance()
+        if otherEntrance then
+            otherEntrance.otherEntranceId = Entity.invalidId
+            self.otherEntranceId = Entity.invalidId
+             --otherEntrance:UpdateConnectedTunnel()
+        end
+        
+        origKill(self,attacker, doer, point, direction)
+    
+    end
+
+
+
 

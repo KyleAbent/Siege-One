@@ -1,6 +1,17 @@
 --Kyle 'Avoca' Abent - Skip the "Tunnel" entity - lower the entity count by not requiring it in the first place
 Script.Load("lua/MinimapConnectionMixin.lua")
 
+local networkVars =
+{
+    index = "integer",
+}
+
+local origCreate = TunnelEntrance.OnCreate
+function TunnelEntrance:OnCreate()
+    origCreate(self)
+    self.index = 0
+end
+
 local origInit = TunnelEntrance.OnInitialized
 function TunnelEntrance:OnInitialized()
     origInit(self)
@@ -46,6 +57,12 @@ function TunnelEntrance:SetOtherEntrance(otherEntranceEnt)
 end
 function TunnelEntrance:GetGorgeOwner()
     return self.ownerId and self.ownerId ~= Entity.invalidId
+end
+function TunnelEntrance:SetIndex(index)
+    self.index = index
+end
+function TunnelEntrance:GetIndex()
+    return self.index
 end
 
 function TunnelEntrance:GetTunnelEntity()
@@ -133,7 +150,7 @@ end
         end
     end
 
-    function TunnelEntrance:UpdateConnectedTunnel()
+    function TunnelEntrance:UpdateConnectedTunnel() --I am NOT happy about OnUpdate with a For Loop. Still better than Tunnel, though.
         local hasValidTunnel = self.otherEntranceId ~= nil and Shared.GetEntity(self.otherEntranceId) ~= nil
   
         if hasValidTunnel or not self:GetIsBuilt() then
@@ -141,15 +158,15 @@ end
         end
         
         local foundTunnel = nil
-        
+        --Print("Self Index Is %s", self.index )
         -- register if a tunnel entity already exists or a free tunnel has been found
         for _, tunnel in ientitylist( Shared.GetEntitiesWithClassname("TunnelEntrance") ) do
+          --Print("Tunnel Index  Is %s", tunnel.index )
             if not tunnel.open and tunnel ~= self and tunnel:GetOwnerClientId() == self:GetOwnerClientId() then
-                if  self:GetTechId() == kTechId.BuildTunnelEntryOne and tunnel:GetTechId() == kTechId.BuildTunnelExitOne or
-                    self:GetTechId() == kTechId.BuildTunnelEntryTwo and tunnel:GetTechId() == kTechId.BuildTunnelExitTwo or
-                    self:GetTechId() == kTechId.BuildTunnelEntryThree and tunnel:GetTechId() == kTechId.BuildTunnelExitThree or
-                    self:GetTechId() == kTechId.BuildTunnelEntryFour and tunnel:GetTechId() == kTechId.BuildTunnelExitFour or
-                    self:GetTechId() == tunnel:GetTechId()  then
+                if  self.index == 0 and tunnel.index == 0  or --0 is gorge tunnel
+                    self.index == 1 and tunnel.index == 1  or
+                    self.index == 2 and tunnel.index == 2  or
+                    self.index == 3 and tunnel.index == 3  then
                         foundTunnel = tunnel
                         break
                 end
@@ -187,21 +204,24 @@ end
     function TunnelEntrance:OnUpdate(deltaTime)
             --Why is it being set to other entities? ParticleEffect, d
         local otherEntrance = self:GetOtherEntrance()
-        if otherEntrance then 
-            if not otherEntrance:isa("TunnelEntrance") or not otherEntrance.GetIsBuilt then
-                Print("UHHH")
+        if otherEntrance then                                                                   --or not other.getisalive bleh
+            if not ( otherEntrance:isa("TunnelEntrance") or otherEntrance:isa("GorgeTunnel") ) or  ( otherEntrance.GetIsAlive and not otherEntrance:GetIsAlive() ) then
+                --Print("UHHH")
                 self.otherEntranceId = Entity.invalidId 
+                self.open = false
             else
                 origUpdate(self, deltaTime)
             end
         else
+            if not self.timeLastBallsSweat or ( self.timeLastBallsSweat + 0.5 < Shared.GetTime() )  then
+                self:UpdateConnectedTunnel()
+                self.timeLastBallsSweat = Shared.GetTime()
+            end
             origUpdate(self, deltaTime)
         end
         
     end
-    
-    
-    
+
     
 end //Server
 
@@ -217,38 +237,10 @@ function TunnelEntrance:GetMinimapYawOffset()
     
 end
 
-/*
-local origDestroy = TunnelEntrance.OnDestroy
-function TunnelEntrance:OnDestroy()
-
-
-    if Server then
-        local otherEntrance = self:GetOtherEntrance()
-        if otherEntrance then
-            otherEntrance.otherEntranceId = Entity.invalidId
-            self.otherEntranceId = Entity.invalidId
-             --otherEntrance:UpdateConnectedTunnel()
-        end
-    end
-    
-        origDestroy(self)
-    
-end
-*/
-    local origKill = TunnelEntrance.OnKill
-    function TunnelEntrance:OnKill(attacker, doer, point, direction)
-    
-        local otherEntrance = self:GetOtherEntrance()
-        if otherEntrance then
-            otherEntrance.otherEntranceId = Entity.invalidId
-            self.otherEntranceId = Entity.invalidId
-             --otherEntrance:UpdateConnectedTunnel()
-        end
-        
-        origKill(self,attacker, doer, point, direction)
-    
-    end
 
 
 
 
+
+
+Shared.LinkClassToMap("TunnelEntrance", TunnelEntrance.kMapName, networkVars)

@@ -4,6 +4,8 @@ ModLoader.SetupFileHook( "lua/AchievementReceiverMixin.lua", "lua/AchievementRec
 ModLoader.SetupFileHook( "lua/AlienTunnelManager.lua", "lua/AlienTunnelManager_Siege20.lua", "post" )
 
 
+--ModLoader.SetupFileHook( "lua/MaturityMixin.lua", "lua/MaturityMixin.lua", "replace" )
+
 ModLoader.SetupFileHook( "lua/shine/core/shared/hook.lua", "lua/shine/hook.lua", "post" )
 --ModLoader.SetupFileHook( "lua/shine/extensions/unstuck/server.lua", "lua/shine/unstuckhook.lua", "post" )
 

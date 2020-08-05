@@ -9,6 +9,14 @@
     
 end
 
+function Whip:GetMatureMaxHealth()
+    return kMatureWhipHealth
+end
+
+function Whip:GetMatureMaxArmor()
+    return kMatureWhipArmor
+end    
+
 
 --Copying from gorgetunnel mod
 
@@ -59,9 +67,9 @@ function GorgeWhip:GetUnitNameOverride(viewer)
             
             local lastLetter = ownerName:sub(-1)
             if lastLetter == "s" or lastLetter == "S" then
-                return string.format( "%s' Whip", ownerName )
+                return string.format( "%s' Siege Whip", ownerName )
             else
-                return string.format( "%s's Whip", ownerName )
+                return string.format( "%s's Siege Whip", ownerName )
             end
         end
     

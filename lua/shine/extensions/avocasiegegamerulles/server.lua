@@ -548,3 +548,59 @@ Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRedemptionSetting"
 Shine.Hook.SetupClassHook( "Onos", "ShowRedemptionSetting", "ShowRebirthSetting", "Replace" )
 
 */
+
+function Plugin:JoinTeam(gamerules, player, newteam, force, ShineForce)
+    //Print("JoinTeam newteam is %s", newteam)
+    if ShineForce or newteam == kSpectatorIndex or newteam == kTeamReadyRoom then return end
+
+    local chosenTeamCount = 0
+    local failString = ""
+    local maxSizeForTeam = 0
+    
+    if newteam == 1 then
+        chosenTeamCount =  gamerules:GetTeam1():GetNumPlayers()
+        failString = "Marine Team Capped at 19 Players"
+        maxSizeForTeam = 19
+    elseif newteam == 2 then
+        chosenTeamCount = gamerules:GetTeam2():GetNumPlayers()
+        failString = "Alien Team Capped at 23 Players"
+        maxSizeForTeam = 23
+    end
+   
+
+
+    if chosenTeamCount >= maxSizeForTeam then
+        local client = player:GetClient()
+        if not client:GetIsVirtual() then
+            self:NotifyOne(client, "%s", true, failString )
+        end
+        return false
+    end
+end
+
+/*
+function Plugin:SiegeGetCanJoinTeamNumber(self, player, teamNumber)
+        Print("teamNumber is %s", ToString(teamNumber) )
+        if teamNumber == 2 then
+            Print("A")
+            local marineCount = GetGamerules():GetTeam1():GetNumPlayers()
+            local alienCount = GetGamerules():GetTeam2():GetNumPlayers()
+            if alienCount > marineCount then-- alien count
+            Print("B")
+            local difference = math.abs(alienCount - marineCount)
+                if  difference < 4 then
+                    Print("C")
+                    local client = player:GetClient()
+                    if not client:GetIsVirtual() then
+                        --self:NotifyOne(client, "Alien Team Greter Size than Marine team by %s, allowing a size of %s more aliens than marines", true, difference, math.abs(difference - 4) )
+                    end
+                    return true --kTeam2Index -- Allow Alien Stack lol
+                end
+            end
+        end
+end
+
+Shine.Hook.SetupClassHook( "NS2Gamerules", "GetCanJoinTeamNumber", "SiegeGetCanJoinTeamNumber", "PassivePre" )
+--Shine.Hook.SetupClassHook( "Gamerules", "GetCanJoinPlayingTeam", "SiegeGetCanJoinTeamNumber", "PassivePre" )
+
+*/

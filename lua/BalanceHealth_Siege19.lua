@@ -26,3 +26,11 @@ kMACArmor = 200
 
 
 kSentryBatteryHealth = 780    kSentryBatteryArmor = 260    kSentryBatteryPointValue = 5
+
+
+
+kSkulkHealth = 80 --75    
+kGorgeHealth = 176 --160   
+kLerkHealth = 198 --180  
+kFadeHealth = 275 --250   
+kOnosHealth = 770 --700   

@@ -11,6 +11,10 @@ ModLoader.SetupFileHook( "lua/Balance.lua", "lua/Balance_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/BalanceMisc.lua", "lua/BalanceMisc_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/BalanceHealth.lua", "lua/BalanceHealth_Siege19.lua", "post" )
 
+ModLoader.SetupFileHook( "lua/GUIGorgeBuildMenu.lua", "lua/GUIGorgeBuildMenu_Siege20.lua", "post" )
+
+
+
 ModLoader.SetupFileHook( "lua/Location.lua", "lua/Location_Siege.lua", "post" )
 ModLoader.SetupFileHook( "lua/Hive.lua", "lua/Hive_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Marine.lua", "lua/Marine_Siege19.lua", "post" )

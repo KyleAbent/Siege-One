@@ -111,7 +111,7 @@ end
 function DropARC:OnGetMapBlipInfo()
 
     local success = false
-    local blipType = kMinimapBlipType.MAC
+    local blipType = kMinimapBlipType.ARC
     local blipTeam = -1
     local isAttacked = HasMixin(self, "Combat") and self:GetIsInCombat()
     local isParasited = HasMixin(self, "ParasiteAble") and self:GetIsParasited()

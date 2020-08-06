@@ -23,7 +23,7 @@ class 'ExoFlamer' (Entity)
 
 ExoFlamer.kMapName = "exoflamer"
 
-local kConeWidth = kFlamethrowerConeWidth
+local kConeWidth = 0.9 --0.3
 local kFireRate = 1/3
 local kDamageRadius = kFlamethrowerDamageRadius
 local kCoolDownRate = 0.24
@@ -40,6 +40,10 @@ ExoFlamer.kMapName = "exoflamer"
 ExoFlamer.kModelName = PrecacheAsset("models/marine/flamethrower/flamethrower.model")
 local kAnimationGraph = PrecacheAsset("models/marine/flamethrower/flamethrower_view.animation_graph")
 local kFireLoopingSound = PrecacheAsset("sound/NS2.fev/marine/flamethrower/attack_loop")
+
+
+local kExoFlamerThingyZero = PrecacheAsset("cinematics/marine/flamethrower/flameexo.cinematic")
+local kExoFlamerThingyOne = PrecacheAsset("cinematics/marine/flamethrower/flameexo_1p.cinematic")
 
 --local kHeatUISoundName = PrecacheAsset("sound/NS2.fev/marine/heavy/heat_UI")
 local kOverheatedSoundName = PrecacheAsset("sound/NS2.fev/marine/heavy/overheated")
@@ -242,86 +246,94 @@ end
  end
 
 
+
 local function ApplyConeDamage(self, player)
-  local eyePos = player:GetEyePos()
+    local eyePos  = player:GetEyePos()    
     local ents = {}
 
     local fireDirection = player:GetViewCoords().zAxis
     local extents = Vector(kConeWidth, kConeWidth, kConeWidth)
-    local range = self:GetRange()
-
+    local remainingRange = self:GetRange()
+    
     local startPoint = Vector(eyePos)
     local filterEnts = {self, player}
-    local trace = TraceMeleeBox(self, startPoint, fireDirection, extents, range, PhysicsMask.Flame, EntityFilterList(filterEnts))
-
-    local endPoint = trace.endPoint
-    local normal = trace.normal
-
-    -- Check for spores in the way.
-    if Server then
-        BurnSporesAndUmbra(self,startPoint, endPoint)
-    end
-
-    if trace.fraction ~= 1 then
-
-        local traceEnt = trace.entity
-        if traceEnt and HasMixin(traceEnt, "Live") and traceEnt:GetCanTakeDamage() then
-            table.insert(ents, traceEnt)
+    
+    for i = 1, 20 do
+        if remainingRange <= 0 then
+            break
         end
-
-        local hitEntities = GetEntitiesWithMixinWithinXZRange("Live", endPoint, kDamageRadius)
-        local damageHeight =  kDamageRadius / 2
-        for i = 1, #hitEntities do
-            local ent = hitEntities[i]
-            if ent ~= traceEnt and ent:GetCanTakeDamage() and math.abs(endPoint.y - ent:GetOrigin().y) <= damageHeight then
-                table.insert(ents, ent)
-            end
+        
+        local trace = TraceMeleeBox(self, startPoint, fireDirection, extents, remainingRange, PhysicsMask.Flame, EntityFilterList(filterEnts))
+        
+        --DebugLine(startPoint, trace.endPoint, 0.3, 1, 0, 0, 1)        
+        
+        -- Check for spores in the way.
+        if Server and i == 1 then
+            BurnSporesAndUmbra(self, startPoint, trace.endPoint)
         end
-
-        --Create Flame
-        if Server then
-            --Create flame below target
+        
+        if trace.fraction ~= 1 then
             if trace.entity then
-                local groundTrace = Shared.TraceRay(endPoint, endPoint + Vector(0, -2.6, 0), CollisionRep.Default, PhysicsMask.CystBuild, EntityFilterAllButIsa("TechPoint"))
-                if groundTrace.fraction ~= 1 then
-                    fireDirection = fireDirection * 0.55 + normal
-                    fireDirection:Normalize()
-
-                    CreateFlame(self,player, groundTrace.endPoint, groundTrace.normal, fireDirection)
+                if HasMixin(trace.entity, "Live") then
+                    table.insertunique(ents, trace.entity)
                 end
+                table.insertunique(filterEnts, trace.entity)
             else
-                fireDirection = fireDirection * 0.55 + normal
-                fireDirection:Normalize()
-
-                CreateFlame(self,player, endPoint, normal, fireDirection)
+            
+                -- Make another trace to see if the shot should get deflected.
+                local lineTrace = Shared.TraceRay(startPoint, startPoint + remainingRange * fireDirection, CollisionRep.Damage, PhysicsMask.Flame, EntityFilterOne(player))
+                
+                if lineTrace.fraction < 0.8 then
+                    fireDirection = fireDirection + trace.normal * 0.55
+                    fireDirection:Normalize()
+                    if Server then
+                        CreateFlame(self, player, lineTrace.endPoint, lineTrace.normal, fireDirection)
+                    end
+                end
+                
+                remainingRange = remainingRange - (trace.endPoint - startPoint):GetLength()
+                startPoint = trace.endPoint -- + fireDirection * kConeWidth * 2
+            end
+        else
+            break
+        end
+    end
+    
+    for index, ent in ipairs(ents) do
+        if ent ~= player then
+            local toEnemy = GetNormalizedVector(ent:GetModelOrigin() - eyePos)
+            local health = ent:GetHealth()
+            
+            local attackDamage = kFlamethrowerDamage * 2
+          
+            if HasMixin( ent, "Fire" ) and HasMixin( ent, "Construct" ) then
+                    attackDamage = attackDamage * 1.5
             end
 
-        end
-
-    end
-
-    local attackDamage = kFlamethrowerDamage
-    for i = 1, #ents do
-
-        local ent = ents[i]
-        local enemyOrigin = ent:GetModelOrigin()
-
-        if ent ~= player and enemyOrigin then
-
-            local toEnemy = GetNormalizedVector(enemyOrigin - eyePos)
-
-            local health = ent:GetHealth()
-            self:DoDamage( attackDamage, ent, enemyOrigin, toEnemy )
-
+           self:DoDamage(attackDamage, ent, ent:GetModelOrigin(), toEnemy)
+                     
             -- Only light on fire if we successfully damaged them
             if ent:GetHealth() ~= health and HasMixin(ent, "Fire") then
                 ent:SetOnFire(player, self)
             end
-
+   
+          --  if ent.SetElectrified then
+           --   ent:SetElectrified(4)
+            --end
+            
+            if ent.GetEnergy and ent.SetEnergy then
+             --  Print("Ent energy is %s", ent:GetEnergy())
+                ent:SetEnergy(ent:GetEnergy() - kFlameThrowerEnergyDamage)
+              --  Print("Ent energy is %s", ent:GetEnergy())
+              --Not working.
+            end
+            
+            if Server and ent:isa("Alien") then
+                ent:CancelEnzyme()
+                ent:CancelPrimal()
+            end
         end
-
     end
-
 end
 
 
@@ -539,15 +551,15 @@ GetEffectManager():AddEffectData("FlamerModEffects", {
     leftexoflamer_muzzle = {
         flamerMuzzleEffects =
         {
-            {viewmodel_cinematic = "cinematics/marine/flamethrower/flame_1p.cinematic", attach_point = "fxnode_l_railgun_muzzle"},
-           {weapon_cinematic = "cinematics/marine/flamethrower/flame.cinematic", attach_point = "fxnode_lrailgunmuzzle"},
+            {viewmodel_cinematic = kExoFlamerThingyOne, attach_point = "fxnode_l_railgun_muzzle"},
+           {weapon_cinematic = kExoFlamerThingyZero, attach_point = "fxnode_lrailgunmuzzle"},
         },
     },
     rightexoflamer_muzzle = {
         flamerMuzzleEffects =
         {
-            {viewmodel_cinematic = "cinematics/marine/flamethrower/flame_1p.cinematic", attach_point = "fxnode_r_railgun_muzzle"},
-           {weapon_cinematic = "cinematics/marine/flamethrower/flame.cinematic", attach_point = "fxnode_rrailgunmuzzle"},
+            {viewmodel_cinematic = kExoFlamerThingyOne, attach_point = "fxnode_r_railgun_muzzle"},
+           {weapon_cinematic = kExoFlamerThingyZero, attach_point = "fxnode_rrailgunmuzzle"},
         },
     },
 })

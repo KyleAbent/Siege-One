@@ -67,3 +67,6 @@ kRedemptionEHPThresholdMax = 30
 
 kMarineInitialIndivRes = 40--15
 kAlienInitialIndivRes = 70 --12
+
+kWhipSlapDamage = 125
+kWhipBombardDamage = 350

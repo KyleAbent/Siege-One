@@ -105,48 +105,85 @@ function GetCheckCatLimit(techId, origin, normal, commander)
     return num < 10
     
 end
+function GetCheckCragLimit(techId, origin, normal, commander)
+    local num = 0
+
+        
+        for index, obs in ientitylist(Shared.GetEntitiesWithClassname("Crag")) do
+                num = num + 1
+        end
+    
+    return num < 10
+    
+end
+function GetCheckWhipLimit(techId, origin, normal, commander)
+    local num = 0
+
+        
+        for index, obs in ientitylist(Shared.GetEntitiesWithClassname("Whip")) do
+                num = num + 1
+        end
+    
+    return num < 10
+    
+end
 local origLegal = GetIsBuildLegal
 function GetIsBuildLegal(techId, position, angle, snapRadius, player, ignoreEntity, ignoreChecks)
     --Print("A")
     
-    --Skip
-    if player:GetTeamNumber() == 2 then
-        return origLegal(techId, position, angle, snapRadius, player, ignoreEntity, ignoreChecks)
-    end
+
    
     --prefer a string find?
     local returnOrig = true
     local method = nil
-    if techId == kTechId.Observatory then
-        returnOrig = false
-        method = GetCheckObsLimit
-       -- Print("B")
-    elseif techId == kTechId.Armory then
-        returnOrig = false
-        method = GetCheckArmoryLimit
-    elseif techId == kTechId.RoboticsFactory then
-        returnOrig = false
-        method = GetCheckRoboLimit
-    elseif techId == kTechId.ArmsLab then
-        returnOrig = false
-        method = GetCheckArmsLimit
-    elseif techId == kTechId.InfantryPortal then
-        returnOrig = false
-        method = GetCheckIPLimit
-    elseif techId == kTechId.PrototypeLab then
-        returnOrig = false
-        method = GetCheckProtoLimit
-    elseif techId == kTechId.MedPack then
-        returnOrig = false
-        method = GetCheckMedLimit
-    elseif techId == kTechId.AmmoPack then
-        returnOrig = false
-        method = GetCheckAmmoLimit
-    elseif techId == kTechId.CatPack then
-        returnOrig = false
-        method = GetCheckCatLimit
+    local doSkip = false
+    
+    --Skip
+    if player:GetTeamNumber() == 2 then
+        if techId == kTechId.Crag then
+            returnOrig = false
+            method = GetCheckCragLimit
+            doSkip = true
+        elseif techId == kTechId.Whip then
+            returnOrig = false
+            method = GetCheckWhipLimit
+            doSkip = true
+        else
+            return origLegal(techId, position, angle, snapRadius, player, ignoreEntity, ignoreChecks)
+       end
     end
-
+    
+    if not doSkip then 
+        if techId == kTechId.Observatory then
+            returnOrig = false
+            method = GetCheckObsLimit
+           -- Print("B")
+        elseif techId == kTechId.Armory then
+            returnOrig = false
+            method = GetCheckArmoryLimit
+        elseif techId == kTechId.RoboticsFactory then
+            returnOrig = false
+            method = GetCheckRoboLimit
+        elseif techId == kTechId.ArmsLab then
+            returnOrig = false
+            method = GetCheckArmsLimit
+        elseif techId == kTechId.InfantryPortal then
+            returnOrig = false
+            method = GetCheckIPLimit
+        elseif techId == kTechId.PrototypeLab then
+            returnOrig = false
+            method = GetCheckProtoLimit
+        elseif techId == kTechId.MedPack then
+            returnOrig = false
+            method = GetCheckMedLimit
+        elseif techId == kTechId.AmmoPack then
+            returnOrig = false
+            method = GetCheckAmmoLimit
+        elseif techId == kTechId.CatPack then
+            returnOrig = false
+            method = GetCheckCatLimit
+        end
+    end
     
     if returnOrig then
         --Print("C")

@@ -140,7 +140,7 @@ ModLoader.SetupFileHook( "lua/Shell.lua", "lua/Shell_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/PrototypeLab.lua", "lua/PrototypeLab_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Crag.lua", "lua/Crag_Siege19.lua", "post" )
-
+--ModLoader.SetupFileHook( "lua/NS2_GorgeTunnel/Crag.lua", "lua/Crag_Siege19.lua", "post" ) -- Bleh
 
 
 

@@ -17,6 +17,15 @@ function Whip:GetMatureMaxArmor()
     return kMatureWhipArmor
 end    
 
+function Whip:GetUnitNameOverride(viewer)
+    
+
+            return string.format( "Siege Whip" )
+
+
+end
+
+
 
 --Copying from gorgetunnel mod
 
@@ -51,33 +60,6 @@ function GorgeWhip:GetMapBlipType()
     return kMinimapBlipType.Whip
 end
 
-function GorgeWhip:GetUnitNameOverride(viewer)
-    
-    local unitName = GetDisplayName(self)
-    
-    if not GetAreEnemies(self, viewer) and self.ownerId then
-        local ownerName
-        for _, playerInfo in ientitylist(Shared.GetEntitiesWithClassname("PlayerInfoEntity")) do
-            if playerInfo.playerId == self.ownerId then
-                ownerName = playerInfo.playerName
-                break
-            end
-        end
-        if ownerName then
-            
-            local lastLetter = ownerName:sub(-1)
-            if lastLetter == "s" or lastLetter == "S" then
-                return string.format( "%s' Siege Whip", ownerName )
-            else
-                return string.format( "%s's Siege Whip", ownerName )
-            end
-        end
-    
-    end
-    
-    return unitName
-
-end
 
 function GorgeWhip:GetTechButtons(techId)
     local techButtons = { kTechId.Slap, kTechId.None, kTechId.None, kTechId.None,
@@ -153,43 +135,6 @@ end
 
 
 
-
-
-if Server then
-
-
-    local kSlapAfterBombardTimeout = Shared.GetAnimationLength(Whip.kModelName, "attack")
-    local kSlapAnimationHitTagAt      = kSlapAfterBombardTimeout / 2.5
-
-    --More Damage
-    function GorgeWhip:SlapTarget(target)
-        self:FaceTarget(target)
-        -- where we hit
-        local now = Shared.GetTime()
-        local targetPoint = target:GetEngagementPoint()
-        local attackOrigin = self:GetEyePos()
-        local hitDirection = targetPoint - attackOrigin
-        hitDirection:Normalize()
-        -- fudge a bit - put the point of attack 0.5m short of the target
-        local hitPosition = targetPoint - hitDirection * 0.5
-
-        self:DoDamage(Whip.kDamage * 2.5, target, hitPosition, hitDirection, nil, true)
-        self:TriggerEffects("whip_attack")
-
-        local nextSlapStartTime    = now + (kSlapAfterBombardTimeout - kSlapAnimationHitTagAt)
-        local nextBombardStartTime = now + (kSlapAfterBombardTimeout - kSlapAnimationHitTagAt)
-
-        self.nextSlapStartTime    = math.max(nextSlapStartTime,    self.nextSlapStartTime)
-        self.nextBombardStartTime = math.max(nextBombardStartTime, self.nextBombardStartTime)
-    end
-
-
-end
-
-
-function GorgeWhip:GetMaxHealth()
-    return kWhipHealth * 2.5
-end
 
 
 

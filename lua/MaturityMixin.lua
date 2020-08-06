@@ -38,6 +38,9 @@ end
 
 if Server then
 
+function MaturityMixin:AddMaturity(amount)
+    return
+end
 
     function MaturityMixin:__initmixin()
 

@@ -26,17 +26,14 @@ For an onos with 1170 MAX HP (Max Biomass):
 Crag.kHealPercentage =  0.059 --0.042 4%?
 Crag.kMinHeal = 11--7
 Crag.kMaxHeal = 59--42
-Crag.kHealInterval = 0.35 -- 2
+Crag.kHealInterval = 1.7 -- 2
 
---Rather than calculating, lets print. 
 
 function Crag:TryHeal(target) --GorgeCrag , why you no call this. Bleh. lol.
-    --Print("AAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHH")
-    
-    --So for an onos, the max health is 1170 , and the crag max heal is 42 hp every 2 seconds. Right?
 
-                --why isn't this at start?
-    if target:GetHealthScalar() ~= 1 and (not target.timeLastCragHeal or target.timeLastCragHeal + Crag.kHealInterval <= Shared.GetTime()) then
+
+     --lets remove the delay for heal for the target allowing stack
+    if target:GetHealthScalar() ~= 1 then
     
         local unclampedHeal = target:GetMaxHealth() * Crag.kHealPercentage
         local heal = Clamp(unclampedHeal, Crag.kMinHeal, Crag.kMaxHeal)
@@ -99,7 +96,7 @@ end
 function Crag:GetUnitNameOverride(viewer)
     
 
-     return string.format( "Siege Crag" )
+     return string.format( "Siege Crag(Stack)" )
 
 end
 

@@ -42,8 +42,8 @@ local kAnimationGraph = PrecacheAsset("models/marine/flamethrower/flamethrower_v
 local kFireLoopingSound = PrecacheAsset("sound/NS2.fev/marine/flamethrower/attack_loop")
 
 
-local kExoFlamerThingyZero = PrecacheAsset("cinematics/marine/flamethrower/flameexo.cinematic")
-local kExoFlamerThingyOne = PrecacheAsset("cinematics/marine/flamethrower/flameexo_1p.cinematic")
+local kExoFlamerThingyZero = PrecacheAsset("cinematics/marine/flamethrower/flame.cinematic")
+local kExoFlamerThingyOne = PrecacheAsset("cinematics/marine/flamethrower/flame_1p.cinematic")
 
 --local kHeatUISoundName = PrecacheAsset("sound/NS2.fev/marine/heavy/heat_UI")
 local kOverheatedSoundName = PrecacheAsset("sound/NS2.fev/marine/heavy/overheated")
@@ -304,10 +304,12 @@ local function ApplyConeDamage(self, player)
             local toEnemy = GetNormalizedVector(ent:GetModelOrigin() - eyePos)
             local health = ent:GetHealth()
             
-            local attackDamage = kFlamethrowerDamage * 2
+            local attackDamage = kFlamethrowerDamage
           
             if HasMixin( ent, "Fire" ) and HasMixin( ent, "Construct" ) then
-                    attackDamage = attackDamage * 1.5
+                    attackDamage = attackDamage * 2
+            else
+                    attackDamage = attackDamage * 1.25
             end
 
            self:DoDamage(attackDamage, ent, ent:GetModelOrigin(), toEnemy)
@@ -323,15 +325,15 @@ local function ApplyConeDamage(self, player)
             
             if ent.GetEnergy and ent.SetEnergy then
              --  Print("Ent energy is %s", ent:GetEnergy())
-                ent:SetEnergy(ent:GetEnergy() - kFlameThrowerEnergyDamage)
+                ent:SetEnergy(ent:GetEnergy() - 1)
               --  Print("Ent energy is %s", ent:GetEnergy())
               --Not working.
             end
             
-            if Server and ent:isa("Alien") then
-                ent:CancelEnzyme()
-                ent:CancelPrimal()
-            end
+            --if Server and ent:isa("Alien") then
+             --   ent:CancelEnzyme()
+             --   ent:CancelPrimal()
+           -- end
         end
     end
 end

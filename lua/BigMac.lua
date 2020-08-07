@@ -59,7 +59,14 @@ function GetCheckMacLimit(techId, origin, normal, commander)
         for index, mac in ientitylist(Shared.GetEntitiesWithClassname("MAC")) do
                 macs = macs + 1 
          end
-    return  macs < 1
+         
+    local ccs = 0
+        for index, cc in ientitylist(Shared.GetEntitiesWithClassname("CommandStation")) do
+            if cc:GetIsBuilt() then
+                ccs = ccs + 1 
+            end
+         end 
+    return  macs < ccs
     
 end
 

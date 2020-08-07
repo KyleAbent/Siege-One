@@ -90,6 +90,9 @@ local siegeTime = 930
     elseif string.find(mapName, "powersiege") then
         frontTime = 360
         siegeTime = 960
+     elseif string.find(mapName, "trim") then
+        frontTime = 360
+        --siegeTime = 960
     end     
     
     //Calculate reduction here 6.15.20

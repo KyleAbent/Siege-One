@@ -24,6 +24,7 @@ function Flamethrower:BurnSporesAndUmbra(startPoint, endPoint)
 
         local bombs = GetEntitiesWithinRange("Bomb", checkAtPoint, 1.6)
         table.copy(GetEntitiesWithinRange("WhipBomb", checkAtPoint, 1.6), bombs, true)
+        table.copy(GetEntitiesWithinRange("LerkBomb", checkAtPoint, 1.6), bombs, true)
         table.copy(GetEntitiesWithinRange("Rocket", checkAtPoint, 1.6), bombs, true) -- for this 1 line lol
 
         local burnSpent = false

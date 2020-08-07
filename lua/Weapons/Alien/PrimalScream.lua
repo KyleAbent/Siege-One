@@ -4,6 +4,7 @@
 
 Script.Load("lua/Weapons/Alien/Ability.lua")
 Script.Load("lua/Weapons/Alien/LerkBite.lua")
+Script.Load("lua/Weapons/Alien/LerkBomb.lua")
 Script.Load("lua/Weapons/ClientWeaponEffectsMixin.lua")
 
 Shared.PrecacheSurfaceShader("materials/effects/mesh_effects/view_blood.surface_shader")
@@ -19,6 +20,7 @@ class 'Primal' (Ability)
 Primal.kMapName = "primal"
 
 local kAnimationGraph = PrecacheAsset("models/alien/lerk/lerk_view.animation_graph")
+local kBbombViewEffect = PrecacheAsset("cinematics/alien/gorge/bbomb_1p.cinematic")
 local attackEffectMaterial = nil
 local kRange = 20
 
@@ -32,7 +34,7 @@ local networkVars =
     lastPrimaryAttackTime = "private time"
 }
 
-AddMixinNetworkVars(SpikesMixin, networkVars)
+--AddMixinNetworkVars(SpikesMixin, networkVars)
 local function GetWeaponEffects()
 local toreturn = {
 
@@ -81,10 +83,11 @@ function Primal:OnCreate()
 
     Ability.OnCreate(self)
 	
-   InitMixin(self, SpikesMixin)
 	
     self.primaryAttacking = false
+    self.secondaryAttacking = false
     self.lastPrimaryAttackTime = 0
+    self.timeLastLerkBileBomb = 0
 	
     if Client then
         InitMixin(self, ClientWeaponEffectsMixin)
@@ -99,7 +102,9 @@ end
 function Primal:GetEnergyCost(player)
     return kPrimalScreamEnergyCost
 end
-
+function Primal:GetSecondaryEnergyCost(player)
+    return kBileBombEnergyCost * 1.7
+end
 function Primal:GetHUDSlot()
     return 4
 end
@@ -115,7 +120,7 @@ end
 function Primal:GetDeathIconIndex()
 
     if self.secondaryAttacking then
-        return kDeathMessageIcon.Spikes
+        return kDeathMessageIcon.BileBomb
     else
         return kDeathMessageIcon.Umbra
     end
@@ -126,16 +131,18 @@ return Shared.GetTime() > self:GetLastAttackTime() + kPrimalScreamROF
 end
 function Primal:OnPrimaryAttack(player)
 
-    if player:GetEnergy() >= self:GetEnergyCost() and self:GetCanScream() then
-        self:TriggerEffects("primal_scream")
-        if Server then        
-            TriggerPrimal(self, player)
+    if not self.secondaryAttacking then 
+        if player:GetEnergy() >= self:GetEnergyCost() and self:GetCanScream() then
+            self:TriggerEffects("primal_scream")
+            if Server then        
+                TriggerPrimal(self, player)
+            end
+            self:GetParent():DeductAbilityEnergy(self:GetEnergyCost())
+            self.lastPrimaryAttackTime = Shared.GetTime()
+            self.primaryAttacking = true
+        else
+            self.primaryAttacking = false
         end
-        self:GetParent():DeductAbilityEnergy(self:GetEnergyCost())
-        self.lastPrimaryAttackTime = Shared.GetTime()
-        self.primaryAttacking = true
-    else
-        self.primaryAttacking = false
     end
     
 end
@@ -144,6 +151,74 @@ function Primal:OnPrimaryAttackEnd()
     
     Ability.OnPrimaryAttackEnd(self)
     self.primaryAttacking = false
+    
+end
+
+local function CreateBombProjectile( self, player )
+    
+    if not Predict then
+        
+        -- little bit of a hack to prevent exploitey behavior.  Prevent gorges from bile bombing
+        -- through clogs they are trapped inside.
+        local startPoint = nil
+        local startVelocity = nil
+            local viewCoords = player:GetViewAngles():GetCoords()
+            startPoint = player:GetAttachPointOrigin("Head_Tongue_02")
+            startPoint = startPoint - Vector(0, 0.3, 0 )
+            startVelocity = viewCoords.zAxis * 1
+            
+            local startPointTrace = Shared.TraceRay(player:GetEyePos(), startPoint, CollisionRep.Damage, PhysicsMask.Bullets, EntityFilterOneAndIsa(player, "Babbler"))
+            
+            startPoint = startPointTrace.endPoint
+
+        local bilebomb = player:CreatePredictedProjectile( "LerkBomb", startPoint, startVelocity)
+        
+    end
+    
+end
+
+function Primal:OnSecondaryAttack(player)
+     if not self.secondaryAttacking and not self.primaryAttacking and ( self.timeLastLerkBileBomb + 3.2 <= Shared.GetTime() )  then
+       if player:GetEnergy() >= self:GetSecondaryEnergyCost() then
+        
+            self.secondaryAttacking = true
+            
+            if Server or (Client and Client.GetIsControllingPlayer()) then
+                CreateBombProjectile(self, player)
+            end
+            
+            player:DeductAbilityEnergy(self:GetSecondaryEnergyCost())            
+            self.timeLastLerkBileBomb = Shared.GetTime()
+            
+            self:TriggerEffects("LerkBileBomb_attack")
+            
+            if Client then
+            
+                local cinematic = Client.CreateCinematic(RenderScene.Zone_ViewModel)
+                cinematic:SetCinematic(kBbombViewEffect)
+                
+            end
+  
+        else
+            self.secondaryAttacking = false
+        end  
+     end
+
+end
+
+function Primal:GetTimeLastBomb()
+    return self.timeLastLerkBileBomb
+end
+function Primal:GetHasSecondary(player)
+    return true
+end
+function Primal:OnSecondaryAttackEnd(player)
+    
+    if self.secondaryAttacking then 
+    
+        self.secondaryAttacking = false
+    
+    end
     
 end
 
@@ -187,7 +262,7 @@ function Primal:OnUpdateAnimationInput(modelMixin)
     local abilityString = "umbra"
     local activityString = "none"
     
-    if self.attackButtonPressed then
+    if self.attackButtonPressed or self.secondaryAttacking then
     
         activityString = "primary"
         
@@ -197,6 +272,9 @@ function Primal:OnUpdateAnimationInput(modelMixin)
     modelMixin:SetAnimationInput("activity", activityString)
     
 end
+
+
+
 
 
 Shared.LinkClassToMap("Primal", Primal.kMapName, networkVars)

@@ -25,7 +25,9 @@ function Whip:GetUnitNameOverride(viewer)
 
 end
 
-
+function Whip:OnOverrideOrder(order)
+	order:SetType(kTechId.Default)
+end
 
 --Copying from gorgetunnel mod
 
@@ -108,9 +110,7 @@ function GorgeWhip:GetDigestDuration()
     return kDigestDuration
 end
 
-function GorgeWhip:OnOverrideOrder(order)
-	order:SetType(kTechId.Default)
-end
+
 
 function GorgeWhip:OnDestroy()
     AlienStructure.OnDestroy(self)

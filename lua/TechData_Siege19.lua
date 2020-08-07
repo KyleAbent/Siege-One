@@ -281,14 +281,14 @@ local kSiege_TechData =
     [kTechDataMenuPriority] = 2,
     [kTechDataPointValue] = kMACPointValue * 1.3,
     [kTechDataHotkey] = Move.M,
-    [kTechDataTooltipInfo] = "One Mac, make it Big",
+    [kTechDataTooltipInfo] = "One Mac Per Chair",
      [kTechDataBuildTime] = 8,
      [kTechDataGhostModelClass] = "MarineGhostModel", 
      [kStructureAttachRange] = 8,
      --[kStructureBuildNearClass] = "RoboticsFactory",
         [kStructureAttachId] = { kTechId.RoboticsFactory, kTechId.ARCRoboticsFactory },
      -- [kTechDataGhostGuidesMethod] = GetMacGhostGuides, -- ahh
-      [kTechDataBuildMethodFailedMessage] = "Testing 1 GIANT Mac as powerful as 5",
+      [kTechDataBuildMethodFailedMessage] = "1 MAC Per Chair",
     [kTechDataBuildRequiresMethod] = GetCheckMacLimit,
     },
     

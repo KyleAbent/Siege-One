@@ -100,6 +100,13 @@ function Crag:GetUnitNameOverride(viewer)
 
 end
 
+function Crag:OnOverrideOrder(order)
+    --if self.ownerId ~= nil then
+        order:SetType(kTechId.Default)
+    --elseif order:GetType() == kTechId.Default then
+    --    order:SetType(kTechId.Move)
+    --end
+end
 
 --Copied from NS2GorgeTunnel GorgeToys Meteru to override :l
 
@@ -189,13 +196,7 @@ function GorgeCrag:GetDigestDuration()
     return kDigestDuration
 end
 
-function GorgeCrag:OnOverrideOrder(order)
-    --if self.ownerId ~= nil then
-        order:SetType(kTechId.Default)
-    --elseif order:GetType() == kTechId.Default then
-    --    order:SetType(kTechId.Move)
-    --end
-end
+
 
 function GorgeCrag:GetMapBlipType()
     return kMinimapBlipType.Crag

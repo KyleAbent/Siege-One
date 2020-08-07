@@ -1,8 +1,16 @@
+Script.Load("lua/Weapons/PredictedProjectile.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 
 --Lerk.XZExtents = 0.28
 --Lerk.YExtents = 0.28
 
+
+local origCreate = Lerk.OnCreate 
+
+function Lerk:OnCreate()
+    origCreate(self)
+    InitMixin(self, PredictedProjectileShooterMixin)
+end
 
 if Server then
 

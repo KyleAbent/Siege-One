@@ -4,29 +4,26 @@ Script.Load("lua/MinimapConnectionMixin.lua")
 local networkVars =
 {
     index = "integer",
-    randomColorNumber = "integer (1 to 12)",
+    randomColorNumber = "integer",
+    onTop = "entityid",
 }
 
 local origCreate = TunnelEntrance.OnCreate
 function TunnelEntrance:OnCreate()
     origCreate(self)
     self.index = 0
-    self.randomColorNumber =  12--math.random(1,11)
-    --self:DoOther()
-     self:AddTimedCallback(TunnelEntrance.DoOther, 0.3)
-     self:AddTimedCallback(TunnelEntrance.DoOther, 0.5)
-     self:AddTimedCallback(TunnelEntrance.DoOther, 0.7)
-     self:AddTimedCallback(TunnelEntrance.DoOther, 0.9)
+    self.randomColorNumber = math.random(1,11)
+    self.onTop = Entity.invalidId
+    Print("self.currentMapBlipColor is %s", self.currentMapBlipColor)
 end
-
-
 
 function TunnelEntrance:GetMiniMapColors()
     --local otherEntrance = self:GetOtherEntrance()--doesnt work if not built ugh
-   -- if not self:GetIsBuilt() then  
-    --    return Color(1, 138/255, 0, 1)
-   -- else
+    if not self:GetIsBuilt() then  
+        return Color(1, 138/255, 0, 1)
+    else
         local num = self.randomColorNumber
+        Print("GetMiniMapColors is %s", self.randomColorNumber)
         if num == 1 then
          return ColorIntToColor(0x6638D4)
         elseif num == 2 then
@@ -43,49 +40,20 @@ function TunnelEntrance:GetMiniMapColors()
            return ColorIntToColor(0x1BC4D3)
         elseif num == 8 then
            return ColorIntToColor(0xC8ED0C)
-        elseif num == 9 then
+        elseif num == 9 then--not good color it shows grey
            return ColorIntToColor(0xA99CFF)
         elseif num == 10 then
            return ColorIntToColor(0x0AD5C2)
         elseif num == 11 then
            return ColorIntToColor(0x9C121C)
         end
-   --  end    
+     end    
       
-end
-
-function TunnelEntrance:DoOther()
-    
-
-        local otherEntrance = self:GetOtherEntrance()
-        if otherEntrance then    
-           -- Print("TunnelEntrance DoOther Found otherEntrance") --not working with OnCreate , interesting
-            self.randomColorNumber = otherEntrance.randomColorNumber
-        --elseif self:GetGorgeOwner() then
-            --but if the player drops a tunnel ... 
-        else
-            if self.randomColorNumber == 12 then
-                --Print("TunnelEntrance DoOther randomly choosing number didnt find match")
-                self.randomColorNumber = math.random(1,11)
-             end
-        end
-    
-        local mapBlip = self.mapBlipId and Shared.GetEntity(self.mapBlipId)
-        if mapBlip then
-           mapBlip.randomColorNumber = self.randomColorNumber
-        end
-    return false
 end
 local origInit = TunnelEntrance.OnInitialized
 function TunnelEntrance:OnInitialized()
-    
-    origInit(self) 
-    if Server then
-        self:UpdateConnectedTunnel() --only to match pair so quick lol
-        InitMixin(self, MinimapConnectionMixin)
-    end
-    --self:DoOther()
-    --Print("TunnelEntrance OnInitialized randomColorNumber is %s", self.randomColorNumber)
+    origInit(self)
+    InitMixin(self, MinimapConnectionMixin)
 end
 
 
@@ -125,6 +93,15 @@ function TunnelEntrance:SetOtherEntrance(otherEntranceEnt)
     --end
     
 end
+function TunnelEntrance:GetGorgeOwner()
+    return self.ownerId and self.ownerId ~= Entity.invalidId
+end
+function TunnelEntrance:SetIndex(index)
+    self.index = index
+end
+function TunnelEntrance:GetIndex()
+    return self.index
+end
 
 function TunnelEntrance:GetTunnelEntity()
         return self:GetOtherEntrance()
@@ -133,34 +110,73 @@ end
 function TunnelEntrance:GetIsCollapsing()
     return false
 end
+
+function TunnelEntrance:GetShowHitIndicator()
+    return false
+end
+
+function TunnelEntrance:GetCanBeUsed(player, useSuccessTable)
+
+    if self.onTop ~= nil and self.onTop ~= Entity.invalidId then
+        if self.onTop == player:GetId() then
+            useSuccessTable.useSuccess = true
+        end
+    else
+        useSuccessTable.useSuccess = false
+    end
     
+end
     
+
+function TunnelEntrance:OnUse(player, elapsedTime, useSuccessTable)
+    --What if Gorge wants to Destroy? lol 
+    local success = false
+    if player:isa("Alien") then
+        if self:GetIsBuilt() then
+            local tunnelEntity = self:GetTunnelEntity()
+            if tunnelEntity then
+            
+                if HasMixin(player, "LOS") then
+                    player:MarkNearbyDirtyImmediately()
+                end
+
+                tunnelEntity:MovePlayerToTunnel(player, self)
+                player:SetVelocity(Vector(0, 0, 0))
+
+                if player.OnUseGorgeTunnel then
+                    player:OnUseGorgeTunnel()
+                end
+                self.onTop = Entity.invalidId
+            end
+            success = true
+        end
+    end
+    
+    useSuccessTable.useSuccess = useSuccessTable.useSuccess or success
+    
+end
+
 if Server then
 
     function TunnelEntrance:OnConstructionComplete()
 
             self.skipOpenAnimation = false
-            --self:UpdateConnectedTunnel()
+            self:UpdateConnectedTunnel()
         
     end
     
     function TunnelEntrance:SuckinEntity(entity)
     
         if entity and HasMixin(entity, "TunnelUser") then
-        
-            local tunnelEntity = self:GetTunnelEntity()
+          local tunnelEntity = self:GetTunnelEntity()
             if tunnelEntity then
-                if HasMixin(entity, "LOS") then
-                    entity:MarkNearbyDirtyImmediately()
+                tunnelEntity:MarkBlipDirty()
+                self:MarkBlipDirty()
+                self.onTop = entity:GetId()
+                local mapBlip = entity and entity.mapBlipId and Shared.GetEntity(entity.mapBlipId)
+                if mapBlip then
+                    mapBlip:Update()
                 end
-                
-                tunnelEntity:MovePlayerToTunnel(entity, self)
-                entity:SetVelocity(Vector(0, 0, 0))
-                
-                if entity.OnUseGorgeTunnel then
-                    entity:OnUseGorgeTunnel()
-                end
-
             end
             
         end
@@ -214,8 +230,8 @@ end
 
     function TunnelEntrance:UpdateConnectedTunnel() --I am NOT happy about OnUpdate with a For Loop. Still better than Tunnel, though.
         local hasValidTunnel = self.otherEntranceId ~= nil and Shared.GetEntity(self.otherEntranceId) ~= nil
-                                --cant worry about built if wanting to pair color
-        if hasValidTunnel then --or not self:GetIsBuilt() then
+  
+        if hasValidTunnel or not self:GetIsBuilt() then
             return
         end
         
@@ -238,12 +254,10 @@ end
         self:SetOtherEntrance(foundTunnel)
         
         if (foundTunnel) then
-            foundTunnel:SetOtherEntrance(self)
+            --foundTunnel:SetOtherEntrance(self)
             foundTunnel:UpdateConnectedTunnel()
-            --foundTunnel.randomColorNumber = self.randomColorNumber
-            --self.randomColorNumber = foundTunnel.randomColorNumber
-            --Print("foundTunnel")
-            
+            foundTunnel.randomColorNumber = self.randomColorNumber
+            self.randomColorNumber = foundTunnel.randomColorNumber
         end
         
         
@@ -269,7 +283,6 @@ end
     local origUpdate = TunnelEntrance.OnUpdate
     function TunnelEntrance:OnUpdate(deltaTime)
             --Why is it being set to other entities? ParticleEffect, d
-
         local otherEntrance = self:GetOtherEntrance()
         if otherEntrance then                                                                   --or not other.getisalive bleh
             if not ( otherEntrance:isa("TunnelEntrance") or otherEntrance:isa("GorgeTunnel") ) or  ( otherEntrance.GetIsAlive and not otherEntrance:GetIsAlive() ) then
@@ -303,6 +316,13 @@ function TunnelEntrance:GetMinimapYawOffset()
     end
     
 end
+
+
+/*
+function TunnelEntrance:GetMapBlipColor(minimap, item)
+            return self:GetMiniMapColors()
+end
+*/
 
 
 Shared.LinkClassToMap("TunnelEntrance", TunnelEntrance.kMapName, networkVars)

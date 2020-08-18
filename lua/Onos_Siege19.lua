@@ -52,8 +52,10 @@ function Onos:RedemAlienToHive()
     if self:GetEligableForRebirth() then
         self:TeleportToHive()
         local client = self:GetClient()
-        if client.GetIsVirtual and client:GetIsVirtual() then
-            return 
+        if client then
+            if client.GetIsVirtual and client:GetIsVirtual() then
+                return 
+            end
         end
         self.lastredeemorrebirthtime = Shared:GetTime()
         client = client:GetControllingPlayer()

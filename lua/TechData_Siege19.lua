@@ -3,6 +3,7 @@ Script.Load("lua/2019/StructureBeacon.lua")
 Script.Load("lua/2019/Wall.lua")
 Script.Load("lua/2019/ExoWelder.lua")
 Script.Load("lua/2019/ExoFlamer.lua")
+Script.Load("lua/2019/ExoGrenader.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 Script.Load("lua/Weapons/Alien/GorillaGlue.lua")
@@ -234,6 +235,17 @@ local kSiege_TechData =
     [kTechDataCostKey] = kDualExosuitCost - 5, 
     [kTechDataHotkey] = Move.E,
     [kTechDataTooltipInfo] = "Dual Flamers yo", 
+    [kTechDataSpawnHeightOffset] = kCommanderEquipmentDropSpawnHeight},
+    
+
+    { [kTechDataId] = kTechId.DualGrenaderExosuit,    
+    [kTechIDShowEnables] = false,     
+    [kTechDataDisplayName] = "Dual Exo Grenader", 
+    [kTechDataMapName] = "exo",         
+   [kTechDataMaxExtents] = Vector(0.55, 1.2, 0.55),
+    [kTechDataCostKey] = 30,--kDualExosuitCost - 5, 
+    [kTechDataHotkey] = Move.E,
+    [kTechDataTooltipInfo] = "Dual Grenaders yo", 
     [kTechDataSpawnHeightOffset] = kCommanderEquipmentDropSpawnHeight},
     
     --Thanks dragon ns2c

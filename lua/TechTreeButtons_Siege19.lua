@@ -8,8 +8,8 @@ function GetMaterialXYOffset(techId)
          return origIndex(kTechId.Shell)
     elseif techId == kTechId.Wall then
          return origIndex(kTechId.Door)
-    elseif techId == kTechId.DropArc then
-         return origIndex(kTechId.ARC)
+    elseif techId == kTechId.DualWelderExosuit or techId == kTechId.DualFlamerExosuit or techId == kTechId.DualGrenaderExosuit then
+         return origIndex(kTechId.Exo)
     else
         return origIndex(techId)
     end

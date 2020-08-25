@@ -304,5 +304,9 @@ function TunnelEntrance:GetMinimapYawOffset()
     
 end
 
+function TunnelEntrance:SetIndex(index)
+    self.index = index
+end
+
 
 Shared.LinkClassToMap("TunnelEntrance", TunnelEntrance.kMapName, networkVars)

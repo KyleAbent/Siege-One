@@ -38,6 +38,7 @@ local kSiege_TechIds =
     'BackupBattery',
     'GorillaGlue',
     'DropArc',
+    'DualGrenaderExosuit',
 
 }
 

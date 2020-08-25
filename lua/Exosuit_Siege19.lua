@@ -25,6 +25,8 @@ if Server then
                     exoPlayer = player:GiveDualWelder()
                 elseif self.layout == "FlamerFlamer" then
                     exoPlayer = player:GiveDualFlamer()
+                elseif self.layout == "GrenaderGrenader" then
+                    exoPlayer = player:GiveDualGrenader()
                 else
                     exoPlayer = player:GiveExo()
                 end  

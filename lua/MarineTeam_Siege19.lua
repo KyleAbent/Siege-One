@@ -56,6 +56,7 @@ function MarineTeam:InitTechTree()
       self.techTree:AddBuildNode(kTechId.DropArc,     kTechId.ARCRoboticsFactory, kTechId.None)
       self.techTree:AddBuyNode(kTechId.DualWelderExosuit, kTechId.ExosuitTech, kTechId.None)
       self.techTree:AddBuyNode(kTechId.DualFlamerExosuit, kTechId.ExosuitTech, kTechId.None)
+      self.techTree:AddBuyNode(kTechId.DualGrenaderExosuit, kTechId.ExosuitTech, kTechId.None)
       self.techTree:AddTargetedActivation(kTechId.DropExosuit,     kTechId.ExosuitTech, kTechId.None)
       
     self.techTree:SetComplete()

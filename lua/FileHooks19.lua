@@ -2,6 +2,8 @@ ModLoader.SetupFileHook( "lua/TargetCache.lua", "lua/TargetCache_Siege.lua", "po
 ModLoader.SetupFileHook( "lua/AchievementGiverMixin.lua", "lua/AchievementGiverMixin_Siege19.lua", "replace" ) --hmm?
 ModLoader.SetupFileHook( "lua/AchievementReceiverMixin.lua", "lua/AchievementReceiverMixin_Siege19.lua", "replace" ) --hmm?
 
+--ModLoader.SetupFileHook( "lua/Utility.lua", "lua/Utility_Siege20.lua", "post" ) --hmm?
+
 ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
 ModLoader.SetupFileHook( "lua/NS2_GorgeTunnel/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
 

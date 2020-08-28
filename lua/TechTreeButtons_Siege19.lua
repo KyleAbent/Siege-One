@@ -10,6 +10,14 @@ function GetMaterialXYOffset(techId)
          return origIndex(kTechId.Door)
     elseif techId == kTechId.DualWelderExosuit or techId == kTechId.DualFlamerExosuit or techId == kTechId.DualGrenaderExosuit then
          return origIndex(kTechId.Exo)
+    elseif techId == kTechId.Redemption then
+         return origIndex(kTechId.Hive)
+    elseif techId == kTechId.Rebirth then
+         return origIndex(kTechId.Egg)
+    elseif techId == kTechId.Hunger then
+         return origIndex(kTechId.EnzymeCloud)
+    elseif techId == kTechId.ThickenedSkin then
+         return origIndex(kTechId.Shell)
     else
         return origIndex(techId)
     end

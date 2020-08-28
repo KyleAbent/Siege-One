@@ -187,7 +187,7 @@ function Plugin:SetGameState( Gamerules, State, OldState )
      if State == kGameState.Started then 
          kgameStartTime = Shared.GetTime()
          GetTimer():OnRoundStart()
-         self:NotifyTimer( nil, "Front Door time has been reduced by this many seconds: %s", true, kReduceDoorTimeBy)
+         self:NotifyTimer( nil, "Front Door time has been reduced by %s seconds", true, kReduceDoorTimeBy)
          GiveTimersToAll()
          OpenAllBreakableDoors()
       else
@@ -208,14 +208,14 @@ function Plugin:SetGameState( Gamerules, State, OldState )
 end
 ------------------------------------------------------------
 function Plugin:NotifyOne( Player, String, Format, ... )
-Shine:NotifyDualColour( Player, 255, 165, 0,  "[Siege One]",  255, 0, 0, String, Format, ... )
+Shine:NotifyDualColour( Player, 255, 165, 0,  "[Siege One]",  0, 255, 0, String, Format, ... )
 end
 function Plugin:NotifyGorilla( Player, String, Format, ... )
-Shine:NotifyDualColour( Player, 255, 165, 0,  "[GorillaGlue]",  255, 0, 0, String, Format, ... )
+Shine:NotifyDualColour( Player, 255, 165, 0,  "[GorillaGlue]",  0, 255, 0, String, Format, ... )
 end
 ------------------------------------------------------------
 function Plugin:NotifyTimer( Player, String, Format, ... )
-Shine:NotifyDualColour( Player, 255, 165, 0,  "[Timer]",  255, 0, 0, String, Format, ... )
+Shine:NotifyDualColour( Player, 255, 165, 0,  "[Timer]",  0, 255, 0, String, Format, ... )
 end
 ------------------------------------------------------------
 function Plugin:NotifyGiveRes( Player, String, Format, ... )
@@ -223,7 +223,7 @@ Shine:NotifyDualColour( Player, 255, 165, 0,  "[GiveRes]",  255, 0, 0, String, F
 end
 ------------------------------------------------------------
 function Plugin:NotifyGeneric( Player, String, Format, ... )
-Shine:NotifyDualColour( Player, 255, 165, 0,  "[Admin Abuse]",  255, 0, 0, String, Format, ... )
+Shine:NotifyDualColour( Player, 255, 165, 0,  "[Admin Abuse]",  0, 255, 0, String, Format, ... )
 end
 ------------------------------------------------------------
 function Plugin:NotifyAutoComm( Player, String, Format, ... )
@@ -466,6 +466,7 @@ OldUpdateBatteryState = Shine.Hook.ReplaceLocalFunction( Sentry.OnUpdate, "Updat
 
 
 
+/*
 
 function Plugin:ShowRebirthRedemptionSettings(player)
 
@@ -489,6 +490,9 @@ function Plugin:ShowRebirthRedemptionSettings(player)
 end
 
 Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRebirthRedemptionSettings", "Replace" )
+
+*/
+
 --Shine.Hook.SetupClassHook( "Onos", "ShowRedemptionSetting", "ShowRebirthRedemptionSettings", "Replace" )
 
 
@@ -501,14 +505,15 @@ Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRebirthRedemptionS
         local NowToCoolDownOver = player:GetRedemptionCoolDown() - (Shared.GetTime() - player.lastredeemorrebirthtime)
         --Shine.ScreenText.End("Countdown") 
                         --settext? not addtext? ugh.
-        --Shine.ScreenText.Add( 35, {X = 0.40, Y = 0.85,Text = "GorillaGlue Cooldown: %s",Duration = NowToCoolDownOver,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
+        --Shine.ScreenText.Add( 35, {X = 0.40, Y = 0.85,Text = "Rebirth/Redeem Cooldown: %s",Duration = NowToCoolDownOver,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
        -- Shine.ScreenText.Add( 27, {X = 0.85, Y = 0.90,Text = "uhhhhhhh",Duration = 6,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
-        self:NotifyGorilla(player:GetClient(), "GorillaGlue Cooldown : %s", true, NowToCoolDownOver )
+        self:NotifyOne(player:GetClient(), "Rebirth/Redeem Cooldown : %s seconds", true, NowToCoolDownOver )
 end
  
  
-Shine.Hook.SetupClassHook( "Onos", "TriggerRebirthRedeemCountdown", "OnRedemedHook", "Replace" )
+Shine.Hook.SetupClassHook( "Alien", "TriggerRebirthRedeemCountdown", "OnRedemedHook", "Replace" )
 
+/*
   function Plugin:TellThemToGetOutOfCombat(player) 
             if not player:GetTeamNumber() == 2 or not player:GetIsAlive() then return end
             --Shine.ScreenText.Add( 25, {X = 0.50, Y = 0.65,Text = "Get out of Combat!!!",Duration = 2,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, player ) 
@@ -517,6 +522,8 @@ end
  
  
 Shine.Hook.SetupClassHook( "Onos", "GetOutOfComebat", "TellThemToGetOutOfCombat", "PassivePre" )
+*/
+
 
 
 

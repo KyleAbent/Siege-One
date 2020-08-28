@@ -60,7 +60,7 @@ kXenocideRange = 12 -- was 14
 
 
 kRedemptionCooldown = 45
-kRedemptionEHPThresholdMin = 15
+kRedemptionEHPThresholdMin = 1
 kRedemptionEHPThresholdMax = 30
 
 
@@ -70,3 +70,14 @@ kAlienInitialIndivRes = 70 --12
 
 kWhipSlapDamage = 125
 kWhipBombardDamage = 350
+
+
+
+kThickenedSkinCost = 2
+kHungerCost = 2
+kRedemptionCost = 2
+kRebirthCost = 2
+kRedemptionCooldown = 45
+kRedemptionCooldown = 45
+kRedemptionEHPThresholdMin = 15
+kRedemptionEHPThresholdMax = 30

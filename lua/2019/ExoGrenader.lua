@@ -241,7 +241,7 @@ local function ShootGrenade(self, player)
         local direction = viewCoords.zAxis
             --I thought PRedicedProjectile broke with this class getting this mapname, so i copied the function. then now i need it for chargeamount
         kGrenadeSpeed = 8 * ( ( math.round( self:GetChargeAmount() * 10 ) ) /10) + 8
-        Print("kGrenadeSpeed is %s", kGrenadeSpeed)
+        --Print("kGrenadeSpeed is %s", kGrenadeSpeed)
         player:CreateExoGrenade("ExoGrenade", startPoint, direction * kGrenadeSpeed, kGrenadeBounce, kGrenadeFriction, nil, self:GetChargeAmount() )
 
     end

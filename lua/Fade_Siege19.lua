@@ -52,4 +52,7 @@ if Client then
 end
 
 
+
+
+
 Shared.LinkClassToMap("Fade", Fade.kMapName, networkVars, true)

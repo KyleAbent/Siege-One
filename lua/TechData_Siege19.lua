@@ -305,7 +305,38 @@ local kSiege_TechData =
     },
     
     
-    
+           { [kTechDataId] = kTechId.Rebirth, 
+       [kTechDataCategory] = kTechId.CragHiveTwo,  
+        [kTechDataDisplayName] = "Rebirth", 
+      [kTechDataSponitorCode] = "A",  
+      [kTechDataCostKey] = kRebirthCost, 
+     [kTechDataTooltipInfo] = "Replaces death with gestation if cooldown is reached", },
+
+      // Lifeform purchases
+        { [kTechDataId] = kTechId.Redemption, 
+       [kTechDataCategory] = kTechId.CragHiveTwo,  
+        [kTechDataDisplayName] = "Redemption", 
+      [kTechDataSponitorCode] = "B",  
+      [kTechDataCostKey] = kRedemptionCost, 
+     [kTechDataTooltipInfo] = "45 second cooldown, having less than 30% HP will enable a chance to redeem to the alien base hive", },
+
+
+             { [kTechDataId] = kTechId.ThickenedSkin, 
+       [kTechDataCategory] = kTechId.ShiftHiveTwo,  
+        [kTechDataDisplayName] = "Thickened Skin", 
+      [kTechDataSponitorCode] = "A",  
+      [kTechDataCostKey] = kThickenedSkinCost,
+     [kTechDataTooltipInfo] = "+10% max hp", },
+     
+       { [kTechDataId] = kTechId.Hunger, 
+       [kTechDataCategory] = kTechId.ShiftHiveTwo,   
+        [kTechDataDisplayName] = "Hunger", 
+      [kTechDataSponitorCode] = "B",  
+      [kTechDataCostKey] = kHungerCost, 
+     [kTechDataTooltipInfo] = "On Player Kill: Enzyme and +10% health/energy ", }, --"Non Gorges On Player Kill: Enzyme and +10% health/energy  Gorge:+10%Energy/Enzyme on  ", },
+   
+
+
         {
             [kTechDataId] = kTechId.DropArc,
             [kTechDataSupply] = kARCSupply,

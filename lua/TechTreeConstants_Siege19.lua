@@ -39,6 +39,12 @@ local kSiege_TechIds =
     'GorillaGlue',
     'DropArc',
     'DualGrenaderExosuit',
+    'Rebirth',
+    'Redemption',
+    'CragHiveTwo',
+    'ShiftHiveTwo',
+    'Hunger',
+    'ThickenedSkin',
 
 }
 

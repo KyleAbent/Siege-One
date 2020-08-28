@@ -37,6 +37,15 @@ self.techTree:AddBuildNode(kTechId.StructureBeacon, kTechId.ShiftHive)
 self.techTree:AddResearchNode(kTechId.PrimalScream, kTechId.BioMassFive, kTechId.None, kTechId.AllAliens)
 self.techTree:AddResearchNode(kTechId.AcidRocket, kTechId.BioMassSeven, kTechId.None, kTechId.AllAliens)
 self.techTree:AddResearchNode(kTechId.GorillaGlue, kTechId.BioMassSeven, kTechId.None, kTechId.AllAliens)
+self.techTree:AddBuyNode(kTechId.Hunger, kTechId.Spur, kTechId.None, kTechId.AllAliens)
+self.techTree:AddBuyNode(kTechId.ThickenedSkin, kTechId.Spur, kTechId.None, kTechId.AllAliens)
+
+ self.techTree:AddBuyNode(kTechId.Rebirth, kTechId.Shell, kTechId.None, kTechId.AllAliens)
+ self.techTree:AddBuyNode(kTechId.Redemption, kTechId.Shell, kTechId.None, kTechId.AllAliens)
+ 
+ 
+     self.techTree:AddPassive(kTechId.CragHiveTwo, kTechId.CragHive)
+    self.techTree:AddPassive(kTechId.ShiftHiveTwo, kTechId.ShiftHive)
 
 
     self.techTree:SetComplete()

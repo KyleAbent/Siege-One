@@ -8,16 +8,22 @@ self.Enabled = true
 self:CreateCommands()
 kgameStartTime = 0
 kReduceDoorTimeBy = 0
+
 return true
 end
+
+
 ------------------------------------------------------------
 //Messy, Whatever. Deal with it. lol.
 //Either Here or in map entity door convar for front and siege
 //Either or, not both. For now this way.
 local function GetDoorLengthByMapName()
 mapName = Shared.GetMapName()
+
 local frontTime = 330
 local siegeTime = 930
+local sideTime = 540
+
     if string.find(mapName, "siege007") then 
         frontTime = 315
         siegeTime = 915
@@ -96,38 +102,168 @@ local siegeTime = 930
     end     
     
     //Calculate reduction here 6.15.20
-    print("frontTime was %s",frontTime)
-    kReduceDoorTimeBy = math.random(frontTime*0.5, frontTime*0.7)
-    frontTime = frontTime - kReduceDoorTimeBy
-    print("mapName is %s", mapName)
-    print("frontTime is %s",frontTime)
-    print("siegeTime is %s", siegeTime)
-    kFrontTime = frontTime
-    kSiegeTime = siegeTime
+    --Print("frontTime was %s",frontTime)
+    --kReduceDoorTimeBy = math.random(frontTime*0.5, frontTime*0.7)
+    --frontTime = frontTime - kReduceDoorTimeBy
+    Print("mapName is %s", mapName)
+    Print("frontTime is %s",frontTime)
+    Print("siegeTime is %s", siegeTime)
+    --kFrontTime = frontTime
+    --kSiegeTime = siegeTime
+    
+    return frontTime, siegeTime, sideTime
 
 end
+
+local function grabDoorMapEditorSettings()
+
+    local frontDoor = GetFrontDoor()
+    local siegeDoor = GetSiegeDoor()
+    local sideDoor = GetSideDoor()
+    --Print("Frontdoor is %s", frontDoor)
+    --Print("siegeDoor is %s", siegeDoor)
+    
+    if frontDoor ~= nil and siegeDoor ~= nil then
+        Print("found front and siege doors!")
+    else
+        Print("frontdoor siegedoor nil ugh lol")
+    end
+
+    if sideDoor ~= nil then
+        Print("found side door!")
+    else
+        Print("sideDoor nil ugh lol")
+    end
+    
+    
+    local frontTime = 0
+    local siegeTime = 0
+    local sideTime = 0
+
+    local isDefaultFront = false
+    local isDefaultSiege = false
+    local isDefaultSide = false
+
+    if frontDoor.timer ~= nil and siegeDoor.timer ~= nil then
+        Print("found front and siege door timers!")
+        if frontDoor.timer ~= 0 then
+            frontTime = frontDoor.timer
+            Print("frontTime is %s", frontTime)
+        else
+            isDefaultFront = true
+            Print("frontTime is default by mapname")
+        end
+        if siegeDoor.timer ~= 0 then
+            siegeTime = siegeDoor.timer
+            Print("siegeTime is %s", siegeTime)
+        else
+            isDefaultSiege = true
+            Print("siegeTime is default by mapname")
+        end
+    else
+        Print("frontdoor siegedoor timers nil ugh lol")
+    end
+    
+    
+    if sideDoor ~= nil and sideDoor.timer ~= nil then
+        Print("found sideDoor and sideDoor timer!")
+        if sideDoor.timer ~= 0 then
+            sideTime = sideDoor.timer
+            Print("sideTime is %s", sideTime)
+        else
+            isDefaultSide = true
+            Print("sideTime is default by mapname")
+        end
+    end
+    
+    local byNameFront, byNameSiege, byNameSide = GetDoorLengthByMapName()
+    
+    if isDefaultFront then
+        frontTime = byNameFront
+        Print("Front time map setting 0, so grabbing by mapname")
+        Print("Front time is %s", frontTime)
+    end
+    
+    if isDefaultSiege then
+        siegeTime = byNameSiege
+        Print("Siege time map setting 0, so grabbing by mapname")
+        Print("siegeTime time is %s", siegeTime)
+    end
+    
+    if isDefaultSide then
+        sideTime = byNameSide
+        Print("Siege time map setting 0, so grabbing by mapname")
+        Print("siegeTime time is %s", siegeTime)
+    end
+    
+    if frontDoor.shortenTimer ~= nil then
+        Print("found front shortenTimer!, set to %s", frontDoor.shortenTimer)
+        if frontDoor.shortenTimer == true then
+            Print("shortentimer true, reducing front timer")
+            //Calculate reduction here 6.15.20
+            Print("frontTime was %s",frontTime)
+            kReduceDoorTimeBy = math.random(frontTime*0.5, frontTime*0.7)
+            frontTime = frontTime - kReduceDoorTimeBy
+            Print("mapName is %s", mapName)
+            Print("frontTime is %s",frontTime)
+            kFrontTime = frontTime
+       else
+        Print("frontTime is %s",frontTime)
+        kFrontTime = frontTime
+       end
+    end
+    
+    Print("siegeTime is %s", siegeTime)
+    
+    if siegeTime ~= kSiegeTime then
+      kSiegeTime = siegeTime
+      Print("kSiegeTime is %s", siegeTime)
+    end
+    
+    if sideDoor == nil then
+        kSideTime = 0
+        Print("sideDoor is nil, not found on map. Don't show its timer")
+    end
+    
+    Print("sideTime is %s", sideTime)
+    if kSideTime ~= sideTime then
+        kSideTime = sideTime
+        Print("kSideTime is %s", kSideTime)
+    end
+    
+
+
+
+
+end
+
 ------------------------------------------------------------
 function Plugin:MapPostLoad()
       Server.CreateEntity(Timer.kMapName)
-      GetDoorLengthByMapName()
+      --GetDoorLengthByMapName()
 end
 function Plugin:OnFirstThink()
-      GetDoorLengthByMapName()
+      --GetDoorLengthByMapName()
 end
 
 
 ------------------------------------------------------------
 function Plugin:OnSiege() 
-Shared.ConsoleCommand("sh_csay Siege Door(s) now open!!!!") 
-self:NotifyTimer( nil, "Siege Door(s) now open!!!!", true)
+Shared.ConsoleCommand("sh_csay Siege Doors now open!!!!") 
+self:NotifyTimer( nil, "Siege Doors now open!!!!", true)
 end
 ------------------------------------------------------------
 function Plugin:OnFront() 
-Shared.ConsoleCommand("sh_csay Front Door(s) now open!!!!") 
-self:NotifyTimer( nil, "Front Door(s) now open!!!!", true)
+Shared.ConsoleCommand("sh_csay Front Doors now open!!!!") 
+self:NotifyTimer( nil, "Front Doors now open!!!!", true)
+end
+function Plugin:OnSide() 
+Shared.ConsoleCommand("sh_csay Side Doors now open!!!!") 
+self:NotifyTimer( nil, "Side Doors now open!!!!", true)
 end
 ------------------------------------------------------------
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePost" ) 
+Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySide", "OnSide", "PassivePost" ) 
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePost" ) 
 ------------------------------------------------------------
 local function AddFrontTimer(who,NowToFront)
@@ -143,6 +279,13 @@ local function AddSiegeTimer(who, NowToSiege)
      end
     Shine.ScreenText.Add( 2, {X = 0.40, Y = 0.95,Text = "Siege: %s",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, who )
 end
+local function AddSideTimer(who, NowToSiege)
+    if not NowToSiege then 
+     NowToSiege = kSideTime - (Shared.GetTime() - kgameStartTime)
+     end
+    Shine.ScreenText.Add( 3, {X = 0.40, Y = 0.85,Text = "Side: %s",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, who )
+end
+
 ------------------------------------------------------------
 local function GiveTimersToAll()
               //GetDoorLengthByMapName()
@@ -152,6 +295,7 @@ local function GiveTimersToAll()
                for i = 1, #Players do
                    local Player = Player[ i ]//:GetControllingPlayer()
                    AddFrontTimer(Player)
+                   AddSideTimer(Player)
                    AddSiegeTimer(Player)
                end
 end
@@ -164,6 +308,9 @@ function Plugin:ClientConfirmConnect(Client)
 --Shared.ConsoleCommand("alltech") 
 --Shared.ConsoleCommand("autobuild") 
 --Shared.ConsoleCommand("sh_forceroundstart") 
+
+--GetDoorLengthByMapName()
+
   if Client:GetIsVirtual() then return end
     if GetGamerules():GetGameStarted() then
        if not GetTimer():GetIsFrontOpen() then
@@ -186,6 +333,7 @@ end
 function Plugin:SetGameState( Gamerules, State, OldState )
      if State == kGameState.Started then 
          kgameStartTime = Shared.GetTime()
+         grabDoorMapEditorSettings() --only do once per map? hm
          GetTimer():OnRoundStart()
          self:NotifyTimer( nil, "Front Door time has been reduced by %s seconds", true, kReduceDoorTimeBy)
          GiveTimersToAll()
@@ -372,6 +520,8 @@ local Gamerules = GetGamerules()
        Shine.ScreenText.End(1) 
      elseif String == "Siege" or String == "siege" then
        GetTimer():OpenSiegeDoors()
+     elseif String == "Side" or String == "side" then
+       GetTimer():OpenSideDoors()
      elseif String == "Breakable" or String == "breakable" then
        OpenBreakableDoors()
     end  

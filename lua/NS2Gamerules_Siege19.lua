@@ -6,6 +6,10 @@ function NS2Gamerules:DisplaySiege()
 
 end
 
+function NS2Gamerules:DisplaySide()
+
+end
+
 if Server then
 
     local origCanJoin = NS2Gamerules.GetCanJoinTeamNumber
@@ -15,15 +19,12 @@ if Server then
                 --Print("A")
                 local marineCount = GetGamerules():GetTeam1():GetNumPlayers()
                 local alienCount = GetGamerules():GetTeam2():GetNumPlayers()
-                if alienCount > marineCount then-- alien count
+                if marineCount >= 10 then
+                --if alienCount > marineCount then-- alien count
                 --Print("B")
                 local difference = math.abs(alienCount - marineCount)
                     if  difference < 4 then
                         --Print("C")
-                        local client = player:GetClient()
-                        if not client:GetIsVirtual() then
-                            --self:NotifyOne(client, "Alien Team Greter Size than Marine team by %s, allowing a size of %s more aliens than marines", true, difference, math.abs(difference - 4) )
-                        end
                         return true --kTeam2Index -- Allow Alien Stack lol
                     end
                 end

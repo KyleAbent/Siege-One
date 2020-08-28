@@ -16,11 +16,17 @@ local networkVars =
    frontOpened = "boolean",
    siegeOpened = "boolean",
    siegeBeaconed = "boolean",
+   SideTimer = "integer",
+   sideOpened = "boolean",
+   
+   
 }
 
 function Timer:TimerValues()
    self.SiegeTimer = kSiegeTime 
    self.FrontTimer = kFrontTime
+   self.sideOpened = kSideTime
+   self.sideOpened = false
    self.siegeOpened = false
    self.frontOpened = false
    self.siegeBeaconed = false
@@ -93,18 +99,26 @@ function Timer:OpenSiegeDoors()
      self.SiegeTimer = 0
      self.siegeOpened = true
        for index, siegedoor in ientitylist(Shared.GetEntitiesWithClassname("SiegeDoor")) do
-            if not siegedoor:isa("FrontDoor") then 
+            if not siegedoor:isa("FrontDoor") and not siegedoor:isa("SideDoor") then 
             OpenEightTimes(siegedoor) 
             end
        end
       if GetGameStarted() then
-         GetGamerules():DisplaySiege()
             for _, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
             StartSoundEffectForPlayer(Timer.kSiegeDoorSound, player)
            end
       end   
 end
-
+function Timer:OpenSideDoors()
+     self.SideTimer = 0
+     self.sideOpened = true
+       for index, sidedoor in ientitylist(Shared.GetEntitiesWithClassname("SideDoor")) do
+            OpenEightTimes(sidedoor) 
+       end
+       if GetGameStarted() then 
+        GetGamerules():DisplaySide()
+        end
+end
 local function CloseAllBreakableDoors()
   for _, door in ientitylist(Shared.GetEntitiesWithClassname("BreakableDoor")) do 
            door.open = false
@@ -140,7 +154,11 @@ function Timer:GetIsFrontOpen()
            local gameLength = Shared.GetTime() - gamestarttime
            return  gameLength >= kFrontTime
 end
-
+function Timer:GetIsSideOpen()
+           local gamestarttime = GetGameInfoEntity():GetStartTime()
+           local gameLength = Shared.GetTime() - gamestarttime
+           return  gameLength >= kSideTime
+end
 if Server then
      function Timer:OnUpdate(deltatime)
           local gamestarted = GetGamerules():GetGameStarted()
@@ -148,6 +166,7 @@ if Server then
                if not self.timelasttimerup or self.timelasttimerup + 1 <= Shared.GetTime() then
                     if not self.frontOpened then self:FrontDoorTimer() end
                     if not self.siegeOpened then self:SiegeDoorTimer() end   
+                    if not self.sideOpened then self:SideDoorTimer() end  
                     self.timelasttimerup = Shared.GetTime()  
                 end
           end
@@ -228,7 +247,11 @@ function Timer:FrontDoorTimer()
         end
      end
 end
-
+function Timer:SideDoorTimer()
+    if self:GetIsSideOpen() then
+       self:OpenSideDoors()
+     end
+end
 function Timer:OnPreGame()
    for i = 1, 4 do
      Print("Timer OnPreGame")

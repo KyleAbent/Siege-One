@@ -304,13 +304,28 @@ end
 
 
 
-
-function GetSiegeDoor() --it washed away
-    local entityList = Shared.GetEntitiesWithClassname("SiegeDoor")
+function GetFrontDoor() 
+        for index, door in ientitylist(Shared.GetEntitiesWithClassname("FrontDoor")) do
+        
+          return door
+            
+    end
+end
+function GetSideDoor() 
+    local entityList = Shared.GetEntitiesWithClassname("SideDoor")
     if entityList:GetSize() > 0 then
-                 local siegedoor = entityList:GetEntityAtIndex(0) 
-                 return siegedoor
-    end    
+         local door = entityList:GetEntityAtIndex(0) 
+         return door
+    end   
+     return nil 
+end
+function GetSiegeDoor() 
+    for index, door in ientitylist(Shared.GetEntitiesWithClassname("SiegeDoor")) do
+        if not door:isa("FrontDoor") and not door:isa("SideDoor") then--because siegedoor is parent lol ugh
+            return door
+        end  
+    end
+           
     return nil
 end
 function GetTimer() --it washed away

@@ -37,3 +37,5 @@ kOnosHealth = 770 --700
 
 kMatureWhipHealth = 1440
 kMatureWhipArmor = 340
+
+kCystHealthPerBioMass = 50

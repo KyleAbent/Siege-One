@@ -2,6 +2,7 @@ kHiveInfestationRadius = 10 // Common for hive infestation to leech over in sieg
 
 kFrontTime = 300
 kSiegeTime = 930
+kSideTime = 540
 
 
 kJetpackUseFuelRate = .15 //I'm really not happy about this.

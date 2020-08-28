@@ -161,6 +161,8 @@ local function grabDoorMapEditorSettings()
             Print("siegeTime is default by mapname")
         end
     else
+        isDefaultFront = true
+        isDefaultSiege = true
         Print("frontdoor siegedoor timers nil ugh lol")
     end
     
@@ -213,6 +215,18 @@ local function grabDoorMapEditorSettings()
        end
     end
     
+    --lol
+    if frontDoor.shortenTimer == nil then
+            Print("shortentimer true, reducing front timer")
+            //Calculate reduction here 6.15.20
+            Print("frontTime was %s",frontTime)
+            kReduceDoorTimeBy = math.random(frontTime*0.5, frontTime*0.7)
+            frontTime = frontTime - kReduceDoorTimeBy
+            Print("mapName is %s", mapName)
+            Print("frontTime is %s",frontTime)
+            kFrontTime = frontTime
+    end
+    
     Print("siegeTime is %s", siegeTime)
     
     if siegeTime ~= kSiegeTime then
@@ -258,8 +272,10 @@ Shared.ConsoleCommand("sh_csay Front Doors now open!!!!")
 self:NotifyTimer( nil, "Front Doors now open!!!!", true)
 end
 function Plugin:OnSide() 
-Shared.ConsoleCommand("sh_csay Side Doors now open!!!!") 
-self:NotifyTimer( nil, "Side Doors now open!!!!", true)
+    if GetSideDoor() ~= nil then
+        Shared.ConsoleCommand("sh_csay Side Doors now open!!!!") 
+        self:NotifyTimer( nil, "Side Doors now open!!!!", true)
+    end
 end
 ------------------------------------------------------------
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePost" ) 

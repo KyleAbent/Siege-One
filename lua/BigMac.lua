@@ -101,14 +101,23 @@ end
 
 function BigMac:OnOrderComplete(currentOrder)
 
- if Server then    
-            
-           if (   GetIsInSiege(self)    and not GetTimer():GetIsSiegeOpen() ) then
-          self:Kill() 
-           end
+if self.autoReturning or currentOrder:GetType() == kTechId.Move then
+    if self.autoReturning then
+        self.leashedPosition = nil
+        self.autoReturning = false
+    end
+ end   
+ 
+     if currentOrder:GetType() == kTechId.Move then
+        if Server then    
+
+            if (   GetIsInSiege(self)    and not GetTimer():GetIsSiegeOpen() ) then
+                self:Kill() 
+            end
 
 
-      end
+        end
+    end
     
 end
 
@@ -143,5 +152,9 @@ function BigMac:GetMapBlipInfo()
 
 end
 */
+
+function BigMac:OnUpdate(deltaTime)
+    MAC.OnUpdate(self, deltaTime)
+end
 
 Shared.LinkClassToMap("BigMac", BigMac.kMapName, networkVars)

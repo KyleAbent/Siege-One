@@ -158,6 +158,36 @@ end
 
 FrontDoor.kMapName = "frontdoor"
 
+function FrontDoor:OnInitialized()
+
+SiegeDoor.OnInitialized(self)
+self:SetUpdates(true)
+end
+
+if Server then
+
+    local function DestroyCysts(self)
+
+        for _, cyst in ipairs( GetEntitiesForTeamWithinRange("Cyst", 2, self:GetOrigin(), 17) ) do
+                cyst:Kill()
+                Print("Destroying Cyst by Front Door")
+        end
+        
+    end
+    
+     function FrontDoor:OnUpdate(deltatime)
+          --local gamestarted = GetGamerules():GetGameStarted()
+          --if gamestarted then 
+          if not self.opened then
+               if not self.timelasttimerup or self.timelasttimerup + 1 <= Shared.GetTime() then
+                    DestroyCysts(self)
+                end
+          end
+     end
+     
+end
+
+
 Shared.LinkClassToMap("FrontDoor", FrontDoor.kMapName, networkVars)
 
 

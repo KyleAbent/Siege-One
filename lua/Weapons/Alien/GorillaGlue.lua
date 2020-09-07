@@ -203,7 +203,7 @@ function GorillaGlue:OnSecondaryAttack(player)
           -- Print("Energy cost is %s, player energy is %s, player has more energy is %s", self:GetEnergyCost(),  player:GetEnergy(), self:GetEnergyCost() < player:GetEnergy())
           
           
-        if player:GetIsOnGround() and self:GetCanToggleRebirth(player) and self:GetEnergyCost() < player:GetEnergy() then
+        if player:GetIsOnGround() and self:GetEnergyCost() < player:GetEnergy() then
            --     Print("Umm")
             player:DeductAbilityEnergy(self:GetEnergyCost())
             

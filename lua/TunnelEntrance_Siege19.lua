@@ -81,7 +81,7 @@ function TunnelEntrance:OnInitialized()
     
     origInit(self) 
     if Server then
-        self:UpdateConnectedTunnel() --only to match pair so quick lol
+        --self:UpdateConnectedTunnel() --only to match pair so quick lol
         InitMixin(self, MinimapConnectionMixin)
     end
     --self:DoOther()
@@ -224,27 +224,29 @@ end
         -- register if a tunnel entity already exists or a free tunnel has been found
         for _, tunnel in ientitylist( Shared.GetEntitiesWithClassname("TunnelEntrance") ) do
           --Print("Tunnel Index  Is %s", tunnel.index )
-            if not tunnel.open and tunnel ~= self and tunnel:GetOwnerClientId() == self:GetOwnerClientId() then
-                if  self.index == 0 and tunnel.index == 0  or --0 is gorge tunnel
-                    self.index == 1 and tunnel.index == 1  or
-                    self.index == 2 and tunnel.index == 2  or
-                    self.index == 3 and tunnel.index == 3  then
+          if tunnel ~= self then
+            --if not tunnel:GetOtherEntrance() then -- This ain't pretty lol. For loop! Bad perf. Well. This dont make sense either. The other can have this.
+                if ( tunnel:GetOtherEntrance() == self ) or ( tunnel:GetOwnerClientId() == self:GetOwnerClientId() )  then
+                    if (self.index == tunnel.index) then
                         foundTunnel = tunnel
+                        --Print("TunnelEntrance UpdateConnectedTunnel Found Partner Tunnel!")
                         break
+                    end
                 end
-            end
+            --end
+          end
         end
         
         self:SetOtherEntrance(foundTunnel)
         
-        if (foundTunnel) then
-            foundTunnel:SetOtherEntrance(self)
-            foundTunnel:UpdateConnectedTunnel()
+       -- if (foundTunnel) then
+            --foundTunnel:SetOtherEntrance(self)
+            --foundTunnel:UpdateConnectedTunnel()
             --foundTunnel.randomColorNumber = self.randomColorNumber
             --self.randomColorNumber = foundTunnel.randomColorNumber
             --Print("foundTunnel")
             
-        end
+       -- end
         
         
     end
@@ -268,7 +270,7 @@ end
     
     local origUpdate = TunnelEntrance.OnUpdate
     function TunnelEntrance:OnUpdate(deltaTime)
-            --Why is it being set to other entities? ParticleEffect, d
+          --Why is it being set to other entities? ParticleEffect, d
 
         local otherEntrance = self:GetOtherEntrance()
         if otherEntrance then                                                                   --or not other.getisalive bleh
@@ -303,6 +305,7 @@ function TunnelEntrance:GetMinimapYawOffset()
     end
     
 end
+
 
 function TunnelEntrance:SetIndex(index)
     self.index = index

@@ -7,7 +7,7 @@ function Plugin:Initialise()
 self.Enabled = true
 self:CreateCommands()
 kgameStartTime = 0
-kReduceDoorTimeBy = 0
+--kReduceDoorTimeBy = 0
 
 return true
 end
@@ -194,8 +194,8 @@ local function grabDoorMapEditorSettings()
     
     if isDefaultSide then
         sideTime = byNameSide
-        Print("Siege time map setting 0, so grabbing by mapname")
-        Print("siegeTime time is %s", siegeTime)
+        Print("Side time map setting 0, so grabbing by mapname")
+        Print("sideTime time is %s", sideTime)
     end
     
     if frontDoor.shortenTimer ~= nil then
@@ -206,6 +206,8 @@ local function grabDoorMapEditorSettings()
             Print("frontTime was %s",frontTime)
             kReduceDoorTimeBy = math.random(frontTime*0.5, frontTime*0.7)
             frontTime = frontTime - kReduceDoorTimeBy
+            local gameInfo = GetGameInfoEntity()
+            gameInfo:SetFrontTime(frontTime)
             Print("mapName is %s", mapName)
             Print("frontTime is %s",frontTime)
             kFrontTime = frontTime
@@ -282,37 +284,19 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePo
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySide", "OnSide", "PassivePost" ) 
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePost" ) 
 ------------------------------------------------------------
-local function AddFrontTimer(who,NowToFront)
-  if not NowToFront then 
-    NowToFront = kFrontTime - (Shared.GetTime() - kgameStartTime)
-  end
-  Shine.ScreenText.Add( 1, {X = 0.40, Y = 0.75,Text = "Front: %s",Duration = NowToFront,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, who )
-end
-------------------------------------------------------------
-local function AddSiegeTimer(who, NowToSiege)
-    if not NowToSiege then 
-     NowToSiege = kSiegeTime - (Shared.GetTime() - kgameStartTime)
+local function AddSideTimer(who, NowToSide)
+    if not NowToSide then 
+     NowToSide = kSideTime - (Shared.GetTime() - kgameStartTime)
      end
-    Shine.ScreenText.Add( 2, {X = 0.40, Y = 0.95,Text = "Siege: %s",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, who )
-end
-local function AddSideTimer(who, NowToSiege)
-    if not NowToSiege then 
-     NowToSiege = kSideTime - (Shared.GetTime() - kgameStartTime)
-     end
-    Shine.ScreenText.Add( 3, {X = 0.40, Y = 0.85,Text = "Side: %s",Duration = NowToSiege,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, who )
+    Shine.ScreenText.Add( 1, {X = 0.40, Y = 0.85,Text = "Side: %s",Duration = NowToSide,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, who )
 end
 
 ------------------------------------------------------------
 local function GiveTimersToAll()
-              //GetDoorLengthByMapName()
               local Players = Shine.GetAllPlayers()
-			   //AddFrontTimer(nil)
-			   //AddSiegeTimer(nil)
                for i = 1, #Players do
                    local Player = Player[ i ]//:GetControllingPlayer()
-                   AddFrontTimer(Player)
                    AddSideTimer(Player)
-                   AddSiegeTimer(Player)
                end
 end
 ------------------------------------------------------------
@@ -329,11 +313,8 @@ function Plugin:ClientConfirmConnect(Client)
 
   if Client:GetIsVirtual() then return end
     if GetGamerules():GetGameStarted() then
-       if not GetTimer():GetIsFrontOpen() then
-         AddFrontTimer(Client)
-        end
-        if not GetTimer():GetIsSiegeOpen() then
-         AddSiegeTimer(Client)
+       if not GetTimer():GetIsSideOpen() then
+         AddSideTimer(Client)
         end
    end
 end
@@ -351,13 +332,13 @@ function Plugin:SetGameState( Gamerules, State, OldState )
          kgameStartTime = Shared.GetTime()
          grabDoorMapEditorSettings() --only do once per map? hm
          GetTimer():OnRoundStart()
-         self:NotifyTimer( nil, "Front Door time has been reduced by %s seconds", true, kReduceDoorTimeBy)
+         if kReduceDoorTimeBy > 0 then
+            self:NotifyTimer( nil, "Front Door time has been reduced by %s seconds", true, kReduceDoorTimeBy)
+         end
          GiveTimersToAll()
          OpenAllBreakableDoors()
       else
          Shine.ScreenText.End(1) 
-         Shine.ScreenText.End(2)
-         Shine.ScreenText.End(3)
       end
       
      if State ==  kGameState.Team1Won  or State ==  kGameState.Team2Won then
@@ -533,11 +514,11 @@ local function Open( Client, String )
 local Gamerules = GetGamerules()
      if String == "Front" or String == "front" then
        GetTimer():OpenFrontDoors()
-       Shine.ScreenText.End(1) 
      elseif String == "Siege" or String == "siege" then
        GetTimer():OpenSiegeDoors()
      elseif String == "Side" or String == "side" then
        GetTimer():OpenSideDoors()
+       Shine.ScreenText.End(1) 
      elseif String == "Breakable" or String == "breakable" then
        OpenBreakableDoors()
     end  
@@ -595,6 +576,66 @@ function Plugin:DontSpamCommanders(player)
 end
 
 Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMist", "DontSpamCommanders", "Replace" )
+
+function Plugin:DontSpamCommandersMed(player)
+
+  local mist = GetEntitiesWithinRange("MedPack", player:GetOrigin(), 9)
+  local hasFailed = false
+  local string = "lol"
+  
+   if #mist >=2 then 
+    string = "Failed to buy: Found 2 medpack within radius"
+    hasFailed = true
+   end
+   
+   if not hasFailed then
+       if player:GetResources() == 0 then
+            string = "You're broke. Go to the bank. Get Res."
+            hasFailed = true
+       end
+    end  
+    
+    if not hasFailed then
+        string = "You have purchased medpack for 1 resource"
+        --player:GiveItem(NutrientMist.kMapName)
+          player:DelayMedPack()
+    end
+    
+    local client = player:GetClient()
+    Shine.ScreenText.Add( "One", {X = 0.40, Y = 0.65,Text = string,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
+
+end
+
+Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMed", "DontSpamCommandersMed", "Replace" )
+
+function Plugin:DontSpamCommandersAmmo(player)
+
+  local mist = GetEntitiesWithinRange("AmmoPack", player:GetOrigin(), 9)
+  local hasFailed = false
+  local string = "lol"
+  
+   if #mist >=2 then 
+    string = "Failed to buy: Found 2 ammopack within 9 radius"
+    hasFailed = true
+   end
+   
+   if not hasFailed then
+       if player:GetResources() == 0 then
+            string = "You're broke. Go to the bank. Get Res."
+            hasFailed = true
+       end
+    end  
+    
+    if not hasFailed then
+        string = "You have purchased ammopack for 1 resource"
+        player:DelayAmmoPack()
+    end
+    
+    local client = player:GetClient()
+    Shine.ScreenText.Add( "One", {X = 0.40, Y = 0.65,Text = string,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
+
+end
+Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyAmmo", "DontSpamCommandersAmmo", "Replace" )
 
 
 function Plugin:lolcomm(who,techid,order)
@@ -665,7 +706,7 @@ Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRebirthRedemptionS
   function Plugin:OnRedemedHook(player) 
         if not player:GetTeamNumber() == 2 or not player:GetIsAlive() then return end
         if player:GetEligableForRebirth() then
-            Shine.ScreenText.End(35)
+            --Shine.ScreenText.End(35)
             return
         end
         local NowToCoolDownOver = player:GetRedemptionCoolDown() - (Shared.GetTime() - player.lastredeemorrebirthtime)
@@ -780,3 +821,4 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "GetCanJoinTeamNumber", "SiegeGetCanJ
 --Shine.Hook.SetupClassHook( "Gamerules", "GetCanJoinPlayingTeam", "SiegeGetCanJoinTeamNumber", "PassivePre" )
 
 */
+

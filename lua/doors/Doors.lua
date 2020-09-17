@@ -195,9 +195,9 @@ Shared.LinkClassToMap("FrontDoor", FrontDoor.kMapName, networkVars)
 class 'SideDoor' (SiegeDoor)
 
 
-function SideDoor:GetIsLocked()    
-return not GetPrimaryDoorOpen()
-end
+--function SideDoor:GetIsLocked()    
+--return not GetPrimaryDoorOpen()
+--end
 
 SideDoor.kMapName = "sidedoor"
 
@@ -207,9 +207,9 @@ Shared.LinkClassToMap("SideDoor", SideDoor.kMapName, networkVars)
 class 'SideDoor' (SiegeDoor)
 
 
-function SideDoor:GetIsLocked()    
-return not GetPrimaryDoorOpen()
-end
+--function SideDoor:GetIsLocked()    
+--return not GetPrimaryDoorOpen()
+--end
 
 class 'weldComplete_Door_toOrigin' (SiegeDoor)
 weldComplete_Door_toOrigin.kMapName = "wcdto"

@@ -33,7 +33,7 @@ kSkulkHealth = 80 --75
 kGorgeHealth = 176 --160   
 --kLerkHealth = 198 --180  
 --kFadeHealth = 275 --250   
-kOnosHealth = 770 --700   
+kOnosHealth = 735 --700   
 
 kMatureWhipHealth = 1440
 kMatureWhipArmor = 340

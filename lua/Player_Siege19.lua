@@ -31,4 +31,18 @@ function Player:HookWithShineToBuyMist(player)
 
 end
 
+function Player:HookWithShineToBuyMed(player)
+
+end
+
+function Player:HookWithShineToBuyAmmo(player)
+
+end
+
+function Player:GetFrontTime()
+    --Print("uhh")
+    Print("kReduceDoorTimeBy is %s", kReduceDoorTimeBy)
+    return kFrontTime - kReduceDoorTimeBy
+end
+
 //Shared.LinkClassToMap("Player", Player.kMapName, networkVars)

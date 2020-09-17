@@ -5,6 +5,8 @@ kSiegeTime = 930
 kSideTime = 540
 
 
+kReduceDoorTimeBy = 0
+
 kJetpackUseFuelRate = .15 //I'm really not happy about this.
 
 

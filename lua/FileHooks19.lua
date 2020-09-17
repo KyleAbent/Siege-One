@@ -1,7 +1,12 @@
 ModLoader.SetupFileHook( "lua/TargetCache.lua", "lua/TargetCache_Siege.lua", "post" )
 --ModLoader.SetupFileHook( "lua/Infestation.lua", "lua/Infestation_Siege20.lua", "post" )
 --ModLoader.SetupFileHook( "lua/Cyst.lua", "lua/Cyst_Siege20.lua", "post" )
+ModLoader.SetupFileHook( "lua/GameInfo.lua", "lua/GameInfo_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/Hud/GUIPlayerResource.lua", "lua/Hud/GUIPlayerResource_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/Hud/Marine/GUIMarineHUD.lua", "lua/Hud/Marine/GUIMarineHUD_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/GUIAlienHUD.lua", "lua/GUIAlienHUD_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Alien_Upgrade.lua", "lua/Alien_Upgrade_Siege20.lua", "post" )
+ModLoader.SetupFileHook( "lua/Player_Client.lua", "lua/Player_Client_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/GUIAlienBuyMenu.lua", "lua/GUIAlienBuyMenu_Siege20.lua", "post" )--override
 ModLoader.SetupFileHook( "lua/GUIUpgradeChamberDisplay.lua", "lua/GUIUpgradeChamberDisplay_Siege20.lua", "post" )--override
 ModLoader.SetupFileHook( "lua/AchievementGiverMixin.lua", "lua/AchievementGiverMixin_Siege19.lua", "replace" ) --hmm?

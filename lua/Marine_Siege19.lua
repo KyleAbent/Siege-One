@@ -159,6 +159,30 @@ if Server then
     function Marine:GetCanEnterTunnel()
         return false
     end
+    
+    
+    function Marine:DelayMedPack()
+        self:AddTimedCallback(Marine.DelayedMedPack, 2)
+    end
+    
+    function Marine:DelayedMedPack()
+        local where = FindFreeSpace(self:GetOrigin(), 2, 5)
+        local med = CreateEntity(MedPack.kMapName, where, 1)  
+        self:SetResources( self:GetResources() - 1 )
+        return false
+    end
+    
+    function Marine:DelayAmmoPack()
+        self:AddTimedCallback(Marine.DelayedAmmoPack, 2)
+    end
+    
+    function Marine:DelayedAmmoPack()
+        local where = FindFreeSpace(self:GetOrigin(), 2, 5)
+        local med = CreateEntity(AmmoPack.kMapName, where, 1)  
+        self:SetResources( self:GetResources() - 1 )
+        return false
+    end
+    
 
 end
 

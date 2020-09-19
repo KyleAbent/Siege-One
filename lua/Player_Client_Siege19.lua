@@ -9,13 +9,25 @@ end
 function PlayerUI_GetSiegeLength()
 
 
-    return kSiegeTime
 
+    local timer = GetTimer()
+    if not timer then return kSiegeTime end
+    return timer:GetSiegeLength()
 end
 
 function PlayerUI_GetSideLength()
 
 
-    return kSideTime
+    local gameInfo = GetGameInfoEntity()
+    if not gameInfo then return kSideTime end
+    return gameInfo:GetSideTime()
+
+end
+
+function PlayerUI_GetActivePower()
+
+    local gameInfo = GetGameInfoEntity()
+    if not gameInfo then return 1 end
+    return gameInfo:GetDynamicSiegeTimerAdjustment()
 
 end

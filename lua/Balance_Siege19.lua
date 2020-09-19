@@ -2,7 +2,7 @@ kHiveInfestationRadius = 10 // Common for hive infestation to leech over in sieg
 
 kFrontTime = 300
 kSiegeTime = 930
-kSideTime = 540
+kSideTime = 0
 
 
 kReduceDoorTimeBy = 0

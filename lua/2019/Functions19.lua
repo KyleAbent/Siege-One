@@ -1,3 +1,12 @@
+function GetActivePowerCount()//bool notSiege, if notSiege true then.. prevent grabbing siege powerpoint..?
+      local powers = {}
+      for _, power in ientitylist(Shared.GetEntitiesWithClassname("PowerPoint")) do
+         if power:GetIsBuilt() and not power:GetIsDisabled() then
+                table.insert(powers,power) //and not in siege ? Hm?
+          end
+      end
+        return table.count(powers)
+end
 ----------------------------Fade Trail-----------------------------------------------------------
 if Server then
 

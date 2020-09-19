@@ -116,7 +116,7 @@ local sideTime = 540
 end
 
 local function grabDoorMapEditorSettings()
-
+    local gameInfo = GetGameInfoEntity()
     local frontDoor = GetFrontDoor()
     local siegeDoor = GetSiegeDoor()
     local sideDoor = GetSideDoor()
@@ -206,7 +206,6 @@ local function grabDoorMapEditorSettings()
             Print("frontTime was %s",frontTime)
             kReduceDoorTimeBy = math.random(frontTime*0.5, frontTime*0.7)
             frontTime = frontTime - kReduceDoorTimeBy
-            local gameInfo = GetGameInfoEntity()
             gameInfo:SetFrontTime(frontTime)
             Print("mapName is %s", mapName)
             Print("frontTime is %s",frontTime)
@@ -238,12 +237,14 @@ local function grabDoorMapEditorSettings()
     
     if sideDoor == nil then
         kSideTime = 0
+        gameInfo:SetSideTime(kSideTime)
         Print("sideDoor is nil, not found on map. Don't show its timer")
     end
     
     Print("sideTime is %s", sideTime)
     if kSideTime ~= sideTime then
         kSideTime = sideTime
+        gameInfo:SetSideTime(kSideTime)
         Print("kSideTime is %s", kSideTime)
     end
     
@@ -284,40 +285,11 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePo
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySide", "OnSide", "PassivePost" ) 
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePost" ) 
 ------------------------------------------------------------
-local function AddSideTimer(who, NowToSide)
-    if not NowToSide then 
-     NowToSide = kSideTime - (Shared.GetTime() - kgameStartTime)
-     end
-    Shine.ScreenText.Add( 1, {X = 0.40, Y = 0.85,Text = "Side: %s",Duration = NowToSide,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, who )
-end
+
 
 ------------------------------------------------------------
-local function GiveTimersToAll()
-              local Players = Shine.GetAllPlayers()
-               for i = 1, #Players do
-                   local Player = Player[ i ]//:GetControllingPlayer()
-                   AddSideTimer(Player)
-               end
-end
+
 ------------------------------------------------------------
-//Add timer on join if game started
-function Plugin:ClientConfirmConnect(Client)
---function Plugin:ClientConnect(Client)
-    --REMOvE ME LOL DEBUGGING 
---Shared.ConsoleCommand("cheats 1") 
---Shared.ConsoleCommand("alltech") 
---Shared.ConsoleCommand("autobuild") 
---Shared.ConsoleCommand("sh_forceroundstart") 
-
---GetDoorLengthByMapName()
-
-  if Client:GetIsVirtual() then return end
-    if GetGamerules():GetGameStarted() then
-       if not GetTimer():GetIsSideOpen() then
-         AddSideTimer(Client)
-        end
-   end
-end
 ------------------------------------------------------------
 local function OpenAllBreakableDoors()
      for _, door in ientitylist(Shared.GetEntitiesWithClassname("BreakableDoor")) do 
@@ -335,7 +307,6 @@ function Plugin:SetGameState( Gamerules, State, OldState )
          if kReduceDoorTimeBy > 0 then
             self:NotifyTimer( nil, "Front Door time has been reduced by %s seconds", true, kReduceDoorTimeBy)
          end
-         GiveTimersToAll()
          OpenAllBreakableDoors()
       else
          Shine.ScreenText.End(1) 

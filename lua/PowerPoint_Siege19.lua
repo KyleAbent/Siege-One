@@ -37,6 +37,31 @@ function PowerPoint:OnInitialized()
     self.discoEnabled = false
 end
     
+    
+    
+if Server then
 
+    local origKill = PowerPoint.OnKill
+     function PowerPoint:OnKill(attacker, doer, point, direction) //Initial hive 
+        origKill(self, attacker, doer, point, direction)
+        local gameinfo = GetGameInfoEntity()
+        if gameinfo then
+            gameinfo:DeductActivePower()
+        end
+        
+     end
+     
 
+     function PowerPoint:SetPoweringState(state)
+         if state == true then
+                    local gameinfo = GetGameInfoEntity()
+                    if gameinfo then
+                        gameinfo:AddActivePower()
+                    end
+        end      
+    end  
+    
+    
+    
+end
 Shared.LinkClassToMap("PowerPoint", PowerPoint.kMapName, networkVars)

@@ -18,8 +18,6 @@ local networkVars =
    siegeBeaconed = "boolean",
    SideTimer = "integer",
    sideOpened = "boolean",
-   
-   
 }
 
 function Timer:TimerValues()
@@ -86,7 +84,9 @@ end
 function Timer:GetFrontLength()
  return self.FrontTimer 
 end
-
+function Timer:GetSiegeLength()
+ return self.SiegeTimer 
+end
 local function OpenEightTimes(who)
     if not who then return end
     for i = 1, math.max(9 / 2, 16) do
@@ -127,6 +127,7 @@ local function CloseAllBreakableDoors()
 end
 
 function Timer:OpenFrontDoors()
+        GetGameInfoEntity():SetSetupPowerCount()
          self.frontOpened = true
           GetGamerules():SetDamageMultiplier(1) 
            CloseAllBreakableDoors()
@@ -142,20 +143,22 @@ function Timer:OpenFrontDoors()
                       end
                end          
 end
-
-function Timer:GetIsSiegeOpen()
-           local gamestarttime = GetGameInfoEntity():GetStartTime()
+function Timer:AdjustSiegeTimer(time)
+        self.SiegeTimer = self.SiegeTimer + (time)
+end
+function Timer:GetIsSiegeOpen(gameinfo)
+           local gamestarttime = gameinfo:GetStartTime()
            local gameLength = Shared.GetTime() - gamestarttime
-           return  gameLength >= kSiegeTime
+           return  gameLength >= self.SiegeTimer
 end
 
-function Timer:GetIsFrontOpen()
-           local gamestarttime = GetGameInfoEntity():GetStartTime()
+function Timer:GetIsFrontOpen(gameinfo)
+           local gamestarttime = gameinfo:GetStartTime()
            local gameLength = Shared.GetTime() - gamestarttime
            return  gameLength >= kFrontTime
 end
-function Timer:GetIsSideOpen()
-           local gamestarttime = GetGameInfoEntity():GetStartTime()
+function Timer:GetIsSideOpen(gameinfo)
+           local gamestarttime = gameinfo:GetStartTime()
            local gameLength = Shared.GetTime() - gamestarttime
            return  gameLength >= kSideTime
 end
@@ -164,17 +167,18 @@ if Server then
           local gamestarted = GetGamerules():GetGameStarted()
           if gamestarted then 
                if not self.timelasttimerup or self.timelasttimerup + 1 <= Shared.GetTime() then
-                    if not self.frontOpened then self:FrontDoorTimer() end
-                    if not self.siegeOpened then self:SiegeDoorTimer() end   
-                    if not self.sideOpened then self:SideDoorTimer() end  
+                    local gameinfo = GetGameInfoEntity()
+                    if not self.frontOpened then self:FrontDoorTimer(gameinfo) end
+                    if not self.siegeOpened then self:SiegeDoorTimer(gameinfo) end   
+                    if not self.sideOpened then self:SideDoorTimer(gameinfo) end  
                     self.timelasttimerup = Shared.GetTime()  
                 end
           end
      end
 end
 
-function Timer:SiegeDoorTimer()
-       if  self:GetIsSiegeOpen() then
+function Timer:SiegeDoorTimer(gameinfo)
+       if  self:GetIsSiegeOpen(gameinfo) then
            self:OpenSiegeDoors()
        end
 end
@@ -236,9 +240,9 @@ function Timer:BuildSpeedBonus()
         --infested unbuilt
 end
 
-function Timer:FrontDoorTimer()
+function Timer:FrontDoorTimer(gameinfo)
 
-    if self:GetIsFrontOpen() then
+    if self:GetIsFrontOpen(gameinfo) then
        self:OpenFrontDoors()
     else
         if not self.timelastBonus or self.timelastBonus + 10 <= Shared.GetTime() then
@@ -247,8 +251,8 @@ function Timer:FrontDoorTimer()
         end
      end
 end
-function Timer:SideDoorTimer()
-    if self:GetIsSideOpen() then
+function Timer:SideDoorTimer(gameinfo)
+    if self:GetIsSideOpen(gameinfo) then
        self:OpenSideDoors()
      end
 end

@@ -6,7 +6,7 @@ function GUIMarineHUD:Update(deltaTime)
     
     -- Update resource display
     local resourceUpdate = {
-        PlayerUI_GetGameStartTime(),
+        PlayerUI_GetActivePower(),
         PlayerUI_GetGameLengthTime(),
         PlayerUI_GetFrontLength(),
         PlayerUI_GetSiegeLength(),

@@ -5,7 +5,6 @@ local networkVars =
     --Siege is determined by timer as it will fluctuate
     activePower = "integer",
     setupPowerCount = "integer",
-    negate = "boolean",
 }
 
 local ogCreate = GameInfo.OnCreate
@@ -16,7 +15,6 @@ function GameInfo:OnCreate()
     self.sideTimer = kSideTime
     self.activePower = GetActivePowerCount()
     self.setupPowerCount = 0
-    self.negate = false
 end
 
 function GameInfo:GetSetupPowerCount()
@@ -31,8 +29,7 @@ function GameInfo:AddActivePower()
    self.activePower = self.activePower + 1
     local timer = GetTimer()
     if not timer:GetIsSiegeOpen(self) then
-        self.negate = false
-        timer:AdjustSiegeTimer(self:GetDynamicSiegeTimerAdjustment(self.setupPowerCount == self.activePower) )
+        timer:AdjustSiegeTimer(self:GetDynamicSiegeTimerAdjustment(self.setupPowerCount == self.activePower, false) )
         
     end
 end
@@ -41,8 +38,7 @@ function GameInfo:DeductActivePower()
    self.activePower = self.activePower - 1
     local timer = GetTimer()
     if not timer:GetIsSiegeOpen(self) then
-        self.negate = true
-        timer:AdjustSiegeTimer(self:GetDynamicSiegeTimerAdjustment(self.setupPowerCount == self.activePower))--it will still say 
+        timer:AdjustSiegeTimer(self:GetDynamicSiegeTimerAdjustment(self.setupPowerCount == self.activePower, true))--it will still say 
         --if at 3 power then get 3 more , 100% bonus, then get another so at total 7
         --then destroy 7, this deducts. shouldnt. because it would be at 6. would be 100% lol
         
@@ -53,7 +49,7 @@ function GameInfo:GetFrontTime()
    return self.frontTimer
 end
 
-function GameInfo:GetDynamicSiegeTimerAdjustment(force)--Interesting how this is called by powerpoint toggle as well as client gui ;). Power of vars!
+function GameInfo:GetDynamicSiegeTimerAdjustment(force, negate)--Interesting how this is called by powerpoint toggle as well as client gui ;). Power of vars!
 
     --So once front door opens, the setup time count will be set to the amount of active power at time of opening
     --Then the current amount of active power will add and deduct count manually when each powerpoint is killed or constrct
@@ -71,7 +67,7 @@ function GameInfo:GetDynamicSiegeTimerAdjustment(force)--Interesting how this is
                         --Off by one don't count main power here.               --nor here
                         
         local mathOne = Clamp( ( self.activePower - 1 ) - whenSetupOpened, -20, 20) --Clamp( ( self.activePower - 1 ) - whenSetupOpened, ( whenSetupOpened * - 1 )  + 1, self.activePower - 1) -- negative to a postive
-        if self.negate then 
+        if negate then 
             mathOne = mathOne * -1 
         end
         local mathTwo = mathOne/whenSetupOpened
@@ -104,6 +100,15 @@ function GameInfo:GetDynamicSiegeTimerAdjustment(force)--Interesting how this is
         local kMaxAddition = 120
         deduction = kMaxAddition * mathTwo
         --Print("[Siege Dynamic Result] %s percent of %s is %s", mathTwo, kMaxAddition, deduction)
+        
+        if negate then
+            deduction = deduction * -1
+            --Print("Marine Gained power")
+            --Print("Gained %s Percent of power", mathTwo * 10)
+            --Print("[Siege Dynamic Result] %s percent of %s is %s", mathTwo, kMaxAddition, deduction)
+        end
+        
+        
     end
     
    return deduction

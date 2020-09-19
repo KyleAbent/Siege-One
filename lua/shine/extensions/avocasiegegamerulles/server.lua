@@ -213,6 +213,7 @@ local function grabDoorMapEditorSettings()
        else
         Print("frontTime is %s",frontTime)
         kFrontTime = frontTime
+        gameInfo:SetFrontTime(frontTime)
        end
     end
     
@@ -226,6 +227,7 @@ local function grabDoorMapEditorSettings()
             Print("mapName is %s", mapName)
             Print("frontTime is %s",frontTime)
             kFrontTime = frontTime
+            gameInfo:SetFrontTime(frontTime)
     end
     
     Print("siegeTime is %s", siegeTime)

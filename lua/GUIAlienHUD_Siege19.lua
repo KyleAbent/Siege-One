@@ -10,7 +10,8 @@ function GUIAlienHUD:Update(deltaTime)
         PlayerUI_GetGameLengthTime(),
         PlayerUI_GetFrontLength(),
         PlayerUI_GetSiegeLength(),
-        PlayerUI_GetSideLength()
+        PlayerUI_GetSideLength(),
+        PlayerUI_GetInitialSiegeLength()
     }
     
     

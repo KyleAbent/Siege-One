@@ -155,7 +155,7 @@ end
 function GUIPlayerResource:UpdateFrontSiege(_, parameters)
 
     --origUpdate(self, _, parameters)
-     local activePower, gLength, fLength, sLength, ssLength, initial = parameters[1],  parameters[2], parameters[3], parameters[4],  parameters[5], parameters[6]
+     local activePower, gLength, fLength, sLength, ssLength = parameters[1],  parameters[2], parameters[3], parameters[4],  parameters[5]
      --for i = 1, #parameters do
      --   local p = parameters[i]
      --   Print(p)
@@ -213,16 +213,12 @@ function GUIPlayerResource:UpdateFrontSiege(_, parameters)
          if frontRemain > 0 then
             self.powerTxt:SetText(string.format("Dynamic: **"))
          else
-            local bonus = ( sLength + (activePower) ) 
-            local howMuchBonus = 0
             if activePower == 0 then
                 self.powerTxt:SetText(string.format("Draw"))
-            elseif  bonus > initial then --initial then
-                howMuchBonus = sLength - initial --bonus - initial
-                self.powerTxt:SetText(string.format("Add: %s", howMuchBonus))
+            elseif  sLength > kSiegeTime then
+                self.powerTxt:SetText(string.format("Add: %s", activePower))
             else
-                howMuchBonus = initial - sLength
-                self.powerTxt:SetText(string.format("Deduct: %s", howMuchBonus * -1))
+                self.powerTxt:SetText(string.format("Deduct: %s", activePower * -1))
             end
         end
         

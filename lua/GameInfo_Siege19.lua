@@ -5,6 +5,8 @@ local networkVars =
     --Siege is determined by timer as it will fluctuate
     activePower = "integer",
     setupPowerCount = "integer",
+  
+    
 }
 
 local ogCreate = GameInfo.OnCreate

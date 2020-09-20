@@ -18,18 +18,22 @@ local networkVars =
    siegeBeaconed = "boolean",
    SideTimer = "integer",
    sideOpened = "boolean",
+   initialSiegeLength = "integer",
 }
 
 function Timer:TimerValues()
    self.SiegeTimer = kSiegeTime 
    self.FrontTimer = kFrontTime
+   self.initialSiegeLength = self.SiegeTimer
    self.sideOpened = kSideTime
    self.sideOpened = false
    self.siegeOpened = false
    self.frontOpened = false
    self.siegeBeaconed = false
 end
-
+function Timer:GetInitialSiegeLength() 
+    return self.initialSiegeLength
+end
 function Timer:OnReset() 
    self:TimerValues()
 end

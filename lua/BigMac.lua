@@ -86,9 +86,20 @@ function GetMacGhostGuides(commander)
 
 end
 
+/*
 function BigMac:OnConstructionComplete()
     self:AdjustValues()
 end
+*/
+
+function BigMac:OnOverrideOrder(order)
+    if not self:GetIsBuilt() then
+        order:SetType(kTechId.Default)
+    else
+        return MAC.OnOverrideOrder(self, order)
+    end
+end
+
 
 
 local origB = MAC.GetTechButtons

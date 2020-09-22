@@ -212,6 +212,36 @@ end
         end
     end
 
+    function TunnelEntrance:isThisMyPartner(tunnel)
+        local isIsTrue = false
+        local itsTrue = false
+        
+              --The partner is already matched ahead of me, already having done this calculation
+                if ( tunnel:GetOtherEntrance() == self ) 
+                    --Lonely gorge tunnel finds another tunnel that has the same gorge owner
+                or ( 
+                        tunnel.GetOwnerClientId 
+                    and ( 
+                            tunnel:GetOwnerClientId() == self:GetOwnerClientId()
+                         )  
+                    )
+                    --or if the gorge tunnel has no owner, then it's the commanders.
+                    --This requires OnUpdate to be in sync to update the destroyed connection!
+                or not 
+                        tunnel.GetOwnerClientId 
+                then  
+                
+                        if (self.index == tunnel.index) then
+                            itsTrue = true
+                        end
+ 
+                end
+            
+            isIsTrue = itsTrue
+                
+            return isIsTrue
+                
+    end
     function TunnelEntrance:UpdateConnectedTunnel() --I am NOT happy about OnUpdate with a For Loop. Still better than Tunnel, though.
         local hasValidTunnel = self.otherEntranceId ~= nil and Shared.GetEntity(self.otherEntranceId) ~= nil
                                 --cant worry about built if wanting to pair color
@@ -221,32 +251,16 @@ end
         
         local foundTunnel = nil
         --Print("Self Index Is %s", self.index )
-        -- register if a tunnel entity already exists or a free tunnel has been found
         for _, tunnel in ientitylist( Shared.GetEntitiesWithClassname("TunnelEntrance") ) do
           --Print("Tunnel Index  Is %s", tunnel.index )
           if tunnel ~= self then
-            --if not tunnel:GetOtherEntrance() then -- This ain't pretty lol. For loop! Bad perf. Well. This dont make sense either. The other can have this.
-                if ( tunnel:GetOtherEntrance() == self ) or ( tunnel:GetOwnerClientId() == self:GetOwnerClientId() )  then
-                    if (self.index == tunnel.index) then
-                        foundTunnel = tunnel
-                        --Print("TunnelEntrance UpdateConnectedTunnel Found Partner Tunnel!")
-                        break
-                    end
+                if self:isThisMyPartner(tunnel) then
+                    foundTunnel = tunnel
                 end
-            --end
           end
         end
         
         self:SetOtherEntrance(foundTunnel)
-        
-       -- if (foundTunnel) then
-            --foundTunnel:SetOtherEntrance(self)
-            --foundTunnel:UpdateConnectedTunnel()
-            --foundTunnel.randomColorNumber = self.randomColorNumber
-            --self.randomColorNumber = foundTunnel.randomColorNumber
-            --Print("foundTunnel")
-            
-       -- end
         
         
     end

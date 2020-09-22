@@ -1,3 +1,4 @@
+/*
 
 local origCreate = MAC.OnCreate 
 
@@ -29,3 +30,5 @@ function MAC:AdjustValues()
     MAC.kWeldDistance = 2
     MAC.kBuildDistance = 2 
 end
+
+*/

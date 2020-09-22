@@ -151,17 +151,26 @@ function Timer:AdjustSiegeTimer(time)
         self.SiegeTimer = self.SiegeTimer + (time)
 end
 function Timer:GetIsSiegeOpen(gameinfo)
+            if not gameinfo then
+                 gameinfo = GetGameInfoEntity()
+            end
            local gamestarttime = gameinfo:GetStartTime()
            local gameLength = Shared.GetTime() - gamestarttime
            return  gameLength >= self.SiegeTimer
 end
 
 function Timer:GetIsFrontOpen(gameinfo)
+            if not gameinfo then
+                 gameinfo = GetGameInfoEntity()
+            end
            local gamestarttime = gameinfo:GetStartTime()
            local gameLength = Shared.GetTime() - gamestarttime
            return  gameLength >= kFrontTime
 end
 function Timer:GetIsSideOpen(gameinfo)
+            if not gameinfo then
+                 gameinfo = GetGameInfoEntity()
+            end
            local gamestarttime = gameinfo:GetStartTime()
            local gameLength = Shared.GetTime() - gamestarttime
            return  gameLength >= kSideTime

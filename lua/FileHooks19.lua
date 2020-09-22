@@ -4,6 +4,8 @@ ModLoader.SetupFileHook( "lua/TargetCache.lua", "lua/TargetCache_Siege.lua", "po
 ModLoader.SetupFileHook( "lua/GameInfo.lua", "lua/GameInfo_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Hud/GUIPlayerResource.lua", "lua/Hud/GUIPlayerResource_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Hud/Marine/GUIMarineHUD.lua", "lua/Hud/Marine/GUIMarineHUD_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/GUIInsight_TopBar.lua", "lua/GUIInsight_TopBar_Siege19.lua", "post" )
+ModLoader.SetupFileHook( "lua/GUICommanderButtons.lua", "lua/GUICommanderButtons_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/GUIAlienHUD.lua", "lua/GUIAlienHUD_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/Alien_Upgrade.lua", "lua/Alien_Upgrade_Siege20.lua", "post" )
 ModLoader.SetupFileHook( "lua/Player_Client.lua", "lua/Player_Client_Siege19.lua", "post" )

@@ -15,19 +15,19 @@ GUICommanderButtons.kFontSizePersonalTime = 20
 GUICommanderButtons.kFontSizePersonalTimeBig = 20
 
 
-GUICommanderButtons.kFrontTimeBackgroundSize = Vector(280, 58, 0)
-GUICommanderButtons.kFrontTimeBackgroundPos = Vector(-120, -265, 0) -- -100
+GUICommanderButtons.kFrontTimeBackgroundSize = Vector(180, 58, 0)
+GUICommanderButtons.kFrontTimeBackgroundPos = Vector(-200, -175, 0) -- -100
 
-GUICommanderButtons.kSideTimeBackgroundSize = Vector(280, 58, 0)
-GUICommanderButtons.kSideTimeBackgroundPos = Vector(-120, -200, 0) -- -100
-
-
-GUICommanderButtons.kSiegeTimeBackgroundSize = Vector(280, 58, 0)
-GUICommanderButtons.kSiegeTimeBackgroundPos = Vector(-120, -135, 0) -- -100
+GUICommanderButtons.kSideTimeBackgroundSize = Vector(180, 58, 0)
+GUICommanderButtons.kSideTimeBackgroundPos = Vector(0, -175, 0) -- -100
 
 
-GUICommanderButtons.kPowerBackgroundSize = Vector(280, 58, 0)
-GUICommanderButtons.kPowerBackgroundPos = Vector(-120, -75, 0) -- -100
+GUICommanderButtons.kSiegeTimeBackgroundSize = Vector(180, 58, 0)
+GUICommanderButtons.kSiegeTimeBackgroundPos = Vector(175, -175, 0) -- -100
+
+
+GUICommanderButtons.kPowerBackgroundSize = Vector(180, 58, 0)
+GUICommanderButtons.kPowerBackgroundPos = Vector(275, -175, 0) -- -100
 
 GUICommanderButtons.kTextFontName = Fonts.kAgencyFB_Small
 
@@ -51,27 +51,27 @@ function GUICommanderButtons:Initialize()
     
     
     self.frontBackground = GUIManager:CreateGraphicItem()
-    self.frontBackground:SetAnchor(GUIItem.Right, GUIItem.Center)
+    self.frontBackground:SetAnchor(GUIItem.Center, GUIItem.Bottom)
     --self.frontBackground:SetTexture(kBackgroundTextures[style.textureSet])
     self.frame:AddChild(self.frontBackground)
-    self.frontBackground:SetPosition(GUIPlayerResource.kFrontTimeBackgroundPos) 
+    self.frontBackground:SetPosition(GUICommanderButtons.kFrontTimeBackgroundPos) 
     
     self.siegeBackground = GUIManager:CreateGraphicItem()
-    self.siegeBackground:SetAnchor(GUIItem.Right, GUIItem.Center)
+    self.siegeBackground:SetAnchor(GUIItem.Center, GUIItem.Bottom)
     --self.siegeBackground:SetTexture(kBackgroundTextures[style.textureSet])
     self.frame:AddChild(self.siegeBackground)
-    self.siegeBackground:SetPosition(GUIPlayerResource.kSiegeTimeBackgroundPos)
+    self.siegeBackground:SetPosition(GUICommanderButtons.kSiegeTimeBackgroundPos)
     
     self.sideBackground = GUIManager:CreateGraphicItem()
-    self.sideBackground:SetAnchor(GUIItem.Right, GUIItem.Center)
+    self.sideBackground:SetAnchor(GUIItem.Center, GUIItem.Bottom)
     --self.sideBackground:SetTexture(kBackgroundTextures[style.textureSet])
-    self.sideBackground:SetPosition(GUIPlayerResource.kSideTimeBackgroundPos)
+    self.sideBackground:SetPosition(GUICommanderButtons.kSideTimeBackgroundPos)
     self.frame:AddChild(self.sideBackground)
     
     self.powerBackground =  GUIManager:CreateGraphicItem()
-    self.powerBackground:SetAnchor(GUIItem.Right, GUIItem.Center)
+    self.powerBackground:SetAnchor(GUIItem.Center, GUIItem.Bottom)
     --self.powerBackground:SetTexture(kBackgroundTextures[style.textureSet])
-     self.powerBackground:SetPosition(GUIPlayerResource.kPowerBackgroundPos)
+     self.powerBackground:SetPosition(GUICommanderButtons.kPowerBackgroundPos)
     self.frame:AddChild(self.powerBackground)
     
     self.frontDoor = GUIManager:CreateTextItem()
@@ -119,47 +119,28 @@ local onUpdate = GUICommanderButtons.Update
 function GUICommanderButtons:Update(deltaTime)
     onUpdate(self, deltaTime)
   
-    
- --origUpdate(self, _, parameters)
-     local activePower = PlayerUI_GetActivePower()
+        
      local gLength =  PlayerUI_GetGameLengthTime()
      local fLength = PlayerUI_GetFrontLength()
      local sLength = PlayerUI_GetSiegeLength()
      local ssLength = PlayerUI_GetSideLength()
-     local initial = PlayerUI_GetInitialSiegeLength()
-
-     --for i = 1, #parameters do
-     --   local p = parameters[i]
-     --   Print(p)
-     --end
+     local adjustment = PlayerUI_GetDynamicLength()
      
+
         local frontRemain = Clamp(fLength - gLength, 0, fLength)
         local Frontminutes = math.floor( frontRemain / 60 )
         local Frontseconds = math.floor( frontRemain - Frontminutes * 60 )
 
-
-        local siegeRemain = Clamp(sLength - gLength, 0, sLength)
-        local Siegeminutes = math.floor( siegeRemain / 60 )
-        local Siegeseconds = math.floor( siegeRemain - Siegeminutes * 60 )
-        
-        
-    --if minutes > 0
-    --if seconds > 0
-    --if seconds == 0
-    --if Frontminutes > 0 then
-        --self.frontDoor:SetText(string.format("Front: %s minutes and %s seconds", Frontminutes, Frontseconds))
-    --elseif Frontseconds > 0 then
-        --self.frontDoor:SetText(string.format("Front: %s seconds", Frontseconds))
     if frontRemain > 0 then     
         self.frontDoor:SetText(string.format("Front: %s:%s", Frontminutes, Frontseconds))
     else
         self.frontDoor:SetText(string.format("Front: OPEN"))
     end
-    
-    --if Siegeminutes > 0 then
-        --self.siegeDoor:SetText(string.format("Siege: %s minutes and %s seconds", Siegeminutes, Siegeseconds))
-    --elseif Siegeseconds > 0 then
-        --self.siegeDoor:SetText(string.format("Siege: %s seconds", Siegeseconds))
+
+    local siegeRemain = Clamp(sLength - gLength, 0, sLength)
+    local Siegeminutes = math.floor( siegeRemain / 60 )
+    local Siegeseconds = math.floor( siegeRemain - Siegeminutes * 60 )
+        
     if siegeRemain > 0 then
         self.siegeDoor:SetText(string.format("Siege: %s:%s", Siegeminutes, Siegeseconds))
     else 
@@ -178,27 +159,26 @@ function GUICommanderButtons:Update(deltaTime)
     --fallacy
     end
     
+    local isNegative = false
+        if adjustment < 0 then
+            isNegative = true
+            adjustment = adjustment * -1
+        end
+            
+    local adjMi = math.floor( adjustment / 60 )
+    local adjSe = math.floor( adjustment - adjMi * 60 )
+    
+    
     if siegeRemain == 0 then
         self.powerTxt:SetText(string.format("**"))
-    else
-    
-         if frontRemain > 0 then
-            self.powerTxt:SetText(string.format("Dynamic: **"))
-         else
-            local bonus = ( sLength + (activePower) ) 
-            local howMuchBonus = 0
-            if activePower == 0 then
-                self.powerTxt:SetText(string.format("Draw"))
-            elseif  bonus > initial then --initial then
-                howMuchBonus = sLength - initial --bonus - initial
-                self.powerTxt:SetText(string.format("Add: %s", howMuchBonus))
-            else
-                howMuchBonus = initial - sLength
-                self.powerTxt:SetText(string.format("Deduct: %s", howMuchBonus * -1))
-            end
+    else  
+        if isNegative then
+            self.powerTxt:SetText(string.format("Adj: -%s:%s", adjMi, adjSe))
+        else
+            self.powerTxt:SetText(string.format("Adj: %s:%s", adjMi, adjSe))
         end
-        
     end
+    
     
     
 end

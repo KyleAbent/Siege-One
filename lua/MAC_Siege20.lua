@@ -1,22 +1,6 @@
-/*
-
 local origCreate = MAC.OnCreate 
-
 function MAC:OnCreate()
     origCreate(self)
-    MAC.kConstructRate = 0
-    MAC.kWeldRate = 0
-    MAC.kOrderScanRadius = 0
-    MAC.kRepairHealthPerSecond = 0
-    MAC.kMoveSpeed = 0
-    MAC.kInfestationMoveSpeed = 0
-    MAC.kHoverHeight = 0
-    MAC.kStartDistance = 0
-    MAC.kWeldDistance = 0
-    MAC.kBuildDistance = 0    // Distance at which bot can start building a structure.
-end
-
-function MAC:AdjustValues()
     kMACConstructEfficacy = .3 * 5
     MAC.kConstructRate = 0.4 -- 10
     MAC.kWeldRate = 0.5 --* 5
@@ -31,4 +15,3 @@ function MAC:AdjustValues()
     MAC.kBuildDistance = 2 
 end
 
-*/

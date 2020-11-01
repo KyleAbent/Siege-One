@@ -54,6 +54,7 @@ if Server then
 
      function PowerPoint:SetPoweringState(state)
          if state == true then
+         --Print("Powering true!")
                     local gameinfo = GetGameInfoEntity()
                     if gameinfo then
                         gameinfo:AddActivePower()

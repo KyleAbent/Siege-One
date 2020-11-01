@@ -288,7 +288,23 @@ Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySide", "OnSide", "PassivePost
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePost" ) 
 ------------------------------------------------------------
 
-
+function Plugin:OnAdjust() 
+        local adjustment = GetGameInfoEntity():GetDynamicSiegeTimerAdjustment() or 0
+        local isNegative = false
+            if adjustment < 0 then
+                isNegative = true
+                --adjustment = math.abs(adjustment)
+                adjustment = adjustment * -1
+            end
+        local adjMi = math.floor( adjustment / 60 )
+        local adjSe = math.floor( adjustment - adjMi * 60 )
+        if isNegative then
+            self:NotifyTimer( nil, "Siege Timer adjustment is now: -%s:%s", true, adjMi, adjSe )
+        else
+            self:NotifyTimer( nil, "Siege Timer adjustment is now: %s:%s", true, adjMi, adjSe )
+         end
+end
+Shine.Hook.SetupClassHook( "Timer", "AdjustSiegeTimer", "OnAdjust", "PassivePost" ) 
 ------------------------------------------------------------
 
 ------------------------------------------------------------
@@ -307,7 +323,14 @@ function Plugin:SetGameState( Gamerules, State, OldState )
          grabDoorMapEditorSettings() --only do once per map? hm
          GetTimer():OnRoundStart()
          if kReduceDoorTimeBy > 0 then
-            self:NotifyTimer( nil, "Front Door time has been reduced by %s seconds", true, kReduceDoorTimeBy)
+            local adjustment = kReduceDoorTimeBy + kFrontTime
+            local adjMi = math.floor( adjustment / 60 )
+            local adjSe = math.floor( adjustment - adjMi * 60 )
+            self:NotifyTimer( nil, "Front Door default timer: %s:%s", true, adjMi,adjSe)
+            adjustment = kFrontTime - kReduceDoorTimeBy
+            adjMi = math.floor( adjustment / 60 )
+            adjSe = math.floor( adjustment - adjMi * 60 )
+            self:NotifyTimer( nil, "Front Door adjusted timer: %s:%s", true, adjMi,adjSe)
          end
          OpenAllBreakableDoors()
       else

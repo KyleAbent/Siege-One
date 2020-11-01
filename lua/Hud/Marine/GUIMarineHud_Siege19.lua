@@ -11,7 +11,7 @@ function GUIMarineHUD:Update(deltaTime)
         PlayerUI_GetFrontLength(),
         PlayerUI_GetSiegeLength(),
         PlayerUI_GetSideLength(),
-        PlayerUI_GetInitialSiegeLength()
+        PlayerUI_GetDynamicLength()
     }
 
     self.resourceDisplay:UpdateFrontSiege(deltaTime, resourceUpdate)

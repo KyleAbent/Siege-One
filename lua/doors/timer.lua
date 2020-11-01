@@ -131,7 +131,6 @@ local function CloseAllBreakableDoors()
 end
 
 function Timer:OpenFrontDoors()
-        GetGameInfoEntity():SetSetupPowerCount()
          self.frontOpened = true
           GetGamerules():SetDamageMultiplier(1) 
            CloseAllBreakableDoors()
@@ -148,7 +147,9 @@ function Timer:OpenFrontDoors()
                end          
 end
 function Timer:AdjustSiegeTimer(time)
+        Print("Old siege timer is %s", self.SiegeTimer)
         self.SiegeTimer = self.SiegeTimer + (time)
+        Print("New Siege timer is %s", self.SiegeTimer)
 end
 function Timer:GetIsSiegeOpen(gameinfo)
             if not gameinfo then

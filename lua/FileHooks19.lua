@@ -1,3 +1,4 @@
+ModLoader.SetupFileHook( "lua/Spectator.lua", "lua/Spectator_Avoca.lua", "post" )
 ModLoader.SetupFileHook( "lua/TargetCache.lua", "lua/TargetCache_Siege.lua", "post" )
 --ModLoader.SetupFileHook( "lua/Infestation.lua", "lua/Infestation_Siege20.lua", "post" )
 --ModLoader.SetupFileHook( "lua/Cyst.lua", "lua/Cyst_Siege20.lua", "post" )

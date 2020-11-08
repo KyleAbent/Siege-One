@@ -22,8 +22,8 @@ ModLoader.SetupFileHook( "lua/NS2_GorgeTunnel/TunnelEntrance.lua", "lua/TunnelEn
 
 
 ModLoader.SetupFileHook( "lua/GUIMinimap.lua", "lua/GUIMinimap_Siege20.lua", "post" )
-ModLoader.SetupFileHook( "lua/MapBlip.lua", "lua/MapBlip_Siege20.lua", "post" )
-ModLoader.SetupFileHook( "lua/MapBlipMixin.lua", "lua/MapBlipMixin_Siege20.lua", "post" )
+//ModLoader.SetupFileHook( "lua/MapBlip.lua", "lua/MapBlip_Siege20.lua", "post" )
+//ModLoader.SetupFileHook( "lua/MapBlipMixin.lua", "lua/MapBlipMixin_Siege20.lua", "post" )
 --ModLoader.SetupFileHook( "lua/MinimapMappableMixin.lua", "lua/MinimapMappableMixin_Siege20.lua", "post" )
 --ModLoader.SetupFileHook( "lua/MapConnector.lua", "lua/MapConnector_Siege20.lua", "post" )
 

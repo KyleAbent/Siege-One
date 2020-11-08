@@ -27,7 +27,7 @@ ModLoader.SetupFileHook( "lua/MapBlipMixin.lua", "lua/MapBlipMixin_Siege20.lua",
 --ModLoader.SetupFileHook( "lua/MinimapMappableMixin.lua", "lua/MinimapMappableMixin_Siege20.lua", "post" )
 --ModLoader.SetupFileHook( "lua/MapConnector.lua", "lua/MapConnector_Siege20.lua", "post" )
 
-ModLoader.SetupFileHook( "lua/AlienTunnelManager.lua", "lua/AlienTunnelManager_Siege20.lua", "post" )
+//ModLoader.SetupFileHook( "lua/AlienTunnelManager.lua", "lua/AlienTunnelManager_Siege20.lua", "post" )
 
 --ModLoader.SetupFileHook( "lua/MaturityMixin.lua", "lua/MaturityMixin.lua", "replace" )
 

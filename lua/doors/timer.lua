@@ -93,10 +93,11 @@ function Timer:GetSiegeLength()
 end
 local function OpenEightTimes(who)
     if not who then return end
-    for i = 1, math.max(9 / 2, 16) do
-        who:Open()
-        who.isvisible = false
-    end
+   // for i = 1, math.max(9 / 2, 16) do
+        //who:Open()
+        who.opening = true
+        //who.isvisible = false
+    //end
 end
 
 function Timer:OpenSiegeDoors()
@@ -146,6 +147,11 @@ function Timer:OpenFrontDoors()
                       end
                end          
 end
+function Timer:AdjustFrontTimer(time)
+        Print("Old front timer is %s", self.FrontTimer)
+        self.FrontTimer = self.FrontTimer + (time)
+        Print("New front timer is %s", self.FrontTimer)
+end
 function Timer:AdjustSiegeTimer(time)
         Print("Old siege timer is %s", self.SiegeTimer)
         self.SiegeTimer = self.SiegeTimer + (time)
@@ -166,7 +172,7 @@ function Timer:GetIsFrontOpen(gameinfo)
             end
            local gamestarttime = gameinfo:GetStartTime()
            local gameLength = Shared.GetTime() - gamestarttime
-           return  gameLength >= kFrontTime
+           return  gameLength >= self.FrontTimer
 end
 function Timer:GetIsSideOpen(gameinfo)
             if not gameinfo then
@@ -174,7 +180,7 @@ function Timer:GetIsSideOpen(gameinfo)
             end
            local gamestarttime = gameinfo:GetStartTime()
            local gameLength = Shared.GetTime() - gamestarttime
-           return  gameLength >= kSideTime
+           return  gameLength >= self.SideTimer
 end
 if Server then
      function Timer:OnUpdate(deltatime)

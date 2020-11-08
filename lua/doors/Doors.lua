@@ -16,6 +16,7 @@ local networkVars =
     model = "string (128)",
     savedOrigin = "vector",
     opened = "boolean",
+    opening = "boolean",
 }
 
 AddMixinNetworkVars(BaseModelMixin, networkVars)
@@ -60,23 +61,37 @@ function SiegeDoor:OnInitialized()
     end
     
     self:SetPhysicsType(PhysicsType.Kinematic)
-    self:Open()
     self:SetPhysicsGroup(PhysicsGroup.DefaultGroup)
     self.opened = false
+    self.opening = false
+    self:SetUpdates(true) 
 end
   
-function SiegeDoor:Open()    
- if not self.opened then
-        self:SetOrigin(self:GetOrigin() + Vector(0,.5,0) )   
-        local waypointreached = (self:GetOrigin() - self.savedOrigin):GetLength() >= 9//kDoorMoveUpVect
-        self:UpdatePosition(waypointreached)
-        self.opened = waypointreached
-        self:MakeSurePlayersCanGoThroughWhenMoving()
- end
+function SiegeDoor:OnUpdate(deltaTime)
+    if self.opening and not self.opened then
+        if not self.timeLastNudge or ( self.timeLastNudge + 0.5 < Shared.GetTime() )  then
+            self.opened = (self:GetOrigin() - self.savedOrigin):GetLength() >= 9//kDoorMoveUpVect
+            if self.opened then
+                self.opening = false
+            else
+                self:SetOrigin(self:GetOrigin() + Vector(0,.001,0) ) 
+                if not self.timeLastPhys or ( self.timeLastPhys + 2 < Shared.GetTime() )  then
+                    self:UpdatePosition(waypointreached)//hmm will this spam too much? Im not sure
+                    self:MakeSurePlayersCanGoThroughWhenMoving()//hmm will this spam too much? Im not sure
+                    self.timeLastPhys = Shared.GetTime()
+                end
+            end
+            self.timeLastNudge = Shared.GetTime()
+        end
+    end
+    
 end
+
+
 function SiegeDoor:CloseLock()    
  self:SetOrigin(self.savedOrigin)
  self.opened = false
+ self.opening = false
  self:MakeSurePlayersCanGoThroughWhenMoving() 
  
          -- if Client then 
@@ -161,7 +176,7 @@ FrontDoor.kMapName = "frontdoor"
 function FrontDoor:OnInitialized()
 
 SiegeDoor.OnInitialized(self)
-self:SetUpdates(true)
+//self:SetUpdates(true)
 end
 
 if Server then
@@ -175,10 +190,11 @@ if Server then
         
     end
     
-     function FrontDoor:OnUpdate(deltatime)
+     function FrontDoor:OnUpdate(deltaTime)
           --local gamestarted = GetGamerules():GetGameStarted()
           --if gamestarted then 
-          if not self.opened then
+          SiegeDoor.OnUpdate(self, deltaTime)
+          if not self.opened and not self.opening then
                if not self.timelasttimerup or self.timelasttimerup + 1 <= Shared.GetTime() then
                     DestroyCysts(self)
                 end

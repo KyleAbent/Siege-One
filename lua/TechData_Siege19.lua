@@ -7,7 +7,6 @@ Script.Load("lua/2019/ExoGrenader.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 Script.Load("lua/Weapons/Alien/GorillaGlue.lua")
-Script.Load("lua/BigMac.lua")
 Script.Load("lua/ARC_Siege19.lua")
 Script.Load("lua/BackupBattery.lua")
 
@@ -276,33 +275,6 @@ local kSiege_TechData =
     [kTechDataDisplayName] = "GorillaGlue",
     [kTechDataTooltipInfo] = "Woohoo"},
     
-    {
-    [kTechDataId] = kTechId.BigMac,
-   -- [kTechDataSupply] = kMACSupply,
-    [kTechDataHint] = "Comes with Fries",
-    [kTechDataMapName] = BigMac.kMapName,
-    [kTechDataDisplayName] = "Big Mac",
-    [kTechDataMaxHealth] = kMACHealth, --come back to these
-    [kTechDataMaxArmor] = kMACArmor,
-    [kTechDataCostKey] = 15,
-    --[kTechDataResearchTimeKey] = kMACBuildTime,
-    [kTechDataModel] = MAC.kModelName,
-    [kTechDataDamageType] = kMACAttackDamageType,
-    [kTechDataInitialEnergy] = kMACInitialEnergy,
-    [kTechDataMaxEnergy] = kMACMaxEnergy,
-    [kTechDataMenuPriority] = 2,
-    [kTechDataPointValue] = kMACPointValue * 1.3,
-    [kTechDataHotkey] = Move.M,
-    [kTechDataTooltipInfo] = "One Mac Per Chair",
-     [kTechDataBuildTime] = 8,
-     [kTechDataGhostModelClass] = "MarineGhostModel", 
-     [kStructureAttachRange] = 8,
-     --[kStructureBuildNearClass] = "RoboticsFactory",
-        [kStructureAttachId] = { kTechId.RoboticsFactory, kTechId.ARCRoboticsFactory },
-     -- [kTechDataGhostGuidesMethod] = GetMacGhostGuides, -- ahh
-      [kTechDataBuildMethodFailedMessage] = "1 MAC Per Chair",
-    [kTechDataBuildRequiresMethod] = GetCheckMacLimit,
-    },
     
     
            { [kTechDataId] = kTechId.Rebirth, 

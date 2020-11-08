@@ -28,8 +28,7 @@ function MarineTeam:SpawnEverythingElse(techPoint)
           pg:SetConstructionComplete()
           
           spawnOrigin = FindFreeMarineBaseConsSpace(pg:GetOrigin(), 4, 20)
-    local bigmac = CreateEntity(BigMac.kMapName, spawnOrigin,  1)
-          bigmac:SetConstructionComplete()
+    local mac = CreateEntity(MAC.kMapName, spawnOrigin,  1)
 
 end
 local origSpawnStruct = MarineTeam.SpawnInitialStructures
@@ -52,7 +51,6 @@ function MarineTeam:InitTechTree()
     
       self.techTree:AddBuildNode(kTechId.Wall,     kTechId.None, kTechId.None)
       self.techTree:AddBuildNode(kTechId.BackupBattery,     kTechId.None, kTechId.None)
-      self.techTree:AddBuildNode(kTechId.BigMac,     kTechId.None, kTechId.None)
       self.techTree:AddBuildNode(kTechId.DropArc,     kTechId.ARCRoboticsFactory, kTechId.None)
       self.techTree:AddBuyNode(kTechId.DualWelderExosuit, kTechId.ExosuitTech, kTechId.None)
       self.techTree:AddBuyNode(kTechId.DualFlamerExosuit, kTechId.ExosuitTech, kTechId.None)

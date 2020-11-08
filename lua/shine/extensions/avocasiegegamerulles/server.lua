@@ -327,10 +327,10 @@ function Plugin:SetGameState( Gamerules, State, OldState )
             local adjMi = math.floor( adjustment / 60 )
             local adjSe = math.floor( adjustment - adjMi * 60 )
             self:NotifyTimer( nil, "Front Door default timer: %s:%s", true, adjMi,adjSe)
-            adjustment = kFrontTime - kReduceDoorTimeBy
+            adjustment = kReduceDoorTimeBy
             adjMi = math.floor( adjustment / 60 )
             adjSe = math.floor( adjustment - adjMi * 60 )
-            self:NotifyTimer( nil, "Front Door adjusted timer: %s:%s", true, adjMi,adjSe)
+            self:NotifyTimer( nil, "Front Door adjustment is: -%s:%s", true, adjMi,adjSe)
          end
          OpenAllBreakableDoors()
       else
@@ -509,9 +509,9 @@ end
 local function Open( Client, String )
 local Gamerules = GetGamerules()
      if String == "Front" or String == "front" then
-       GetTimer():OpenFrontDoors()
+       GetTimer().FrontTimer = 0
      elseif String == "Siege" or String == "siege" then
-       GetTimer():OpenSiegeDoors()
+       GetTimer().SiegeTimer = 0
      elseif String == "Side" or String == "side" then
        GetTimer():OpenSideDoors()
        Shine.ScreenText.End(1) 
@@ -734,34 +734,6 @@ Shine.Hook.SetupClassHook( "Alien", "TriggerRebirthCountDown", "DoCountdown", "P
 
 
 
-/*
-function Plugin:ShowRedemptionSetting(player)
-
-  local redemption = "Redemption: Disabled"
-    
-    if player.hasRedeem then
-        redemption = "Redemption: Enabled"
-    end
-    
-    local client = player:GetClient()
-    Shine.ScreenText.Add( "Foures", {X = 0.40, Y = 0.75,Text = redemption,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
-end
-function Plugin:ShowRebirthSetting(player)
-
-  local rebirth = "Rebirth: Disabled"
-    
-    if player.hasRebirth then
-        rebirth = "Rebirth: Enabled"
-    end
-    
-    local client = player:GetClient()
-    Shine.ScreenText.Add( "Tres", {X = 0.50, Y = 0.65,Text = rebirth,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
-end
-Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRedemptionSetting", "Replace" )
-Shine.Hook.SetupClassHook( "Onos", "ShowRedemptionSetting", "ShowRebirthSetting", "Replace" )
-
-*/
-
 function Plugin:JoinTeam(gamerules, player, newteam, force, ShineForce)
     //Print("JoinTeam newteam is %s", newteam)
     if ShineForce or newteam == kSpectatorIndex or newteam == kTeamReadyRoom then return end
@@ -770,51 +742,15 @@ function Plugin:JoinTeam(gamerules, player, newteam, force, ShineForce)
     local failString = ""
     local maxSizeForTeam = 0
     
-    if newteam == 1 then
-        chosenTeamCount =  gamerules:GetTeam1():GetNumPlayers()
-        failString = "Marine Team Capped at 19 Players"
-        maxSizeForTeam = 19
-    elseif newteam == 2 then
-        chosenTeamCount = gamerules:GetTeam2():GetNumPlayers()
-        failString = "Alien Team Capped at 23 Players"
-        maxSizeForTeam = 23
-    end
-   
-
-
-    if chosenTeamCount >= maxSizeForTeam then
+    if newteam == 1 or newteam == 2 then
         local client = player:GetClient()
-        if not client:GetIsVirtual() then
-            self:NotifyOne(client, "%s", true, failString )
-        end
-        return false
+       self:NotifyOne(client, "Welcome to this annoying message which will spam you every Marine or Alien teamjoin until modified", true )
+       self:NotifyOne(client, "Bugs? Balance issues? Feature requests?", true )
+       self:NotifyOne(client, "Greetings from Avoca. I'm here to tell you I've no idea what to write.", true )
+       self:NotifyOne(client, "I am writing behind the scenes not playing for myself. ", true )
+       self:NotifyOne(client, "5 years of LUA? Ok", true )
     end
+
 end
 
-/*
-function Plugin:SiegeGetCanJoinTeamNumber(self, player, teamNumber)
-        Print("teamNumber is %s", ToString(teamNumber) )
-        if teamNumber == 2 then
-            Print("A")
-            local marineCount = GetGamerules():GetTeam1():GetNumPlayers()
-            local alienCount = GetGamerules():GetTeam2():GetNumPlayers()
-            if alienCount > marineCount then-- alien count
-            Print("B")
-            local difference = math.abs(alienCount - marineCount)
-                if  difference < 4 then
-                    Print("C")
-                    local client = player:GetClient()
-                    if not client:GetIsVirtual() then
-                        --self:NotifyOne(client, "Alien Team Greter Size than Marine team by %s, allowing a size of %s more aliens than marines", true, difference, math.abs(difference - 4) )
-                    end
-                    return true --kTeam2Index -- Allow Alien Stack lol
-                end
-            end
-        end
-end
-
-Shine.Hook.SetupClassHook( "NS2Gamerules", "GetCanJoinTeamNumber", "SiegeGetCanJoinTeamNumber", "PassivePre" )
---Shine.Hook.SetupClassHook( "Gamerules", "GetCanJoinPlayingTeam", "SiegeGetCanJoinTeamNumber", "PassivePre" )
-
-*/
 

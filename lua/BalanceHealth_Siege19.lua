@@ -21,8 +21,8 @@ kMarineWallHealth = 4000
 kEggBeaconMaxHealth = 715
 kEggBeaconMaxArmor = 200
 
-kMACHealth = 1300
-kMACArmor = 200
+kMACHealth = 600
+kMACArmor = 100
 
 
 kSentryBatteryHealth = 780    kSentryBatteryArmor = 260    kSentryBatteryPointValue = 5

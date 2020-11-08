@@ -104,226 +104,26 @@ function TunnelEntrance:GetInfestationMaxRadius()
     return 7
    end
 end
-function TunnelEntrance:SetOtherEntrance(otherEntranceEnt)
-    
-    -- Convert the entity to an id (or to invalid id if nil).
-    local otherEntranceId = Entity.invalidId
-    if otherEntranceEnt then
-        otherEntranceId = otherEntranceEnt:GetId()
-    end
-    
-    -- Skip if the other entrance is already setup.
-    if otherEntranceId == self.otherEntranceId then
-        return
-    end
-    
-    self.otherEntranceId = otherEntranceId
-    
-    -- Have the other entrance set its 'other' entrance to this entrance.
-  -- - if otherEntranceEnt then
-    --    otherEntranceEnt:SetOtherEntrance(self)
-    --end
-    
-end
 
-function TunnelEntrance:GetTunnelEntity()
-        return self:GetOtherEntrance()
-end
-
-function TunnelEntrance:GetIsCollapsing()
-    return false
-end
-    
-    
-if Server then
-
-    function TunnelEntrance:OnConstructionComplete()
-
-            self.skipOpenAnimation = false
-            --self:UpdateConnectedTunnel()
-        
-    end
-    
-    function TunnelEntrance:SuckinEntity(entity)
-    
-        if entity and HasMixin(entity, "TunnelUser") then
-        
-            local tunnelEntity = self:GetTunnelEntity()
-            if tunnelEntity then
-                if HasMixin(entity, "LOS") then
-                    entity:MarkNearbyDirtyImmediately()
-                end
-                
-                tunnelEntity:MovePlayerToTunnel(entity, self)
-                entity:SetVelocity(Vector(0, 0, 0))
-                
-                if entity.OnUseGorgeTunnel then
-                    entity:OnUseGorgeTunnel()
-                end
-
-            end
-            
-        end
-    
-    end
-    
-    function TunnelEntrance:OnEntityExited(entity)
-        self.timeLastExited = Shared.GetTime()
-        self:TriggerEffects("tunnel_exit_3D")
-    end
-function Tunnel:GetEntranceAPosition()
-    return self:GetOrigin() + self:GetCoords():TransformVector(kEntranceAPos)
-end
-
-/*
-function TunnelEntrance:SetOwner(owner)
-
-    if owner and not self.ownerClientId then
-        local client = Server.GetOwner(owner)
-        self.ownerClientId = client:GetUserId()
-    end
-    
-end
-*/
-
- function TunnelEntrance:MovePlayerToTunnel(player, entrance)
-    
-        assert(player)
-        assert(entrance)
-        
-        local entranceId = entrance:GetId()
-        
-        local newAngles = player:GetViewAngles()
-        newAngles.pitch = 0
-        newAngles.roll = 0
-        local origin = self:GetOrigin() --self:GetTunnelEntity():GetOrigin()
-            player:SetOrigin(origin + Vector(0,1,0) )
-            newAngles.yaw = GetYawFromVector(self:GetCoords().zAxis)
-            player:SetOffsetAngles(newAngles)
 
     
-  end
-  
-    function TunnelEntrance:SetTunnel(tunnel)  
-        if tunnel == nil then
-            self.otherEntranceId = nil
-        else
-            self.otherEntranceId = tunnel:GetId()
-        end
-    end
 
-    function TunnelEntrance:isThisMyPartner(tunnel)
-        local isIsTrue = false
-        local itsTrue = false
-        
-              --The partner is already matched ahead of me, already having done this calculation
-                if ( tunnel:GetOtherEntrance() == self ) 
-                    --Lonely gorge tunnel finds another tunnel that has the same gorge owner
-                or ( 
-                        tunnel.GetOwnerClientId 
-                    and ( 
-                            tunnel:GetOwnerClientId() == self:GetOwnerClientId()
-                         )  
-                    )
-                    --or if the gorge tunnel has no owner, then it's the commanders.
-                    --This requires OnUpdate to be in sync to update the destroyed connection!
-                or not 
-                        tunnel.GetOwnerClientId 
-                then  
-                
-                        if (self.index == tunnel.index) then
-                            itsTrue = true
-                        end
- 
-                end
-            
-            isIsTrue = itsTrue
-                
-            return isIsTrue
-                
-    end
-    function TunnelEntrance:UpdateConnectedTunnel() --I am NOT happy about OnUpdate with a For Loop. Still better than Tunnel, though.
-        local hasValidTunnel = self.otherEntranceId ~= nil and Shared.GetEntity(self.otherEntranceId) ~= nil
-                                --cant worry about built if wanting to pair color
-        if hasValidTunnel then --or not self:GetIsBuilt() then
-            return
-        end
-        
-        local foundTunnel = nil
-        --Print("Self Index Is %s", self.index )
-        for _, tunnel in ientitylist( Shared.GetEntitiesWithClassname("TunnelEntrance") ) do
-          --Print("Tunnel Index  Is %s", tunnel.index )
-          if tunnel ~= self then
-                if self:isThisMyPartner(tunnel) then
-                    foundTunnel = tunnel
-                end
-          end
-        end
-        
-        self:SetOtherEntrance(foundTunnel)
-        
-        
-    end
-    
     function TunnelEntrance:GetConnectionStartPoint()
-        local connection = self.otherEntranceId ~= nil and Shared.GetEntity(self.otherEntranceId) ~= nil
-        if connection then
-            return self:GetOrigin()
-        end
-        
-    end
-    
-    function TunnelEntrance:GetConnectionEndPoint()
-        local connection = self.otherEntranceId ~= nil and Shared.GetEntity(self.otherEntranceId) ~= nil
-        if connection then
-            return Shared.GetEntity(self.otherEntranceId):GetOrigin()
-        end
-        
-    end
-    
-    
-    local origUpdate = TunnelEntrance.OnUpdate
-    function TunnelEntrance:OnUpdate(deltaTime)
-          --Why is it being set to other entities? ParticleEffect, d
-
-        local otherEntrance = self:GetOtherEntrance()
-        if otherEntrance then                                                                   --or not other.getisalive bleh
-            if not ( otherEntrance:isa("TunnelEntrance") or otherEntrance:isa("GorgeTunnel") ) or  ( otherEntrance.GetIsAlive and not otherEntrance:GetIsAlive() ) then
-                --Print("UHHH")
-                self.otherEntranceId = Entity.invalidId 
-                self.open = false
-            else
-                origUpdate(self, deltaTime)
-            end
-        else
-            if not self.timeLastBallsSweat or ( self.timeLastBallsSweat + 0.5 < Shared.GetTime() )  then
-                self:UpdateConnectedTunnel()
-                self.timeLastBallsSweat = Shared.GetTime()
-            end
-            origUpdate(self, deltaTime)
-        end
-        
-    end
-
-    
-end //Server
-
-
-function TunnelEntrance:GetMinimapYawOffset()
     local connection = self.otherEntranceId ~= nil and Shared.GetEntity(self.otherEntranceId) ~= nil
     if connection then
-        local tunnelDirection = GetNormalizedVector( connection:GetOrigin() - self:GetOrigin() )
-        return math.atan2(tunnelDirection.x, tunnelDirection.z)
-    else
-        return 0
+    return self:GetOrigin()
     end
-    
-end
 
+    end
 
-function TunnelEntrance:SetIndex(index)
-    self.index = index
-end
+    function TunnelEntrance:GetConnectionEndPoint()
+    local connection = self.otherEntranceId ~= nil and Shared.GetEntity(self.otherEntranceId) ~= nil
+    if connection then
+    return Shared.GetEntity(self.otherEntranceId):GetOrigin()
+    end
+
+    end
+
 
 
 Shared.LinkClassToMap("TunnelEntrance", TunnelEntrance.kMapName, networkVars)

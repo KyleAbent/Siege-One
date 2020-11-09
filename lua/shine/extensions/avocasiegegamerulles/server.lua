@@ -540,6 +540,44 @@ end
 local BringAllCommand = self:BindCommand( "sh_bringall", "bringall", BringAll )
 BringAllCommand:Help( "sh_bringall - teleports everyone to the same spot" )
 ------------------------------------------------------------
+
+
+
+------------------------------------------------------
+
+local function TunnelColor( Client, Number )
+local Player = Client:GetControllingPlayer()
+    if not Player:isa("Gorge") then
+         self:NotifyOne(Client, "This currently only applies to Gorges", true)
+         return
+    end
+
+    if Number < 1 or Number > 11 then
+         self:NotifyOne(Client, "Pick a number 1-11", true)
+         return
+    end
+    
+    Player.tunnelColor = Number
+    self:NotifyOne(Client, "Set your tunnel color to %s.", true, Number)
+    --self:NotifyOne(Client, "To make this easier programming for Avoca, this will apply to your NEXT dropped tunnel, and not your current. (Be careful you can have mismatching).", true, Number)
+
+    --I'm so glad I don't have to do a for loop of all tunnels and do an if statement for if owner. lol.
+    for _, ownedEnt in ipairs(Player.ownedEntities) do
+        if ownedEnt:isa("TunnelEntrance") then
+            Print("Found tunnel!")
+            ownedEnt.tunnelColor = Number
+            ownedEnt:GetMiniMapColors()
+        end
+    end
+   
+
+    
+end    
+
+local TunnelCommand = self:BindCommand( "sh_tunnelcolor", "tunnelcolor", TunnelColor )
+TunnelCommand:AddParam{ Type = "number" }
+
+--------------------------------
 end//CreateCommands
 
 function Plugin:DontSpamCommanders(player)

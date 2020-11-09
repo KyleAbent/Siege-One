@@ -2,6 +2,7 @@ local networkVars =
 {
     wallWalking = "compensated boolean",
     timeLastWallWalkCheck = "private compensated time",
+    tunnelColor = "integer (1 to 12)",
 }
 
 local kBallFlagAttachPoint = "babbler_attach1"
@@ -29,6 +30,11 @@ function Gorge:OnCreate()
     self.wallWalking = false
     self.wallWalkingNormalGoal = Vector.yAxis
     self.timeLastWallJump = 0
+    self.tunnelColor = math.random(1,11)
+end
+
+function Gorge:GetTunnelColor()
+    return self.tunnelColor
 end
 local originit = Gorge.OnInitialized
 function Gorge:OnInitialized()

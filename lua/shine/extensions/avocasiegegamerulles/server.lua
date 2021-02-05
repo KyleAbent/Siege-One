@@ -782,11 +782,10 @@ function Plugin:JoinTeam(gamerules, player, newteam, force, ShineForce)
     
     if newteam == 1 or newteam == 2 then
         local client = player:GetClient()
-       self:NotifyOne(client, "Welcome to this annoying message which will spam you every Marine or Alien teamjoin until modified", true )
-       self:NotifyOne(client, "Bugs? Balance issues? Feature requests?", true )
-       self:NotifyOne(client, "Greetings from Avoca. I'm here to tell you I've no idea what to write.", true )
-       self:NotifyOne(client, "I am writing behind the scenes not playing for myself. ", true )
-       self:NotifyOne(client, "5 years of LUA? Ok", true )
+       self:NotifyOne(client, "Greetings, and welcome to a less annoying spam message than the previous version of Siege!", true )
+       self:NotifyOne(client, "In this version, I investgate an error relating to FlamerExo! HOW EXCITING! SQUASHING BUGS!!!!", true )
+       self:NotifyOne(client, "Note: This bug was a Client issue. The more exciting bugs are the Server issue.", true )
+       self:NotifyOne(client, "If there's server error for anything inside siege mod then LETS SQUASH THEM!!!!!!", true )
     end
 
 end

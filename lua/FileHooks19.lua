@@ -14,6 +14,7 @@ ModLoader.SetupFileHook( "lua/GUIAlienBuyMenu.lua", "lua/GUIAlienBuyMenu_Siege20
 ModLoader.SetupFileHook( "lua/GUIUpgradeChamberDisplay.lua", "lua/GUIUpgradeChamberDisplay_Siege20.lua", "post" )--override
 ModLoader.SetupFileHook( "lua/AchievementGiverMixin.lua", "lua/AchievementGiverMixin_Siege19.lua", "replace" ) --hmm?
 ModLoader.SetupFileHook( "lua/AchievementReceiverMixin.lua", "lua/AchievementReceiverMixin_Siege19.lua", "replace" ) --hmm?
+ModLoader.SetupFileHook( "lua/ExoVariantMixin.lua", "lua/ExoVariant_Siege19.lua", "post" ) --hmm?
 
 --ModLoader.SetupFileHook( "lua/Utility.lua", "lua/Utility_Siege20.lua", "post" ) --hmm?
 

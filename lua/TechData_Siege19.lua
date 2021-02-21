@@ -307,34 +307,6 @@ local kSiege_TechData =
       [kTechDataCostKey] = kHungerCost, 
      [kTechDataTooltipInfo] = "On Player Kill: Enzyme and +10% health/energy ", }, --"Non Gorges On Player Kill: Enzyme and +10% health/energy  Gorge:+10%Energy/Enzyme on  ", },
    
-
-
-        {
-            [kTechDataId] = kTechId.DropArc,
-            [kTechDataSupply] = kARCSupply,
-            [kTechDataHint] = "Requires construction. Is STATIONARY. Cannot MOVE. Must be recycled to be repositioned.",
-            [kTechDataDisplayName] = "Drop-ARC_(Stationary)",
-            [kTechDataTooltipInfo] = "Must be constructed. Cannot move.",
-            [kTechDataMapName] = DropARC.kMapName,
-            [kTechDataCostKey] = kARCCost,
-            [kTechDataDamageType] = kARCDamageType,
-            [kTechDataBuildTime] = kARCBuildTime,
-            [kTechDataMaxHealth] = kARCHealth,
-            [kTechDataEngagementDistance] = kARCEngagementDistance,
-            [kVisualRange] = ARC.kFireRange,
-            [kTechDataMaxArmor] = kARCArmor,
-            [kTechDataModel] = ARC.kModelName,
-            [kTechDataBuildTime] = 12,
-            [kStructureBuildNearClass] = "ARCRoboticsFactory",
-            [kTechDataGhostModelClass] = "MarineGhostModel", 
-            [kStructureAttachRange] = 8,
-            [kStructureAttachId] = kTechId.ARCRoboticsFactory,
-            [kTechDataMaxHealth] = kARCHealth,
-            [kTechDataPointValue] = kARCPointValue,
-            [kTechDataHotkey] = Move.T,
-        [kTechDataBuildMethodFailedMessage] = "Limit Reached",
-        [kTechDataBuildRequiresMethod] = GetCheckArcLimit,
-        },
         
     
         {

@@ -371,9 +371,6 @@ function Plugin:NotifyAutoComm( Player, String, Format, ... )
 Shine:NotifyDualColour( Player, 255, 165, 0,  "[AutoComm]",  255, 0, 0, String, Format, ... )
 end
 ------------------------------------------------------------
-function Plugin:NotifyMods( Player, String, Format, ... )
-Shine:NotifyDualColour( Player, 255, 165, 0,  "[Moderator Chat]",  255, 0, 0, String, Format, ... )
-end
 ------------------------------------------------------------
 function Plugin:GiveCyst(Player)
             local ent = CreateEntity(CystSiege.kMapName, Player:GetOrigin(), Player:GetTeamNumber())  
@@ -545,37 +542,6 @@ BringAllCommand:Help( "sh_bringall - teleports everyone to the same spot" )
 
 ------------------------------------------------------
 
-local function TunnelColor( Client, Number )
-local Player = Client:GetControllingPlayer()
-    if not Player:isa("Gorge") then
-         self:NotifyOne(Client, "This currently only applies to Gorges", true)
-         return
-    end
-
-    if Number < 1 or Number > 11 then
-         self:NotifyOne(Client, "Pick a number 1-11", true)
-         return
-    end
-    
-    Player.tunnelColor = Number
-    self:NotifyOne(Client, "Set your tunnel color to %s.", true, Number)
-    --self:NotifyOne(Client, "To make this easier programming for Avoca, this will apply to your NEXT dropped tunnel, and not your current. (Be careful you can have mismatching).", true, Number)
-
-    --I'm so glad I don't have to do a for loop of all tunnels and do an if statement for if owner. lol.
-    for _, ownedEnt in ipairs(Player.ownedEntities) do
-        if ownedEnt:isa("TunnelEntrance") then
-            Print("Found tunnel!")
-            ownedEnt.tunnelColor = Number
-            ownedEnt:GetMiniMapColors()
-        end
-    end
-   
-
-    
-end    
-
-local TunnelCommand = self:BindCommand( "sh_tunnelcolor", "tunnelcolor", TunnelColor )
-TunnelCommand:AddParam{ Type = "number" }
 
 --------------------------------
 end//CreateCommands
@@ -671,19 +637,7 @@ function Plugin:DontSpamCommandersAmmo(player)
 end
 Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyAmmo", "DontSpamCommandersAmmo", "Replace" )
 
-
-function Plugin:lolcomm(who,techid,order)
-    //print("lolcommlolcommlolcommlolcommlolcomm")
-    //self:NotifyTimer(nil, "[A] Setup Time: Giving you free upgrade: %s", true, EnumToString(kTechId, techid) )
-    local commander = who:GetTeam():GetCommander()
-    if commander ~= nil then
-        local client = commander:GetClient()
-        self:NotifyOne(client, "Blocking Order for %s : %s", true, EnumToString(kTechId, techid), EnumToString(kTechId, order) )
-    end
-end
-
-Shine.Hook.SetupGlobalHook( "notifycommander", "lolcomm", "Replace" )
-
+/*
 
 function Plugin:doitcomm(who,techid)
     //print("lolcommlolcommlolcommlolcommlolcomm")
@@ -696,6 +650,8 @@ function Plugin:doitcomm(who,techid)
 end
 
 Shine.Hook.SetupGlobalHook( "helpcommander", "doitcomm", "Replace" )
+
+*/
 
 
 local function NewUpdateBatteryState( self )
@@ -769,25 +725,5 @@ Shine.Hook.SetupClassHook( "Onos", "GetOutOfComebat", "TellThemToGetOutOfCombat"
 
 
 Shine.Hook.SetupClassHook( "Alien", "TriggerRebirthCountDown", "DoCountdown", "PassivePre" )
-
-
-
-function Plugin:JoinTeam(gamerules, player, newteam, force, ShineForce)
-    //Print("JoinTeam newteam is %s", newteam)
-    if ShineForce or newteam == kSpectatorIndex or newteam == kTeamReadyRoom then return end
-
-    local chosenTeamCount = 0
-    local failString = ""
-    local maxSizeForTeam = 0
-    
-    if newteam == 1 or newteam == 2 then
-        local client = player:GetClient()
-       self:NotifyOne(client, "Greetings, and welcome to a less annoying spam message than the previous version of Siege!", true )
-       self:NotifyOne(client, "In this version, I investgate an error relating to FlamerExo! HOW EXCITING! SQUASHING BUGS!!!!", true )
-       self:NotifyOne(client, "Note: This bug was a Client issue. The more exciting bugs are the Server issue.", true )
-       self:NotifyOne(client, "If there's server error for anything inside siege mod then LETS SQUASH THEM!!!!!!", true )
-    end
-
-end
 
 

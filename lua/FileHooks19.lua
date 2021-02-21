@@ -1,4 +1,4 @@
-ModLoader.SetupFileHook( "lua/Spectator.lua", "lua/Spectator_Avoca.lua", "post" )
+//ModLoader.SetupFileHook( "lua/Spectator.lua", "lua/Spectator_Avoca.lua", "post" )
 ModLoader.SetupFileHook( "lua/TargetCache.lua", "lua/TargetCache_Siege.lua", "post" )
 --ModLoader.SetupFileHook( "lua/Infestation.lua", "lua/Infestation_Siege20.lua", "post" )
 --ModLoader.SetupFileHook( "lua/Cyst.lua", "lua/Cyst_Siege20.lua", "post" )
@@ -18,8 +18,8 @@ ModLoader.SetupFileHook( "lua/ExoVariantMixin.lua", "lua/ExoVariant_Siege19.lua"
 
 --ModLoader.SetupFileHook( "lua/Utility.lua", "lua/Utility_Siege20.lua", "post" ) --hmm?
 
-ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
-ModLoader.SetupFileHook( "lua/NS2_GorgeTunnel/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
+//ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
+//ModLoader.SetupFileHook( "lua/NS2_GorgeTunnel/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
 
 
 ModLoader.SetupFileHook( "lua/GUIMinimap.lua", "lua/GUIMinimap_Siege20.lua", "post" )

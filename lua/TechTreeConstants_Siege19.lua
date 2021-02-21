@@ -36,7 +36,6 @@ local kSiege_TechIds =
     'AcidRocket',
     'BackupBattery',
     'GorillaGlue',
-    'DropArc',
     'DualGrenaderExosuit',
     'Rebirth',
     'Redemption',

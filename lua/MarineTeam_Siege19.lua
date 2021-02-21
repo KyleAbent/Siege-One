@@ -1,44 +1,3 @@
-function MarineTeam:SpawnExtraIPS(techPoint)
-    local techPointOrigin = techPoint:GetOrigin() + Vector(0, 2, 0)
-     local ipCount = GetEntitiesWithinRange("InfantryPortal", techPoint:GetOrigin(), 99999999)
-    for i = 1, 4 - #ipCount do
-        local spawnOrigin = FindFreeIPSpace(techPointOrigin, 4, kInfantryPortalAttachRange)
-        local ip = CreateEntity(InfantryPortal.kMapName, spawnOrigin,  1)
-        ip:SetConstructionComplete()
-    end
-end
-function MarineTeam:SpawnEverythingElse(techPoint)
-            --if not spawnpoint is in techpoint location :/  --error prone if not written well lol
-    local techPointOrigin = techPoint:GetOrigin() + Vector(0, 2, 0)
-
-    local spawnOrigin = FindFreeMarineBaseConsSpace(techPointOrigin, 4, 20)
-    local armory = CreateEntity(Armory.kMapName, spawnOrigin,  1) --adv
-          armory:SetConstructionComplete()
-          
-          spawnOrigin = FindFreeMarineBaseConsSpace(armory:GetOrigin(), 4, 20)
-    local obs = CreateEntity(Observatory.kMapName, spawnOrigin,  1)
-          obs:SetConstructionComplete()
-          
-          spawnOrigin = FindFreeMarineBaseConsSpace(obs:GetOrigin(), 4, 20)
-    local proto = CreateEntity(PrototypeLab.kMapName, spawnOrigin,  1)
-          proto:SetConstructionComplete()
-          
-          spawnOrigin = FindFreeMarineBaseConsSpace(proto:GetOrigin(), 4, 20)
-    local pg = CreateEntity(PhaseGate.kMapName, spawnOrigin,  1)
-          pg:SetConstructionComplete()
-          
-          spawnOrigin = FindFreeMarineBaseConsSpace(pg:GetOrigin(), 4, 20)
-    local mac = CreateEntity(MAC.kMapName, spawnOrigin,  1)
-
-end
-local origSpawnStruct = MarineTeam.SpawnInitialStructures
-function MarineTeam:SpawnInitialStructures(techPoint)
-    self:SpawnExtraIPS(techPoint)
-    self:SpawnEverythingElse(techPoint)
-    return origSpawnStruct(self, techPoint)
-end
-
-
 local orig_MarineTeam_InitTechTree = MarineTeam.InitTechTree
 function MarineTeam:InitTechTree()
     local orig_PlayingTeam_InitTechTree = PlayingTeam.InitTechTree
@@ -51,7 +10,6 @@ function MarineTeam:InitTechTree()
     
       self.techTree:AddBuildNode(kTechId.Wall,     kTechId.None, kTechId.None)
       self.techTree:AddBuildNode(kTechId.BackupBattery,     kTechId.None, kTechId.None)
-      self.techTree:AddBuildNode(kTechId.DropArc,     kTechId.ARCRoboticsFactory, kTechId.None)
       self.techTree:AddBuyNode(kTechId.DualWelderExosuit, kTechId.ExosuitTech, kTechId.None)
       self.techTree:AddBuyNode(kTechId.DualFlamerExosuit, kTechId.ExosuitTech, kTechId.None)
       self.techTree:AddBuyNode(kTechId.DualGrenaderExosuit, kTechId.ExosuitTech, kTechId.None)

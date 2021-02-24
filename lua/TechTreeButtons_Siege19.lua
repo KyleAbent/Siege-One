@@ -16,6 +16,14 @@ function GetMaterialXYOffset(techId)
          return origIndex(kTechId.EnzymeCloud)
     elseif techId == kTechId.ThickenedSkin then
          return origIndex(kTechId.Shell)
+    elseif techId == kTechId.AdvancedBeacon or techId == kTechId.SiegeBeacon then
+         return origIndex(kTechId.DistressBeacon)
+    elseif techId == kTechId.LoneCyst then
+         return origIndex(kTechId.Cyst)
+    elseif techId == kTechId.CragHiveTwo then
+         return origIndex(kTechId.CragHive)
+    elseif techId == kTechId.ShiftHiveTwo then
+         return origIndex(kTechId.ShiftHive)
     else
         return origIndex(techId)
     end

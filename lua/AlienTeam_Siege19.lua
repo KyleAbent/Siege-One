@@ -31,7 +31,8 @@ function AlienTeam:InitTechTree()
     self.techTree.SetComplete = function() end
     orig_AlienTeam_InitTechTree(self)
     self.techTree.SetComplete = orig_TechTree_SetComplete
-    
+   
+self.techTree:AddBuildNode(kTechId.LoneCyst, kTechId.None) 
 self.techTree:AddBuildNode(kTechId.EggBeacon, kTechId.CragHive)
 self.techTree:AddBuildNode(kTechId.StructureBeacon, kTechId.ShiftHive)
 self.techTree:AddResearchNode(kTechId.PrimalScream, kTechId.BioMassFive, kTechId.None, kTechId.AllAliens)

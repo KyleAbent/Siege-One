@@ -3,9 +3,6 @@ Script.Load("lua/InfestationMixin.lua")
 local networkVars = {}
 AddMixinNetworkVars(InfestationMixin, networkVars)
 
-function Clog:GetMinRangeAC()
-return  kCystRedeployRange * .7      
-end
 
 function Clog:GetIsSighted()
 return true    

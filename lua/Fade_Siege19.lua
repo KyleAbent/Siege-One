@@ -22,7 +22,6 @@ local origCreate = Fade.OnCreate
 function Fade:OnCreate()
     origCreate(self)
     InitMixin(self, PredictedProjectileShooterMixin)
-    self.Color = math.random(1,6)
 end
 
 if Server then
@@ -31,24 +30,6 @@ if Server then
         return kTechId.AcidRocket
     end
 
-end
-
-function Fade:PreUpdateMove(input, runningPrediction)
-       if Client then
-         self:OnMoveTrail()
-       end
-end    
-
-if Client then
-
-
-    function Fade:OnMoveTrail()
-        local coords = self:GetCoords() 
-              coords.origin = coords.origin + Vector(0, 0.2, 0)
-        Shared.CreateEffectModified(nil, kTrails[self.Color], nil, coords )
-    end
-    
-    
 end
 
 

@@ -33,7 +33,7 @@ class 'AlienBeacon' (ScriptActor)
 
 AlienBeacon.kMapName = "alienbeacon"
 
-AlienBeacon.kModelName = PrecacheAsset("models/alien/shell/shell.model")
+AlienBeacon.kModelName = PrecacheAsset("models/alien/egg/egg.model")
 
 AlienBeacon.kAnimationGraph =  PrecacheAsset("models/alien/shell/shell.animation_graph")
 

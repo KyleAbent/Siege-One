@@ -1,3 +1,7 @@
+Script.Load("lua/Cyst.lua")
+
+LoneCyst.kModelName = Cyst.kModelName
+
 /*
 Script.Load("lua/BiomassHealthMixin.lua")
 
@@ -21,3 +25,9 @@ end
 
 Shared.LinkClassToMap("Cyst", Cyst.kMapName, networkVars, true)
 */
+
+class 'LoneCyst' (Cyst)
+local networkVars = {
+ }
+  
+ Shared.LinkClassToMap("LoneCyst", LoneCyst.kMapName, networkVars, true)

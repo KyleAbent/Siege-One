@@ -13,4 +13,5 @@ GUIInsight_PlayerHealthbars.kAmmoColors = {
     ["railgun"] = Color(1,0.5,0,1), -- orange
     ["exoflamer"] = Color(1,0,0,1), -- red
     ["exowelder"] = Color(1,0,0,1), -- red
+    ["exogrenader"] = Color(1,0,0,1), -- red
 }

@@ -43,6 +43,9 @@ local kSiege_TechIds =
     'ShiftHiveTwo',
     'Hunger',
     'ThickenedSkin',
+    'SiegeBeacon',
+    'AdvancedBeacon',
+    'LoneCyst',
 
 }
 

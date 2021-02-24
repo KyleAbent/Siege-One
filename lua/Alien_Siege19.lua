@@ -104,8 +104,10 @@ function Alien:TriggerRebirthRedeemCountdown(player)
 end
 function Alien:DoTriggerRebirthRedeemCountdown()
         local client = self:GetClient()
-        client = client:GetControllingPlayer()
-        self:TriggerRebirthRedeemCountdown(client)
+        if client then
+            client = client:GetControllingPlayer()
+            self:TriggerRebirthRedeemCountdown(client)
+        end
         return false
 end
 function Alien:OnRedeem(player)

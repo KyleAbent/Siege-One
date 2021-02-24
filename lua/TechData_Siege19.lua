@@ -7,7 +7,8 @@ Script.Load("lua/2019/ExoGrenader.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 Script.Load("lua/Weapons/Alien/GorillaGlue.lua")
-Script.Load("lua/ARC_Siege19.lua")
+//Script.Load("lua/ARC_Siege19.lua")
+Script.Load("lua/2019/LoneCyst.lua")
 Script.Load("lua/BackupBattery.lua")
 
 local kCachedTechCategories
@@ -132,6 +133,12 @@ function GetCheckEggBeacon(techId, origin, normal, commander)
     
 end
 
+function GetCheckLoneCyst(techId, origin, normal, commander)
+    
+    return  GetSetupConcluded() and not GetWhereIsInSiege(origin)
+    
+end
+
 function GetWallInRoom(origin)
 
     local location = GetLocationForPoint(origin)
@@ -168,7 +175,22 @@ end
 local kSiege_TechData =
 {  
 
+    { [kTechDataId] = kTechId.AdvancedBeacon,   
+    [kTechDataBuildTime] = 0.1,   
+    [kTechDataCooldown] = kAdvancedBeaconCoolDown,
+    [kTechDataDisplayName] = "Advanced Beacon",   
+    [kTechDataHotkey] = Move.B, 
+    [kTechDataCostKey] = kObservatoryDistressBeaconCost * 2.5, 
+    [kTechDataTooltipInfo] = "Teleports Exos and Revives Dead Players. Also shuts down power to this observatory for 15 seconds (cannot be surged)"},
 
+    { [kTechDataId] = kTechId.SiegeBeacon,  
+    [kTechDataBuildTime] = 0.1,   
+    [kTechDataDisplayName] = "SiegeBeacon", 
+    [kTechDataHotkey] = Move.B, 
+    [kTechDataCostKey] = kObservatoryDistressBeaconCost * 3.5, 
+    [kTechDataTooltipInfo] =  "(Siege must be open for this to work) Once per game, advanced beacon located inside Siege Room rather than closest CC. Choose your timing wisely. Also shuts down power to this observatory for 15 seconds (cannot be surged)"},
+    
+    
     { [kTechDataId] = kTechId.EggBeacon, 
     [kTechDataCooldown] = kEggBeaconCoolDown, 
     [kTechDataTooltipInfo] = "Eggs Spawn approximately at the placed Egg Beacon. Be careful as infestation is required.", 
@@ -184,6 +206,23 @@ local kSiege_TechData =
     [kTechDataBuildMethodFailedMessage] = "1 at a time not in siege",
     [kVisualRange] = 8,
     [kTechDataMaxHealth] = kEggBeaconHealth, [kTechDataMaxArmor] = kEggBeaconArmor},
+    
+    { [kTechDataId] = kTechId.LoneCyst, 
+    [kTechDataCooldown] = kEggBeaconCoolDown, 
+    [kTechDataTooltipInfo] = "A lonely cyst which does not require a parent. Grows by itself overtime. Perfect for stealth. Cannot be placed during Setup or inside Siege. 5 Max on field at once, if you try to place a 6th it will destroy the 1st.", 
+    [kTechDataGhostModelClass] = "AlienGhostModel",   
+    [kTechDataBuildRequiresMethod] = GetCheckLoneCyst,
+    [kTechDataMapName] = LoneCyst.kMapName,        
+    [kTechDataDisplayName] = "Lone Cyst",
+    [kTechDataCostKey] = 10,   
+    [kTechDataRequiresInfestation] = false, 
+    [kTechDataHotkey] = Move.C,   
+    [kTechDataBuildTime] = 20, 
+    [kTechDataModel] = LoneCyst.kModelName,   
+    [kTechDataBuildMethodFailedMessage] = "Cannot place during Setup or In Siege",
+    [kVisualRange] = 8,
+    [kTechDataMaxHealth] = kEggBeaconHealth, 
+    [kTechDataMaxArmor] = kEggBeaconArmor},
     
     { [kTechDataId] = kTechId.StructureBeacon, 
     [kTechDataCooldown] = kStructureBeaconCoolDown, 

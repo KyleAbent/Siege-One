@@ -538,7 +538,13 @@ local BringAllCommand = self:BindCommand( "sh_bringall", "bringall", BringAll )
 BringAllCommand:Help( "sh_bringall - teleports everyone to the same spot" )
 ------------------------------------------------------------
 
+local function Go( Client )
+    Shared.ConsoleCommand("cheats 1") 
+    Shared.ConsoleCommand("sh_forceroundstart") 
+end
 
+local BringAllCommand = self:BindCommand( "sh_go", "go", Go )
+BringAllCommand:Help( "sh_go - cheats 1 and forceroundstart" )
 
 ------------------------------------------------------
 
@@ -653,6 +659,28 @@ Shine.Hook.SetupGlobalHook( "helpcommander", "doitcomm", "Replace" )
 
 */
 
+function Plugin:HookNotifyCommanderLimitReached(who)
+    local commander = who:GetTeam():GetCommander()
+    if commander ~= nil then
+        local client = commander:GetClient()
+        self:NotifyOne(client, "LoneCyst count is 5. Next placement will delete the 1st.", true )
+    end
+end
+
+Shine.Hook.SetupGlobalHook( "NotifyCommanderLimitReached", "HookNotifyCommanderLimitReached", "Replace" )
+
+function Plugin:HookNotifyCommanderKill(who)
+    local commander = who:GetTeam():GetCommander()
+    if commander ~= nil then
+        local client = commander:GetClient()
+        local location = GetLocationForPoint(who:GetOrigin())
+        if location then
+            self:NotifyOne(client, "Deleted LoneCyst in %s", true, location.name )
+        end
+    end
+end
+
+Shine.Hook.SetupGlobalHook( "NotifyCommanderKill", "HookNotifyCommanderKill", "Replace" )
 
 local function NewUpdateBatteryState( self )
         return -- lol no

@@ -226,6 +226,12 @@ end
 function helpcommander(who,techid)
 
 end
+function NotifyCommanderLimitReached(who)
+
+end
+function NotifyCommanderKill(who)
+
+end
 /*
 
 function notifyglow(who)

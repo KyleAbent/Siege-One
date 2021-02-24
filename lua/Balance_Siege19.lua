@@ -30,7 +30,7 @@ kAlienEggsPerHive = 5
 kEggGenerationRate = 9
 
 
-kEggBeaconCost = 50
+kEggBeaconCost = 30
 kEggBeaconCoolDown = 12
 kStructureBeaconCoolDown = 25
 kStructureBeaconCost = 50

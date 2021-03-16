@@ -69,6 +69,11 @@ ModLoader.SetupFileHook( "lua/Clog.lua", "lua/Clog_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/NetworkMessages_Server.lua", "lua/NetworkMessages_Server_Siege19.lua", "post" ) 
 
+
+//Load bonewall just before exo because stun / modelsize
+ModLoader.SetupFileHook( "lua/CommAbilities/Alien/BoneWall.lua", "lua/CommAbilities/Alien/BoneWall_Siege19.lua", "post" )
+
+
 ModLoader.SetupFileHook( "lua/Exo.lua", "lua/Exo_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/Egg.lua", "lua/Egg_Siege19.lua", "post" ) 
@@ -127,6 +132,8 @@ ModLoader.SetupFileHook( "lua/Weapons/Marine/ExoWeaponHolder.lua", "lua/Weapons/
 ModLoader.SetupFileHook( "lua/Weapons/Marine/Flamethrower.lua", "lua/Weapons/Marine/Flamethrower_Siege19.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/CommAbilities/Alien/Contamination.lua", "lua/CommAbilities/Alien/Contamination_Siege19.lua", "post" )
+
+
 
 ModLoader.SetupFileHook( "lua/Drifter.lua", "lua/Drifter_Stack.lua", "post" )
 ModLoader.SetupFileHook( "lua/MAC.lua", "lua/BigMac.lua", "post" )

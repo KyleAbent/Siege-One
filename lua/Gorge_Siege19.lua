@@ -2,7 +2,9 @@ local networkVars =
 {
     wallWalking = "compensated boolean",
     timeLastWallWalkCheck = "private compensated time",
-    tunnelColor = "integer (1 to 12)",
+    isriding = "boolean",
+    gorgeusingLerkID = "entityid",
+     wantstobelifted = "boolean",
 }
 
 local kBallFlagAttachPoint = "babbler_attach1"
@@ -30,7 +32,9 @@ function Gorge:OnCreate()
     self.wallWalking = false
     self.wallWalkingNormalGoal = Vector.yAxis
     self.timeLastWallJump = 0
-    self.tunnelColor = math.random(1,11)
+    self.isriding = false
+    self.gorgeusingLerkID = Entity.invalidI
+    self.wantstobelifted = true
 end
 
 function Gorge:GetTunnelColor()
@@ -42,6 +46,7 @@ function Gorge:OnInitialized()
     originit(self)
     self.currentWallWalkingAngles = Angles(0.0, 0.0, 0.0)
     self.timeLastWallJump = 0
+    self.lastToggled = Shared.GetTime()
 end
 
 
@@ -284,7 +289,17 @@ function Gorge:PreUpdateMove(input, runningPrediction)
     
     self.currentWallWalkingAngles = self:GetAnglesFromWallNormal(self.wallWalkingNormalGoal or Vector.yAxis) or self.currentWallWalkingAngles
 
-
+    if(self.gorgeusingLerkID ~= Entity.invalidI) then
+         local lerk = Shared.GetEntity(self.gorgeusingLerkID)
+         if lerk then 
+                self:SetOrigin(lerk:GetOrigin() +  Vector(0, .5,0))
+                input.move.z = 0
+                input.move.x = 0
+         end
+     end
+     
+     
+   
 end
 function Gorge:GetMoveSpeedIs2D()
     return not self:GetIsWallWalking()
@@ -327,15 +342,79 @@ end
 if Server then
 
 
-function Gorge:GetTierFourTechId()
-    return kTechId.None
+    function Gorge:GetTierFourTechId()
+        return kTechId.None
+    end
+
+    function Gorge:GetTierFiveTechId()
+        return kTechId.None
+    end
+
 end
 
-function Gorge:GetTierFiveTechId()
-    return kTechId.None
+function Gorge:OnUse(player, elapsedTime, useSuccessTable)
+  
+       
+      if not player.isoccupied and not self.isriding then
+        player.isoccupied = true 
+        self.gorgeusingLerkID = player:GetId()
+        player.lerkcarryingGorgeId = self:GetId()
+        self.isriding = true
+        //Print("Gorge On Use A")
+        self.lastToggled = Shared.GetTime()
+    elseif player.isoccupied and self.isriding and player.lerkcarryingGorgeId == self:GetId() then
+        player.isoccupied = false
+        self.gorgeusingLerkID = Entity.invalidI
+        player.lerkcarryingGorgeId = Entity.invalidI
+        self.isriding = false
+        //Print("Gorge On Use B")
+        self.lastToggled = Shared.GetTime()
+        self:SetOrigin(self:GetOrigin() - Vector(0, 0.5, 0) )
+     end
+       
+       
 end
 
+function Gorge:ModifyGravityForce(gravityTable)
+
+    if self.isriding then--self:GetIsWallWalking() and not self:GetCrouching() or self.isriding or self:GetIsOnGround() then
+        gravityTable.gravity = 0
+    end
+       // if self.gravity ~= 0 then
+       // gravityTable.gravity = self.gravity
+   // end
+    
 end
 
+function Gorge:GetCanBeUsed(player, useSuccessTable)
+        if GetIsTimeUp(self.lastToggled, 4) and self.wantstobelifted then
+           if player:isa("Lerk") and ( GetHasTech(player, kTechId.LerkLift) or Shared.GetCheatsEnabled )
+           and ( not player.isoccupied and not self.isriding )
+           or ( self.isriding and player.isoccupied and player.lerkcarryingGorgeId == self:GetId()  )then
+           useSuccessTable.useSuccess = true
+           //Print("Gorge Can Be Used")
+           else
+           useSuccessTable.useSuccess = false
+           //Print("Gorge Can Not Be Used")
+           end 
+       else
+        useSuccessTable.useSuccess = false
+       end
+end
+
+local orig = Gorge.OnKill
+function Gorge:OnKill()
+    orig(self)
+   if self.isriding then
+        self.isriding = false
+        local lerk = Shared.GetEntity(self.gorgeusingLerkID)
+        if lerk then
+                lerk.occupied = false 
+                lerk.lerkcarryingGorgeId = Entity.invalidI 
+         end
+        self.gorgeusingLerkID = Entity.invalidI
+   end
+
+end
 
 Shared.LinkClassToMap("Gorge", Gorge.kMapName, networkVars, true)

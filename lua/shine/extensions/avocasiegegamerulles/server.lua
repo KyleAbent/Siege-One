@@ -450,6 +450,18 @@ SlapCommand:Help ("sh_slap <player> <time> Slaps the player once per second rand
 SlapCommand:AddParam{ Type = "clients" }
 SlapCommand:AddParam{ Type = "number" }
 ------------------------------------------------------------
+local function MakeExo( Client, Targets ) //make sure team 1 lol
+    for i = 1, #Targets do
+    local Player = Targets[ i ]:GetControllingPlayer()
+        if Player:GetTeamNumber() == 1 and Player:isa("Marine") then
+            Player:GiveExo(Player:GetOrigin())    
+         end
+     end
+end
+local MakeExoCommand = self:BindCommand( "sh_makeexo", "makeexo", MakeExo )
+MakeExoCommand:AddParam{ Type = "clients" }
+MakeExoCommand:Help( "<player> if marine then give exo" )
+--------------------------------------------------------------------------------
 local function Respawn( Client, Targets )
     for i = 1, #Targets do
     local Player = Targets[ i ]:GetControllingPlayer()

@@ -1,3 +1,35 @@
+local networkVars = {   
+
+ hasjumppack = "boolean",
+  lastjump  = "time",
+ }
+local origInit = Marine.OnInitialized
+function Marine:OnInitialized()
+    origInit(self)
+    self.lastjump = Shared.GetTime()
+    self.hasjumppack = false
+    //Print("marine init uhh")
+end
+local brutaliknow = Marine.OnProcessMove
+function Marine:OnProcessMove(input)
+    brutaliknow(self, input)
+     if self.hasjumppack then
+            //Print("has jump pack")
+           if Shared.GetTime() >  self.lastjump + 1.5 and bit.band(input.commands, Move.Jump) ~= 0 and bit.band(input.commands, Move.Crouch) ~= 0 then
+           //if self:GetGravity() ~= 0 then self:JumpPackNotGravity() end
+           local range = 8
+           local force = 11
+           local velocity = self:GetVelocity() * 0.5
+           local forwardVec = self:GetViewAngles():GetCoords().zAxis
+           local newVelocity = velocity + GetNormalizedVectorXZ(forwardVec) * force
+              //Jumping upward ruins it.
+           // newVelocity.y = range * forwardVec.y + range * 0.5 + ConditionalValue(velocity.y < 0, velocity.y, 0)
+            newVelocity.y = 0
+            self:SetVelocity(  self:GetVelocity() + newVelocity )
+            self.lastjump = Shared.GetTime()
+            end
+     end
+end
 
 function Marine:GetWeaponsToStore()
 local toReturn = {}
@@ -133,7 +165,7 @@ function Marine:AttemptToBuy(techIds)
     
         local mapName = LookupTechData(techId, kTechDataMapName)
         
-        if mapName then
+        if mapName or techId == kTechId.JumpPack then
         
             Shared.PlayPrivateSound(self, Marine.kSpendResourcesSoundName, nil, 1.0, self:GetOrigin())
             
@@ -141,12 +173,18 @@ function Marine:AttemptToBuy(techIds)
                 self:GetTeam():OnBought(techId)
             end
             
-                 
               if kIsExoTechId[techId] then
                 BuyExo(self, techId)    
                else
                 if hostStructure:isa("Armory") then self:AddResources(-GetCostForTech(techId)) end -- o_O
-                origattemptbuy(self, techIds)
+                if techId == kTechId.JumpPack then
+                    //StartSoundEffectForPlayer(Marine.activatedsound, self)
+                    //    self:AddResources(-GetCostForTech(techId))
+                    self.hasjumppack = true
+                    return true
+                else    
+                    origattemptbuy(self, techIds)
+                end
             end
        end
    end

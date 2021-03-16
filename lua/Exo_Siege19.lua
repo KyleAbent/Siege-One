@@ -2,27 +2,12 @@ Script.Load("lua/Weapons/PredictedProjectile.lua")
 Script.Load("lua/2019/ExoWelder.lua")
 Script.Load("lua/2019/ExoFlamer.lua")
 Script.Load("lua/2019/ExoGrenader.lua")
+Script.Load("lua/StunMixin.lua")
 
 local networkVars = {   
 
 
-  --isLockedEjecting = "private boolean",
-
-  --  wallboots = "private boolean",
-  --  wallWalking = "compensated boolean",
-  --  timeLastWallWalkCheck = "private compensated time",
-
  }
-  /*
-local kNormalWallWalkFeelerSize = 0.25
-local kNormalWallWalkRange = 0.3
-local kJumpWallRange = 0.4
-local kJumpWallFeelerSize = 0.1
-local kWallJumpInterval = 0.4
-local kWallJumpForce = 5.2 // scales down the faster you are
-local kMinWallJumpForce = 0.1
-local kVerticalWallJumpForce = 4.3
-*/
 
 AddMixinNetworkVars(StunMixin, networkVars)
 AddMixinNetworkVars(PhaseGateUserMixin, networkVars)
@@ -46,7 +31,26 @@ function Exo:OnCreate()
     origcreate(self)
     self:AddTimedCallback(function() HealSelf(self) return true end, 1) 
     InitMixin(self, PredictedProjectileShooterMixin)
+    InitMixin(self, StunMixin)
+    self.timeLastStun = Shared.GetTime()
 end
+
+function Exo:GetLastStunTime()
+return self.timeLastStun
+end
+function Exo:GetIsStunAllowed()
+    return self:GetLastStunTime() + math.random(8,12) < Shared.GetTime() //and GetAreFrontDoorsOpen() //and not self:GetIsVortexed()
+end
+function Exo:OnStun()
+         if Server then
+                local bonewall = CreateEntity(BoneWall.kMapName, self:GetOrigin(), 2)    
+                bonewall:SetSmaller()
+                bonewall:AdjustMaxHealth(bonewall:GetMaxHealth() / 2)
+                StartSoundEffectForPlayer(AlienCommander.kBoneWallSpawnSound, self)
+        end
+        self.timeLastStun = Shared.GetTime()
+end
+
 
 
 local oninit = Exo.OnInitialized

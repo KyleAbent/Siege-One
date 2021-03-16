@@ -3,7 +3,7 @@ function GetMaterialXYOffset(techId)
     if techId == kTechId.BackupBattery then
          return origIndex(kTechId.PowerPoint) 
     elseif techId == kTechId.EggBeacon then
-         return origIndex(kTechId.Shell)
+         return origIndex(kTechId.Egg)
     elseif techId == kTechId.Wall then
          return origIndex(kTechId.Door)
     elseif techId == kTechId.DualWelderExosuit or techId == kTechId.DualFlamerExosuit or techId == kTechId.DualGrenaderExosuit then

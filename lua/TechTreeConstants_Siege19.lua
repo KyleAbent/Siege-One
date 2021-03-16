@@ -46,6 +46,8 @@ local kSiege_TechIds =
     'SiegeBeacon',
     'AdvancedBeacon',
     'LoneCyst',
+    'LerkLift',
+    'JumpPack',
 
 }
 

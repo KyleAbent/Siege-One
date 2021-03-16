@@ -178,8 +178,8 @@ class 'EggBeacon' (AlienBeacon)
 EggBeacon.kMapName = "eggbeacon"
 
 
-EggBeacon.kModelName = PrecacheAsset("models/alien/shell/shell.model")
-local kAnimationGraph = PrecacheAsset("models/alien/shell/shell.animation_graph")
+EggBeacon.kModelName = PrecacheAsset("models/alien/egg/egg.model")
+local kAnimationGraph = PrecacheAsset("models/alien/egg/egg.animation_graph")
 
 function EggBeacon:OnInitialized()
 AlienBeacon.OnInitialized(self)

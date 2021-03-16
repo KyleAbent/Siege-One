@@ -175,6 +175,14 @@ end
 local kSiege_TechData =
 {  
 
+
+    { [kTechDataId] = kTechId.LerkLift, 
+    [kTechDataDisplayName] = "LerkLift", 
+    --[kTechDataCostKey] = kLerkLiftResearchCost, 
+    --[kTechDataResearchTimeKey] = kLerkLiftResearchTime, 
+    [kTechDataTooltipInfo] = "Enables LerkLift for Gorges and Lerks. One gorge per lerk. Both the lerk and gorge may press E on eachother to activate/deactivate." },
+     
+     
     { [kTechDataId] = kTechId.AdvancedBeacon,   
     [kTechDataBuildTime] = 0.1,   
     [kTechDataCooldown] = kAdvancedBeaconCoolDown,
@@ -371,6 +379,14 @@ local kSiege_TechData =
             [kTechDataObstacleRadius] = 0.25,
             [kTechDataSpecifyOrientation] = true,
         },
+        
+        { [kTechDataId] = kTechId.JumpPack,
+        [kTechDataCostKey] = kJumpPackCost,
+        [kTechDataDisplayName] = "Jump Pack", 
+        [kTechDataHotkey] = Move.Z, 
+        [kTechDataTooltipInfo] = "Mimics the NS1/HL1 JumpPack (With Attempted Balance Modifications WIP) - Press DUCK + Jump @ the same time to become overpowered for the alien team."},
+
+        
  
   }
     

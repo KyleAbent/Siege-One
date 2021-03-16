@@ -44,6 +44,9 @@ self.techTree:AddBuyNode(kTechId.ThickenedSkin, kTechId.Spur, kTechId.None, kTec
  self.techTree:AddBuyNode(kTechId.Rebirth, kTechId.Shell, kTechId.None, kTechId.AllAliens)
  self.techTree:AddBuyNode(kTechId.Redemption, kTechId.Shell, kTechId.None, kTechId.AllAliens)
  
+                                                //biomass seven or???
+ self.techTree:AddResearchNode(kTechId.LerkLift, kTechId.BioMassTwelve, kTechId.None, kTechId.AllAliens)
+ 
  
      self.techTree:AddPassive(kTechId.CragHiveTwo, kTechId.CragHive)
     self.techTree:AddPassive(kTechId.ShiftHiveTwo, kTechId.ShiftHive)
@@ -51,4 +54,34 @@ self.techTree:AddBuyNode(kTechId.ThickenedSkin, kTechId.Spur, kTechId.None, kTec
 
     self.techTree:SetComplete()
     PlayingTeam.InitTechTree = orig_PlayingTeam_InitTechTree
+end
+
+----Override
+
+local kUpgradeStructureTable =
+{
+    {
+        name = "Shell",
+        techId = kTechId.Shell,
+        upgrades = {
+            kTechId.Vampirism, kTechId.Carapace, kTechId.Regeneration, kTechId.Redemption, kTechId.Rebirth
+        }
+    },
+    {
+        name = "Veil",
+        techId = kTechId.Veil,
+        upgrades = {
+            kTechId.Camouflage, kTechId.Aura, kTechId.Focus
+        }
+    },
+    {
+        name = "Spur",
+        techId = kTechId.Spur,
+        upgrades = {
+            kTechId.Crush, kTechId.Celerity, kTechId.Adrenaline
+        }
+    }
+}
+function AlienTeam.GetUpgradeStructureTable()
+    return kUpgradeStructureTable
 end

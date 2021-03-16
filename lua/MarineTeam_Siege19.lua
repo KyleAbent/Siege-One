@@ -16,6 +16,7 @@ function MarineTeam:InitTechTree()
       self.techTree:AddTargetedActivation(kTechId.DropExosuit,     kTechId.ExosuitTech, kTechId.None)
       self.techTree:AddActivation(kTechId.AdvancedBeacon, kTechId.Observatory) 
       self.techTree:AddActivation(kTechId.SiegeBeacon, kTechId.Observatory)  
+      self.techTree:AddBuyNode(kTechId.JumpPack,            kTechId.JetpackTech,         kTechId.None)
       
     self.techTree:SetComplete()
     PlayingTeam.InitTechTree = orig_PlayingTeam_InitTechTree

@@ -51,17 +51,17 @@ local origButtons = Observatory.GetTechButtons
 function Observatory:GetTechButtons(techId)
 
     local techButtons = origButtons(self, techId)
-    
-    techButtons[3] = kTechId.AdvancedBeacon
-    if GetSiegeDoorOpen() and not GetTimer():GetHasSiegeBeaconed() then
-        techButtons[4] = kTechId.SiegeBeacon
-    else
-         techButtons[4] = kTechId.None
+    if techButtons then
+        techButtons[3] = kTechId.AdvancedBeacon
+        if GetSiegeDoorOpen() and not GetTimer():GetHasSiegeBeaconed() then
+            techButtons[4] = kTechId.SiegeBeacon
+        else
+             techButtons[4] = kTechId.None
+        end
+        techButtons[5] = kTechId.Detector
+        
+        return techButtons
     end
-    techButtons[5] = kTechId.Detector
-    
-    return techButtons
-    
      
 end
 

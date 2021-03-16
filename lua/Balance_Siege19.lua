@@ -1,3 +1,5 @@
+kJumpPackCost = 19
+
 kHiveInfestationRadius = 10 // Common for hive infestation to leech over in siege  ... 
 
 kFrontTime = 300

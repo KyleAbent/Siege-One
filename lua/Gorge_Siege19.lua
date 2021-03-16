@@ -289,14 +289,20 @@ function Gorge:PreUpdateMove(input, runningPrediction)
     
     self.currentWallWalkingAngles = self:GetAnglesFromWallNormal(self.wallWalkingNormalGoal or Vector.yAxis) or self.currentWallWalkingAngles
 
+   // if self.isriding then
     if(self.gorgeusingLerkID ~= Entity.invalidI) then
-         local lerk = Shared.GetEntity(self.gorgeusingLerkID)
-         if lerk then 
+        local lerk = Shared.GetEntity(self.gorgeusingLerkID)
+        if lerk then 
                 self:SetOrigin(lerk:GetOrigin() +  Vector(0, .5,0))
                 input.move.z = 0
                 input.move.x = 0
-         end
-     end
+                input.move.y = 0
+        //else
+         //  self:TriggerRebirth()
+         //  self.isriding = false
+        //   self.gorgeusingLerkID = Entity.invalidI 
+        end
+    end
      
      
    
@@ -387,19 +393,19 @@ function Gorge:ModifyGravityForce(gravityTable)
 end
 
 function Gorge:GetCanBeUsed(player, useSuccessTable)
-        if GetIsTimeUp(self.lastToggled, 4) and self.wantstobelifted then
-           if player:isa("Lerk") and ( GetHasTech(player, kTechId.LerkLift) or Shared.GetCheatsEnabled )
-           and ( not player.isoccupied and not self.isriding )
-           or ( self.isriding and player.isoccupied and player.lerkcarryingGorgeId == self:GetId()  )then
-           useSuccessTable.useSuccess = true
-           //Print("Gorge Can Be Used")
-           else
-           useSuccessTable.useSuccess = false
-           //Print("Gorge Can Not Be Used")
-           end 
-       else
-        useSuccessTable.useSuccess = false
-       end
+    local boolean = false
+    if player:isa("Lerk") and GetIsTimeUp(self.lastToggled, 2) and self.wantstobelifted then
+       if ( GetHasTech(player, kTechId.LerkLift) or Shared.GetCheatsEnabled ) then
+            if ( not player.isoccupied and not self.isriding ) then
+                boolean = true
+                //Print("Neither Gorge or Lerk is occupied, can Gorge can be used")
+            elseif ( self.isriding and player.isoccupied and player.lerkcarryingGorgeId == self:GetId()  )then
+                boolean = true
+                //Print("Gorge is riding, Lerk is Occupied, Lerk's GorgeID Matches this gorge, Gorge can be used")
+            end
+        end
+   end
+        useSuccessTable.useSuccess = boolean
 end
 
 local orig = Gorge.OnKill
@@ -409,10 +415,9 @@ function Gorge:OnKill()
         self.isriding = false
         local lerk = Shared.GetEntity(self.gorgeusingLerkID)
         if lerk then
-                lerk.occupied = false 
+                lerk.isoccupied = false 
                 lerk.lerkcarryingGorgeId = Entity.invalidI 
          end
-        self.gorgeusingLerkID = Entity.invalidI
    end
 
 end

@@ -33,37 +33,36 @@ if Server then
 end
 
 function Lerk:GetCanBeUsed(player, useSuccessTable)
-        if GetIsTimeUp(self.lastToggled, 4) then
-           if player:isa("Gorge") and ( GetHasTech(player, kTechId.LerkLift) or Shared.GetCheatsEnabled )
-           and ( not self.isoccupied and not player.isriding )
-           or ( player.isriding and self.isoccupied and player.gorgeusingLerkID == self:GetId()  )then
-                //Print("Lerk Can Be Used")
-                useSuccessTable.useSuccess = true
-           else
-                 //Print("Lerk Can Not Be Used")
-                useSuccessTable.useSuccess = false
-           end
-         else
-            useSuccessTable.useSuccess = false
-         end
+    local boolean = false
+    if player:isa("Gorge") and GetIsTimeUp(self.lastToggled, 2) and self.wantstobelifted then
+       if ( GetHasTech(player, kTechId.LerkLift) or Shared.GetCheatsEnabled ) then
+            if ( not self.isoccupied and not player.isriding ) then
+                boolean = true
+                //Print("Neither Gorge or Lerk is occupied, can Lerk can be used")
+            elseif ( player.isriding and self.isoccupied and player.gorgeusingLerkID == self:GetId()  )then
+                boolean = true
+                //Print("Gorge is riding, Lerk is Occupied, Gorge's LerkID Matches this lerk, Lerk can be used")
+            end
+        end
+   end
+        useSuccessTable.useSuccess = boolean
 end
 
 function Lerk:OnUse(player, elapsedTime, useSuccessTable)
-      if not player.isriding and not self.occupied then
+      if not player.isriding and not self.isoccupied then
         player.isriding = true 
         player.gorgeusingLerkID = self:GetId()
         self.lerkcarryingGorgeId = player:GetId()
         self.isoccupied = true
         Print("Lerk On Use A")
         self.lastToggled = Shared.GetTime()
-    elseif self.occupied and  ( player.isriding and self.lerkcarryingGorgeId == player:GetId() ) then
+    elseif self.isoccupied and player.isriding and player.gorgeusingLerkID == self:GetId() then
         player.isriding = false
         player.gorgeusingLerkID = Entity.invalidI
         self.lerkcarryingGorgeId = Entity.invalidI
         self.isoccupied = false
         Print("Lerk On Use B")
         self.lastToggled = Shared.GetTime()
-        player:SetOrigin(self:GetOrigin() - Vector(0, 0.5, 0) )
      end
 end
 
@@ -71,7 +70,7 @@ if Server then
     local orig = Lerk.OnKill
     function Lerk:OnKill()
         orig(self)
-        self.occupied = false
+        //self.occupied = false
         local gorge = Shared.GetEntity(self.lerkcarryingGorgeId)
             if gorge then
                     //Print("Lerk Died, found gorge")
@@ -79,10 +78,8 @@ if Server then
                     gorge.isriding = false
                     gorge:TriggerRebirth()
              end
-        self.lerkcarryingGorgeId = Entity.invalidI
-
+        //self.lerkcarryingGorgeId = Entity.invalidI
     end
-
 end
 
 /*

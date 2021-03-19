@@ -129,10 +129,24 @@ function GetCheckEggBeacon(techId, origin, normal, commander)
             
     end
     
-    return num < 1 and not GetWhereIsInSiege(origin)
+    return num < 1 and not GetWhereIsInSiege(origin) and GetSetupConcluded()
     
 end
+function GetCheckStructureBeacon(techId, origin, normal, commander)
+    local num = 0
 
+        
+        for index, shell in ientitylist(Shared.GetEntitiesWithClassname("StructureBeacon")) do
+        
+           -- if not spur:isa("StructureBeacon") then 
+                num = num + 1
+          --  end
+            
+    end
+    
+    return num < 1 and not GetWhereIsInSiege(origin) and GetSetupConcluded()
+    
+end
 function GetCheckLoneCyst(techId, origin, normal, commander)
     
     return  GetSetupConcluded() and not GetWhereIsInSiege(origin)
@@ -234,14 +248,15 @@ local kSiege_TechData =
     
     { [kTechDataId] = kTechId.StructureBeacon, 
     [kTechDataCooldown] = kStructureBeaconCoolDown, 
-    [kTechDataTooltipInfo] = "Structures move approximately at the placed location", 
+    [kTechDataTooltipInfo] = "Whips/Crags/Shades/Shifts that are currently standing still(non moving), and further than 12 radius, teleport nearby the placed location. Ignores Crags/Shifts/Shades nearby hive for SiegeWall Defense.", 
     [kTechDataGhostModelClass] = "AlienGhostModel",   
     [kTechDataMapName] = StructureBeacon.kMapName,        
     [kTechDataDisplayName] = "Structure Beacon",  [kTechDataCostKey] = kStructureBeaconCost,   
     [kTechDataRequiresInfestation] = true, [kTechDataHotkey] = Move.C,   
     [kTechDataBuildTime] = kStructureBeaconBuildTime, 
     [kTechDataModel] = StructureBeacon.kModelName,  
-    [kTechDataBuildMethodFailedMessage] = "1 at a time not in siege",
+    [kTechDataBuildMethodFailedMessage] = "1 at a time not in siege/during setup",
+    [kTechDataBuildRequiresMethod] = GetCheckStructureBeacon,
     [kVisualRange] = 8,
     [kTechDataMaxHealth] = kStructureBeaconHealth, [kTechDataMaxArmor] = kStructureBeaconArmor},
     

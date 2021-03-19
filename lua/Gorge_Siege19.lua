@@ -35,6 +35,7 @@ function Gorge:OnCreate()
     self.isriding = false
     self.gorgeusingLerkID = Entity.invalidI
     self.wantstobelifted = true
+    self.timeLastLerkCheck = 0
 end
 
 function Gorge:GetTunnelColor()
@@ -289,24 +290,48 @@ function Gorge:PreUpdateMove(input, runningPrediction)
     
     self.currentWallWalkingAngles = self:GetAnglesFromWallNormal(self.wallWalkingNormalGoal or Vector.yAxis) or self.currentWallWalkingAngles
 
-   // if self.isriding then
-    if(self.gorgeusingLerkID ~= Entity.invalidI) then
+    
+    if self.isriding and (self.gorgeusingLerkID ~= Entity.invalidI) then
         local lerk = Shared.GetEntity(self.gorgeusingLerkID)
         if lerk then 
                 self:SetOrigin(lerk:GetOrigin() +  Vector(0, .5,0))
                 input.move.z = 0
                 input.move.x = 0
                 input.move.y = 0
-        //else
-         //  self:TriggerRebirth()
-         //  self.isriding = false
-        //   self.gorgeusingLerkID = Entity.invalidI 
+        else
+           --Print("Lerk which was carrying gorge has been lost. Resetting Gorge Status")
+           --self:TriggerRebirth()
+           self.isriding = false
+           self.gorgeusingLerkID = Entity.invalidI 
         end
     end
-     
-     
-   
+ 
 end
+
+/*
+if Server then
+    --If Lerk Gestates or any other thing while LerkLift is active than OnKill
+    function Gorge:OnUpdate(deltaTime)
+        if self.isriding and GetIsTimeUp(self.timeLastLerkCheck, 1) then
+            local lerk = Shared.GetEntity(self.gorgeusingLerkID)
+            if lerk then 
+                if lerk:isa("Lerk") and lerk.lerkcarryingGorgeId == self:GetId() then
+                    --No Problem Here
+                    Print("OnUpdate found LerkLift Lerk no problem")
+                else
+                    --Something happened
+                    Print("OnUpdate found LerkLift Lerk WITH problem.")
+                    self.isriding = false
+                    self.gorgeusingLerkID = Entity.invalidI 
+                end
+            end
+            self.timeLastLerkCheck = Shared.GetTime()
+        end
+
+    end
+end
+*/
+
 function Gorge:GetMoveSpeedIs2D()
     return not self:GetIsWallWalking()
 end

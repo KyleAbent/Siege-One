@@ -24,6 +24,8 @@ function GetMaterialXYOffset(techId)
          return origIndex(kTechId.CragHive)
     elseif techId == kTechId.ShiftHiveTwo then
          return origIndex(kTechId.ShiftHive)
+    elseif techId == kTechId.StructureBeacon then
+         return origIndex(kTechId.Spur)
     else
         return origIndex(techId)
     end

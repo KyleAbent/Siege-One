@@ -11,7 +11,7 @@ function StructureBeacon:OnInitialized()
 AlienBeacon.OnInitialized(self)
     self:SetModel(StructureBeacon.kModelName, kAnimationGraph)
 end
-local kLifeSpan = 8
+local kLifeSpan = 9
 
 local networkVars = { }
 
@@ -56,35 +56,37 @@ end
 if Server then
 
     function StructureBeacon:OnConstructionComplete()
-        if  GetImaginator():GetAlienEnabled() and math.random(1,100) >= 85 then
-            if Server then CreateEntity(Contamination.kMapName, FindFreeSpace(self:GetOrigin()), 2) end
-        end
-        if GetIsInSiege(self) then kLifeSpan = 4 end
         self:AddTimedCallback(TimeUp, kLifeSpan )  
         self:Magnetize()
          self:AddTimedCallback(StructureBeacon.Magnetize, 1)
     end
     function StructureBeacon:Magnetize()
-      local eligable = {}
-      local entity = GetEntitiesWithMixinForTeam( "Supply", 2 )
+      local entity = {}
       
-      for i = 1, #entity do
+    for _, structure in ipairs(GetEntitiesWithMixinForTeamWithinRange("Supply", 2, self:GetOrigin(), 99999)) do
+         if  ( structure:isa("Whip") or structure:isa("Crag") or structure:isa("Shade") or structure:isa("Shift") )
+            and self:GetDistance(structure) >= 12 and not ( structure.GetIsMoving and structure:GetIsMoving() ) 
+            and structure:GetIsBuilt() and not GetIsStructureSiegeWall(self, structure) then
+                table.insert(entity,structure)
+                break//Well Just one at a time I Guess
+         end
+      end
+      
+      for i = 1, #entity do//Well Just in case I want more than one , heh.
          local structure = entity[i]
-         local distance = self:GetDistance(structure)
-           local restrictions = distance >= 8 and not structure:isa("Shell") and not structure:isa("Veil") and not structure:isa("Spur") and not structure:isa("Drifter") and not structure:isa("DrifterEgg") and not  ( structure.GetIsMoving and structure:GetIsMoving() )  and not GetIsACreditStructure(structure)  and structure:GetIsBuilt() and not GetIsStructureSiegeWall(self, structure)
-            if restrictions and self:GetIsAlive() then
-            
+            if self:GetIsAlive() then
                    local success = false 
-                       if distance >= 16 then
                             if HasMixin(entity, "Obstacle") then  entity:RemoveFromMesh()end
                             success = structure:SetOrigin( FindFreeSpace(self:GetOrigin(), .5, 7 ) )
                              if HasMixin(structure, "Obstacle") then
                                 if structure.obstacleId == -1 then structure:AddToMesh() end
                              end
-                             structure:Check()
-                             if structure:isa("Whip") then  structure. rooted = true structure:Root() if structure.salty then structure:SetInfestationRadius(1) end end
+                             //structure:Check()
+                             if structure:isa("Whip") then  
+                                structure. rooted = true 
+                                structure:Root() 
+                             end
                             if success then return self:GetIsAlive() end
-                       end 
                        
                        --  structure:ClearOrders()
                         -- success = structure:GiveOrder(kTechId.Move, self:GetId(), FindFreeSpace(self:GetOrigin(), .5, 7), nil, true, true) 

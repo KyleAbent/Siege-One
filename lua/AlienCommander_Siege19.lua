@@ -3,7 +3,7 @@
 local gAlienMenuButtons =
 {
     [kTechId.BuildMenu] = { kTechId.Cyst, kTechId.Harvester, kTechId.DrifterEgg, kTechId.Hive,
-                            kTechId.EggBeacon, kTechId.LoneCyst, kTechId.None, kTechId.BuildTunnelMenu },
+                            kTechId.LoneCyst, kTechId.EggBeacon, kTechId.StructureBeacon, kTechId.BuildTunnelMenu },
 
     [kTechId.AdvancedMenu] = { kTechId.Crag, kTechId.Shade, kTechId.Shift, kTechId.Whip,
                                kTechId.Shell, kTechId.Veil, kTechId.Spur, kTechId.None },

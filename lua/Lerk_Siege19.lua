@@ -73,10 +73,12 @@ if Server then
         //self.occupied = false
         local gorge = Shared.GetEntity(self.lerkcarryingGorgeId)
             if gorge then
+                if gorge.isriding and gorge.gorgeusingLerkID == self:GetId() then
                     //Print("Lerk Died, found gorge")
                     gorge.gorgeusingLerkID = Entity.invalidI 
                     gorge.isriding = false
                     gorge:TriggerRebirth()
+                 end
              end
         //self.lerkcarryingGorgeId = Entity.invalidI
     end

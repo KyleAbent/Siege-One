@@ -198,6 +198,7 @@ local function grabDoorMapEditorSettings()
         Print("sideTime time is %s", sideTime)
     end
     
+    /*
     if frontDoor.shortenTimer ~= nil then
         Print("found front shortenTimer!, set to %s", frontDoor.shortenTimer)
         if frontDoor.shortenTimer == true then
@@ -229,6 +230,7 @@ local function grabDoorMapEditorSettings()
             kFrontTime = frontTime
             gameInfo:SetFrontTime(frontTime)
     end
+    */
     
     Print("siegeTime is %s", siegeTime)
     

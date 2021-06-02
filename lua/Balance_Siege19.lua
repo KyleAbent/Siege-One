@@ -13,8 +13,8 @@ kReduceDoorTimeBy = 0
 kJetpackUseFuelRate = .15 //I'm really not happy about this.
 
 
-kPlayingTeamInitialTeamRes = 400
-kMaxTeamResources = 420
+--kPlayingTeamInitialTeamRes = 200
+kMaxTeamResources = 999
 
 kHarvesterMaturationTime = 30
 kWhipMaturationTime = 30 --120

@@ -3,6 +3,7 @@ kSentriesPerBattery = 9
 Sentry.kFov = 360
 Sentry.kMaxPitch = 180
 Sentry.kMaxYaw = Sentry.kFov
+Sentry.kBarrelMoveRate = 120 --150
 
 local function CheckState(self) --Better to have the robo do it. One check per roboo than one per sentry. But this delay should be ok.
 

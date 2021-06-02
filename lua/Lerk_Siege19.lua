@@ -12,6 +12,17 @@ local networkVars = //Why don't  Ijust add LerkLiftMixin and make it networkvars
  wantstobelifted = "boolean",
 }
 
+Lerk.kMaxSpeed = 16//13
+Lerk.kGlideAccel = 8//6
+
+local adjustSpeed = Lerk.GetMaxSpeed
+
+function Lerk:GetMaxSpeed(possible)
+    origSpeed = adjustSpeed(self, possible)
+    boostSpeed = origSpeed * 1.15
+    return boostSpeed
+end
+
 local origCreate = Lerk.OnCreate 
 
 function Lerk:OnCreate()
@@ -124,4 +135,28 @@ if Client then
 end
 
 */
+
+local kLerkXScale = 0.75
+--local kLerkScale = 0.9
+function Lerk:OnAdjustModelCoords(modelCoords)
+    modelCoords.xAxis = modelCoords.xAxis * kLerkXScale
+    --modelCoords.yAxis = modelCoords.yAxis * kLerkScale
+    --modelCoords.zAxis = modelCoords.zAxis * kLerkScale
+
+    return modelCoords
+end
+
+
+function Lerk:ModifyDamageTaken(damageTable, attacker, doer, damageType, hitPoint)
+    
+    if hitPoint ~= nil and self.isoccupied and self.lerkcarryingGorgeId ~= Entity.invalidI then
+
+        if doer:GetClassName() ~= "railgun" then
+            damageTable.damage = damageTable.damage * 0.93
+        end
+        
+    end
+
+end
+
 Shared.LinkClassToMap("Lerk", Lerk.kMapName, networkVars, true)

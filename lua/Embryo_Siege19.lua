@@ -1,8 +1,3 @@
-/*
-
-//Hitboxes aren't updated
-
-
 local kUpdateGestationTime = 0.1
 function Embryo:OnAdjustModelCoords(coords)
 
@@ -17,4 +12,3 @@ function Embryo:OnAdjustModelCoords(coords)
     
 end
 
-*/

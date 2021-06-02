@@ -4,9 +4,11 @@
 local orig = Hive.OnCreate
 function Hive:OnCreate()
 orig(self)
+    /*
     if Server then
     self.bioMassLevel = 4
     end
+    */
 end
 
 
@@ -65,11 +67,13 @@ function Hive:GetNumEggs() --Well all 3 hives in same location, and if each hive
 
 end
 
+    /*
     local orig = Hive.OnConstructionComplete
     function Hive:OnConstructionComplete()
         orig(self)
         self.bioMassLevel = 4
     end
+    */
     
 
 end --server

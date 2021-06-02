@@ -16,17 +16,7 @@ local kCachedMapNameTechIds
 local kCachedTechData
 
 
-function GetCheckObsLimit(techId, origin, normal, commander)
-    local num = 0
 
-        
-        for index, obs in ientitylist(Shared.GetEntitiesWithClassname("Observatory")) do
-                num = num + 1
-        end
-    
-    return num < 10
-    
-end
 
 
 -- Remap techdata for faster lookups

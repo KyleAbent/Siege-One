@@ -6,15 +6,16 @@ if Server then
        -- Print("UHHH")
         local returnOrig = true 
 
-        --Hive Weaponss       
+        --Hive Weaponss
+           
         if prereq1 == kTechId.BioMassOne or prereq1 == kTechId.BioMassTwo or prereq1 == kTechId.BioMassThree then
-            prereq1 = kTechId.None
+            --prereq1 = kTechId.None
             returnOrig = false
         elseif prereq1 == kTechId.BioMassFour or prereq1 == kTechId.BioMassFive or prereq1 == kTechId.BioMassSix then
-            prereq1 = kTechId.TwoHives
+            --prereq1 = kTechId.TwoHives
             returnOrig = false
         elseif prereq1 == kTechId.BioMassSeven or prereq1 == kTechId.BioMassEight or prereq1 == kTechId.BioMassNine then
-            prereq1 = kTechId.ThreeHives
+            --prereq1 = kTechId.ThreeHives
             returnOrig = false
         end
         
@@ -22,19 +23,22 @@ if Server then
         --Armory Weapons, CC.
         if techId == kTechId.ShotgunTech or techId == kTechId.GrenadeTech or techId == kTechId.MinesTech or techId == kTechId.AdvancedMarineSupport 
         or techId == kTechId.PhaseTech then
-            returnOrig = false
+            --returnOrig = false
+            returnOrig = true
         end
         
         --Proto
         if techId == kTechId.JetpackTech or techId == kTechId.ExosuitTech then
-            returnOrig = false
+            --returnOrig = false
+            returnOrig = true
         end
         
         
         --Armslab
         if techId == kTechId.Armor1 or techId == kTechId.Armor2 or techId == kTechId.Armor3 or
         techId == kTechId.Weapons1 or techId == kTechId.Weapons2 or techId == kTechId.Weapons3 then 
-            returnOrig = false
+            --returnOrig = false
+            returnOrig = true
         end
         
         if returnOrig then

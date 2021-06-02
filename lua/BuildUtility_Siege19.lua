@@ -8,13 +8,31 @@ kMaxEntityRadius = 0
 
 function GetCheckObsLimit(techId, origin, normal, commander)
     local num = 0
+    local inRoom = 0
 
         
         for index, obs in ientitylist(Shared.GetEntitiesWithClassname("Observatory")) do
                 num = num + 1
         end
     
-    return num < 10
+    local location = GetLocationForPoint(origin)
+    local locationName = location and location:GetName() or nil
+    
+    if locationName then
+    
+        local walls = Shared.GetEntitiesWithClassname("Observatory")
+        for b = 0, walls:GetSize() - 1 do
+        
+            local wall = walls:GetEntityAtIndex(b)
+            if wall and wall:GetLocationName() == locationName then
+                inRoom = inRoom + 1
+            end
+            
+        end
+        
+    end
+    
+    return num < 10 and inRoom < 3
     
 end
 function GetCheckArmoryLimit(techId, origin, normal, commander)
@@ -30,13 +48,30 @@ function GetCheckArmoryLimit(techId, origin, normal, commander)
 end
 function GetCheckRoboLimit(techId, origin, normal, commander)
     local num = 0
+    local inRoom = 0
 
         
         for index, obs in ientitylist(Shared.GetEntitiesWithClassname("RoboticsFactory")) do
                 num = num + 1
         end
+    local location = GetLocationForPoint(origin)
+    local locationName = location and location:GetName() or nil
     
-    return num < 10
+    if locationName then
+    
+        local walls = Shared.GetEntitiesWithClassname("RoboticsFactory")
+        for b = 0, walls:GetSize() - 1 do
+        
+            local wall = walls:GetEntityAtIndex(b)
+            if wall and wall:GetLocationName() == locationName then
+                inRoom = inRoom + 1
+            end
+            
+        end
+        
+    end
+    
+    return num < 10 and inRoom < 3
     
 end
 function GetCheckArmsLimit(techId, origin, normal, commander)

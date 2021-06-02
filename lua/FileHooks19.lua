@@ -21,6 +21,7 @@ ModLoader.SetupFileHook( "lua/ExoVariantMixin.lua", "lua/ExoVariant_Siege19.lua"
 //ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
 //ModLoader.SetupFileHook( "lua/NS2_GorgeTunnel/TunnelEntrance.lua", "lua/TunnelEntrance_Siege19.lua", "post" ) --hmm?
 
+ModLoader.SetupFileHook( "lua/CloakableMixin.lua", "lua/CloakableMixin_Siege21.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/GUIMinimap.lua", "lua/GUIMinimap_Siege20.lua", "post" )
 ModLoader.SetupFileHook( "lua/MapBlip.lua", "lua/MapBlip_Siege20.lua", "post" )

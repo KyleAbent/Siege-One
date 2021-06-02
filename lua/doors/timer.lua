@@ -264,11 +264,13 @@ function Timer:FrontDoorTimer(gameinfo)
 
     if self:GetIsFrontOpen(gameinfo) then
        self:OpenFrontDoors()
+       /*
     else
         if not self.timelastBonus or self.timelastBonus + 10 <= Shared.GetTime() then
             self:BuildSpeedBonus()
             self.timelastBonus = Shared.GetTime()
         end
+        */
      end
 end
 function Timer:SideDoorTimer(gameinfo)

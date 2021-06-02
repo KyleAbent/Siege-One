@@ -1,3 +1,4 @@
+/*
 local origButtons = Armory.GetTechButtons
 function Armory:GetTechButtons(techId)
 
@@ -11,5 +12,6 @@ function Armory:GetTechButtons(techId)
     
     
 end
+*/
 
 

@@ -1,3 +1,4 @@
+/*
 local origCC = ArmsLab.GetTechButtons
 function ArmsLab:GetTechButtons(techId)
  local orig = origCC(self, techId)
@@ -10,3 +11,4 @@ function ArmsLab:GetTechButtons(techId)
   orig[7] = kTechId.None
   return orig
 end
+*/

@@ -31,7 +31,7 @@ function GameInfo:AddActivePower(isAlienTerritory)
     end
 end
 
-function GameInfo:DeductActivePower(isAlienTerritory)
+function GameInfo:DeductActivePower()
     local timer = GetTimer()
     if timer:GetIsFrontOpen(self) and not timer:GetIsSiegeOpen(self) then
         local newAdjustment = math.random(10,30) * -1

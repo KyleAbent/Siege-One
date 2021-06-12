@@ -1,3 +1,28 @@
+function AdjustCystsHPArmor()
+    for _, cyst in ientitylist(Shared.GetEntitiesWithClassname("Cyst")) do
+        //if not cyst is king?
+        cyst:AdjustMaxHPOnTier()
+    end
+end
+function GetRandomCyst()//Bleh a for loop
+    local cysts = {}
+    for _, cyst in ientitylist(Shared.GetEntitiesWithClassname("Cyst")) do
+        if cyst and cyst:GetIsBuilt() and not cyst.isKing then table.insert(cysts,cyst) end
+    end
+    return table.random(cysts)
+end
+function GetHasHiveType(type)//Bleh a for loop
+    for _, hive in ientitylist(Shared.GetEntitiesWithClassname("Hive")) do
+        if type == kTechId.CragHive and hive:GetTechId() == kTechId.CragHive then
+            return true
+        elseif type == kTechId.ShadeHive and hive:GetTechId() == kTechId.ShadeHive then
+             return true
+        elseif type == kTechId.ShiftHive and hive:GetTechId() == kTechId.ShiftHive then
+             return true
+        end
+    end
+    return false    
+end
 function GetActivePowerCount()//bool notSiege, if notSiege true then.. prevent grabbing siege powerpoint..?
       local powers = {}
       for _, power in ientitylist(Shared.GetEntitiesWithClassname("PowerPoint")) do
@@ -317,7 +342,13 @@ function GetSiegeDoorOpen()
    return boolean
 end
 
-
+function GetKingCyst() 
+        for index, king in ientitylist(Shared.GetEntitiesWithClassname("KingCyst")) do
+      
+          return king
+            
+    end
+end
 
 function GetFrontDoor() 
         for index, door in ientitylist(Shared.GetEntitiesWithClassname("FrontDoor")) do

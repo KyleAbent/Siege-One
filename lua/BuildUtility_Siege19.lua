@@ -1,10 +1,11 @@
 kMaxEntitiesInRadius = 999
 kMaxEntityRadius = 0
 
-
 --Kyle 'Avoca' Abent
 ---I really don't wanna do this, but because you removed the support for setcachedtechdata, you leave me no choice. 
 --Limits
+
+
 
 function GetCheckObsLimit(techId, origin, normal, commander)
     local num = 0

@@ -1,4 +1,3 @@
---Kyle 'Avoca' Abent 
 Script.Load("lua/Mixins/ClientModelMixin.lua")
 Script.Load("lua/LiveMixin.lua")
 Script.Load("lua/PointGiverMixin.lua")

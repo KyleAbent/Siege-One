@@ -183,6 +183,24 @@ function Timer:GetIsSideOpen(gameinfo)
            return  gameLength >= self.SideTimer
 end
 if Server then
+    function Timer:OldKingCystDied()
+        self:Throne()
+        self.timeLastKing = Shared.GetTime()
+    end
+    function Timer:Throne()
+       // local king = GetKingCyst()
+       // local hasKing = false
+       // if king ~= nill then
+        //   hasKing = true
+        //end
+        
+        //if not hasKing then
+            local cyst = GetRandomCyst()
+            if cyst then
+                cyst:Throne()
+            end
+        //end
+    end
      function Timer:OnUpdate(deltatime)
           local gamestarted = GetGamerules():GetGameStarted()
           if gamestarted then 
@@ -192,6 +210,10 @@ if Server then
                     if not self.siegeOpened then self:SiegeDoorTimer(gameinfo) end   
                     if not self.sideOpened then self:SideDoorTimer(gameinfo) end  
                     self.timelasttimerup = Shared.GetTime()  
+                    if not self.timeLastKing or self.timeLastKing + 30 <= Shared.GetTime() then
+                        self:Throne()
+                        self.timeLastKing = Shared.GetTime()
+                    end
                 end
           end
      end

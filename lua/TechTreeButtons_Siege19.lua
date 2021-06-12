@@ -26,6 +26,16 @@ function GetMaterialXYOffset(techId)
          return origIndex(kTechId.ShiftHive)
     elseif techId == kTechId.StructureBeacon then
          return origIndex(kTechId.Spur)
+    elseif techId == kTechId.ArmoryBeefUp then
+          return origIndex(kTechId.AdvancedArmory)
+    elseif techId == kTechId.HiveLifeInsurance or techId == kTechId.AlienTechPointHive then
+          return origIndex(kTechId.Hive)
+    elseif techId == kTechId.AlienTechPoint then
+          return origIndex(kTechId.TechPoint)
+    elseif ( techId == kTechId.CystMenu or techId == kTechId.DoubleCystHP 
+            or techId == kTechId.TripleCystHP or techId == kTechId.QuadrupleCystHP or techId == kTechId.DoubleCystArmor 
+            or techId == kTechId.TripleCystArmor  or techId == kTechId.QuadrupleCystArmor ) then
+            return origIndex(kTechId.Cyst)
     else
         return origIndex(techId)
     end

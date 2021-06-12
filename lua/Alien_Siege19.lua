@@ -138,7 +138,7 @@ end
 
 
 local origKill = Alien.OnKill 
-function Alien:OnKill() 
+function Alien:OnKill(attacker, doer, point, direction) 
     if  GetHasRebirthUpgrade(self) and self:GetEligableForRebirth() then
         if Server then 
             if attacker and attacker:isa("Player")  then 
@@ -149,7 +149,7 @@ function Alien:OnKill()
         self:TriggerRebirth()
         return
     else
-        origKill(self)
+        origKill(self,attacker, doer, point, direction)
     end
 end
 

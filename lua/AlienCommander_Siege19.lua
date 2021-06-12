@@ -6,7 +6,7 @@ local gAlienMenuButtons =
                             kTechId.LoneCyst, kTechId.EggBeacon, kTechId.StructureBeacon, kTechId.BuildTunnelMenu },
 
     [kTechId.AdvancedMenu] = { kTechId.Crag, kTechId.Shade, kTechId.Shift, kTechId.Whip,
-                               kTechId.Shell, kTechId.Veil, kTechId.Spur, kTechId.None },
+                               kTechId.Shell, kTechId.Veil, kTechId.Spur, kTechId.AlienTechPoint },
 
     [kTechId.AssistMenu] = { kTechId.HealWave, kTechId.ShadeInk, kTechId.SelectShift, kTechId.SelectDrifter,
                              kTechId.NutrientMist, kTechId.Rupture, kTechId.BoneWall, kTechId.Contamination }

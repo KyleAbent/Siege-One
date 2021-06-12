@@ -48,6 +48,18 @@ local kSiege_TechIds =
     'LoneCyst',
     'LerkLift',
     'JumpPack',
+    'ArmoryBeefUp',
+    'HiveLifeInsurance',
+    'AlienTechPoint',
+    'CystMenu',
+    'DoubleCystHP',
+    'TripleCystHP',
+    'QuadrupleCystHP',
+    'DoubleCystArmor',
+    'TripleCystArmor',
+    'QuadrupleCystArmor',
+    'AlienTechPointHive',
+    --'KingCyst',
 
 }
 

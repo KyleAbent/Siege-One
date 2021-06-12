@@ -1,5 +1,6 @@
 Script.Load("lua/2019/EggBeacon.lua")
 Script.Load("lua/2019/StructureBeacon.lua")
+Script.Load("lua/2019/AlienTechPoint.lua")
 Script.Load("lua/2019/Wall.lua")
 Script.Load("lua/2019/ExoWelder.lua")
 Script.Load("lua/2019/ExoFlamer.lua")
@@ -16,8 +17,10 @@ local kCachedMapNameTechIds
 local kCachedTechData
 
 
-
-
+-- Returns true if specified class name is used to attach objects to
+function GetIsAttachment(className)
+    return (className == "TechPoint") or (className == "ResourcePoint") or (className == "AlienTechPoint")
+end
 
 -- Remap techdata for faster lookups
 function BuildTechDataCache()
@@ -106,7 +109,15 @@ function GetTechForCategory(techId)
 
 end
 
-
+function GetCheckAlienTechPoint(techId, origin, normal, commander)
+        
+        for index, atp in ientitylist(Shared.GetEntitiesWithClassname("AlienTechPoint")) do
+                return false
+        end
+    
+    
+    return true //GetFrontDoorOpen <- can aliens really get the 600 res before front door open? nah
+end
 function GetCheckEggBeacon(techId, origin, normal, commander)
     local num = 0
 
@@ -383,6 +394,112 @@ local kSiege_TechData =
             [kVisualRange] = 8,
             [kTechDataObstacleRadius] = 0.25,
             [kTechDataSpecifyOrientation] = true,
+        },
+        
+        -- Beefup research
+        {
+            [kTechDataId] = kTechId.ArmoryBeefUp,
+            [kTechDataCostKey] = 80,
+            [kTechDataResearchTimeKey] = 30,
+            [kTechDataDisplayName] = "ArmoryBeefUp",
+            [kTechDataTooltipInfo] = "At the moment this is purely cosmetic. Simply make it bigger in size to block more area. Nothing else to it than modelsize.",
+            [kTechDataResearchName] = "ArmoryBeefUp",
+        },
+        -- HiveLifeInsurance research
+        {
+            [kTechDataId] = kTechId.HiveLifeInsurance,
+            [kTechDataCostKey] = 400,
+            [kTechDataResearchTimeKey] = 30,
+            [kTechDataDisplayName] = "HiveLifeInsurance",
+            [kTechDataTooltipInfo] = "30% Chance Upon Research complete to be Success or Fail. If fail then tres wasted. Otherwise will prevent the death of the hive for one time. OnKill will boost its HP instead of dying. ",
+            [kTechDataResearchName] = "HiveLifeInsurance",
+        },
+        
+     { [kTechDataId] = kTechId.AlienTechPoint,  
+        [kTechDataMapName] = AlienTechPoint.kMapName, 
+        [kTechDataDisplayName] = "AlienTechPoint", 
+        [kTechIDShowEnables] = false, 
+        [kTechDataTooltipInfo] =  "Create your own AlienTechPoint", 
+        [kTechDataModel] = AlienTechPoint.kModelName, 
+        [kTechDataBuildTime] = kWallBuildTime,
+        [kTechDataMaxHealth] = 4000,
+        [kTechDataMaxArmor] = 0,
+        [kTechDataBuildRequiresMethod] = GetCheckAlienTechPoint,
+        [kTechDataBuildMethodFailedMessage] = "Limitreached", 
+        [kTechDataCostKey] = 600, 
+        [kTechDataSpecifyOrientation] = true,
+        [kTechDataPointValue] = 20,
+        [kTechDataMaxHealth] = 2000, 
+        [kTechDataMaxArmor] = 1000,
+        [kTechDataSupply] = 0},
+        
+        {
+            [kTechDataId] = kTechId.CystMenu,
+            [kTechDataDisplayName] = "CystMenu",
+            [kTechDataTooltipInfo] = "CystMenu",
+        },
+        
+        {
+            [kTechDataId] = kTechId.DoubleCystHP,
+           -- [kTechDataBioMass] = kHiveBiomass,
+            [kTechDataCostKey] = 50,
+            [kTechDataResearchTimeKey] = kBioMassOneTime,
+            [kTechDataDisplayName] = "DoubleCystHP",
+            [kTechDataTooltipInfo] = "DoubleCystHP",
+        },
+        
+        {
+            [kTechDataId] = kTechId.TripleCystHP,
+            --[kTechDataBioMass] = kHiveBiomass,
+            [kTechDataCostKey] = 60,
+            [kTechDataResearchTimeKey] = kBioMassOneTime,
+            [kTechDataDisplayName] = "TripleCystHP",
+            [kTechDataTooltipInfo] = "TripleCystHP",
+        },
+        
+        {
+            [kTechDataId] = kTechId.QuadrupleCystHP,
+            --[kTechDataBioMass] = kHiveBiomass,
+            [kTechDataCostKey] = 70,
+            [kTechDataResearchTimeKey] = kBioMassOneTime,
+            [kTechDataDisplayName] = "QuadrupleCystHP",
+            [kTechDataTooltipInfo] = "QuadrupleCystHP",
+        },
+        
+        {
+            [kTechDataId] = kTechId.DoubleCystArmor,
+            --[kTechDataBioMass] = kHiveBiomass,
+            [kTechDataCostKey] = 50,
+            [kTechDataResearchTimeKey] = kBioMassOneTime,
+            [kTechDataDisplayName] = "DoubleCystArmor",
+            [kTechDataTooltipInfo] = "DoubleCystArmor",
+        },
+        
+        {
+            [kTechDataId] = kTechId.TripleCystArmor,
+           -- [kTechDataBioMass] = kHiveBiomass,
+            [kTechDataCostKey] = 60,
+            [kTechDataResearchTimeKey] = kBioMassOneTime,
+            [kTechDataDisplayName] = "TripleCystArmor",
+            [kTechDataTooltipInfo] = "TripleCystArmor",
+        },
+        
+        {
+            [kTechDataId] = kTechId.QuadrupleCystArmor,
+           -- [kTechDataBioMass] = kHiveBiomass,
+            [kTechDataCostKey] = 70,
+            [kTechDataResearchTimeKey] = kBioMassOneTime,
+            [kTechDataDisplayName] = "QuadrupleCystArmor",
+            [kTechDataTooltipInfo] = "QuadrupleCystArmor",
+        },
+        
+        {
+            [kTechDataId] = kTechId.AlienTechPointHive,
+            [kTechDataCooldown] = 0,
+            [kTechDataDisplayName] = "AlienTechPointHive",
+            [kTechDataCostKey] = 40,
+            [kTechDataTooltipInfo] = "AlienTechPointHive",
+            --[kTechDataOneAtATime] = true,
         },
         
         { [kTechDataId] = kTechId.JumpPack,

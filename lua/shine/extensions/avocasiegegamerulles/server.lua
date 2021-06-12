@@ -350,8 +350,90 @@ function Plugin:SetGameState( Gamerules, State, OldState )
      
 end
 ------------------------------------------------------------
+function Plugin:OnTriggerInsurance(who) 
+    local message = ""
+    local techId = who:GetTechId()
+    
+        if techId == kTechId.CragHive then
+        message = "CragHive"
+    elseif techId == kTechId.ShiftHive then
+         message = "ShiftHive"
+    elseif techId == kTechId.ShadeHive then
+       message = "ShadeHive"
+    else
+       message = "DefaultHive"
+     end
+     
+
+        self:NotifyHiveLifeInsurance(nil, "LOL SUCK IT MARINES! HiveLifeInsurance triggered for this particular Hive: %s", true,message)
+
+end
+Shine.Hook.SetupClassHook( "Hive", "TriggerInsurance", "OnTriggerInsurance", "PassivePost" ) 
+function Plugin:OnInsure(who) 
+    local commander = who:GetTeam():GetCommander()
+    local message = ""
+    local techId = who:GetTechId()
+    
+        if techId == kTechId.CragHive then
+        message = "CragHive"
+    elseif techId == kTechId.ShiftHive then
+         message = "ShiftHive"
+    elseif techId == kTechId.ShadeHive then
+       message = "ShadeHive"
+    else
+       message = "DefaultHive"
+     end
+     
+    if commander ~= nil then
+        local client = commander:GetClient()
+        for i = 1, 10 do
+            self:NotifyOne(client, "Insurance Succeeded. See you next OnKill for this particular Hive: %s", true,message)
+         end
+    end
+end
+Shine.Hook.SetupClassHook( "Hive", "Insure", "OnInsure", "PassivePost" ) 
+
+function Plugin:OnNotInsure(who) 
+    local commander = who:GetTeam():GetCommander()
+    local message = ""
+    local techId = who:GetTechId()
+    
+        if techId == kTechId.CragHive then
+        message = "CragHive"
+    elseif techId == kTechId.ShiftHive then
+         message = "ShiftHive"
+    elseif techId == kTechId.ShadeHive then
+       message = "ShadeHive"
+    else
+       message = "DefaultHive"
+     end
+     
+    if commander ~= nil then
+        local client = commander:GetClient()
+        for i = 1, 10 do
+            self:NotifyOne(client, "Insurance FAILED. particular Hive: %s", true,message)
+         end
+    end
+end
+Shine.Hook.SetupClassHook( "Hive", "NotInsure", "OnNotInsure", "PassivePost" ) 
+
+------------------------------------------------------------
+function Plugin:OnNotifyAlienCommander(who) 
+  local commander = who:GetTeam():GetCommander()
+    if commander ~= nil then
+        local client = commander:GetClient()
+         self:NotifyOne(client, "To Build a Hive on this AlienTechPoint, Select the AlienTechPoint then click the AlienTechPointHive TechButton to build", true)
+         self:NotifyOne(client, "AlienTechPoint doesn't allow traditional Hive Building by Drag and Drop due to technical difficulties :P.", true)
+    end
+end
+Shine.Hook.SetupClassHook( "AlienTechPoint", "NotifyAlienCommander", "OnNotifyAlienCommander", "PassivePost" ) 
+------------------------------------------------------------
+
 function Plugin:NotifyOne( Player, String, Format, ... )
 Shine:NotifyDualColour( Player, 255, 165, 0,  "[Siege One]",  0, 255, 0, String, Format, ... )
+end
+function Plugin:NotifyHiveLifeInsurance( Player, String, Format, ... )
+Shine:NotifyDualColour( Player, 255, 165, 0,  "[Hive Life Insurance ]",  0, 255, 0, String, Format, ... )
 end
 function Plugin:NotifyGorilla( Player, String, Format, ... )
 Shine:NotifyDualColour( Player, 255, 165, 0,  "[GorillaGlue]",  0, 255, 0, String, Format, ... )

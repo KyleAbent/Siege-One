@@ -1,5 +1,3 @@
---Kyle 'Avoca' Abent 
-
 class 'StructureBeacon' (AlienBeacon)
 
 StructureBeacon.kModelName =  PrecacheAsset("models/alien/spur/spur.model")

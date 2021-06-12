@@ -1,3 +1,24 @@
+function GetRatioToSiege()
+    
+    local gameRules = nil
+    local entityList = Shared.GetEntitiesWithClassname("GameInfo")
+    if entityList:GetSize() > 0 then
+        gameRules = entityList:GetEntityAtIndex(0) 
+    end    
+
+    local level = 1
+    if not gameRules then return 0.1 end
+    if not gameRules:GetGameStarted() then return 0.1 end
+    if GetSiegeDoorOpen() then
+        return 1
+    end 
+    local roundlength =   Shared.GetTime()   - ( gameRules:GetStartTime()  )
+    local siegetime = GetTimer():GetSiegeLength()
+    level = math.round(roundlength/  GetTimer():GetSiegeLength(), 2)
+   
+    return level 
+    
+end
 function AdjustCystsHPArmor()
     for _, cyst in ientitylist(Shared.GetEntitiesWithClassname("Cyst")) do
         //if not cyst is king?

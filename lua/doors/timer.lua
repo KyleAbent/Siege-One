@@ -19,6 +19,7 @@ local networkVars =
    SideTimer = "integer",
    sideOpened = "boolean",
    initialSiegeLength = "integer",
+   previouspowercountadj = "integer",
 }
 
 function Timer:TimerValues()
@@ -30,6 +31,7 @@ function Timer:TimerValues()
    self.siegeOpened = false
    self.frontOpened = false
    self.siegeBeaconed = false
+   self.previouspowercountadj = -1
 end
 function Timer:GetInitialSiegeLength() 
     return self.initialSiegeLength
@@ -201,6 +203,49 @@ if Server then
             end
         //end
     end
+    
+    function Timer:TimeCheck()
+        Print("Timecheck A")
+        local gameinfo = GetGameInfoEntity()
+        local whenFrontOpened = gameinfo.countofpowerwhensetup
+        local currentAmount =  gameinfo.countofpowercurrently
+        if self.previouspowercountadj == currentAmount then return end
+        Print("Timecheck B")
+        local isLess = currentAmount < whenFrontOpened
+        local isMore = currentAmount > whenFrontOpened
+        
+        Print("currentAmount is %s", currentAmount)
+        Print("whenFrontOpened is %s",whenFrontOpened )
+        Print("isLess is %s",isLess )
+        Print(" isMoreis %s",isMore )
+        
+        local adj = 0
+        if isLess then      //540                               /0.42
+            adj = (self:GetSiegeLength() * GetRatioToSiege()) * (currentAmount/whenFrontOpened)
+            //(whenFrontOpened 3
+            //currentAmount 1 
+            //(GetSiegeLength 900, 15 minutes
+            //* GetRatioToSiege 0.6 9 minutes gone by, 6 minutes remaining
+            //3 minutes removed
+            adj = adj * -1
+        elseif isMore then
+            adj = (whenFrontOpened/currentAmount) * (self:GetSiegeLength() * GetRatioToSiege())
+            //(whenFrontOpened 3
+            //currentAmount 5 
+            //(GetSiegeLength 900, 15 minutes
+            //* GetRatioToSiege 0.6 9 minutes gone by, 6 minutes remaining
+           //900*0.6=540
+        end
+        
+        Print(" adj %s",adj )
+        
+        if isLess or isMore then
+            self:AdjustSiegeTimer(adj)
+            self.previouspowercountadj = currentAmount
+        end
+    
+    end
+    
      function Timer:OnUpdate(deltatime)
           local gamestarted = GetGamerules():GetGameStarted()
           if gamestarted then 
@@ -213,6 +258,12 @@ if Server then
                     if not self.timeLastKing or self.timeLastKing + 30 <= Shared.GetTime() then
                         self:Throne()
                         self.timeLastKing = Shared.GetTime()
+                    end
+                    if self.frontOpened  and not self.siegeOpened then
+                        if not self.timeLastTimeCheck or self.timeLastTimeCheck + math.random(30,45) <= Shared.GetTime() then
+                            self:TimeCheck()
+                            self.timeLastTimeCheck = Shared.GetTime()
+                         end
                     end
                 end
           end

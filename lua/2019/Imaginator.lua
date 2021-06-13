@@ -230,7 +230,7 @@ local function OrganizedSentryCheck(who, self)
 
 end
 local function HaveBatteriesCheckSentrys(self)
-    local SentryBatterys = GetEntitiesForTeam( "SentryBattery", 1 )
+    local SentryBatterys = GetEntitiesForTeam( "RoboticsFactory", 1 )
     if not SentryBatterys then
      return
     end

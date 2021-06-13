@@ -1,3 +1,4 @@
+Script.Load("lua/2019/ResearchMixinChanges.lua")
 local networkVars = {
 
 isInsured = "boolean", 
@@ -10,6 +11,15 @@ function Hive:OnCreate()
 orig(self)
     self.isInsured = false
 end
+
+local orig = Hive.OnInitialized
+function Hive:OnInitialized()
+    orig(self)
+    if Server then
+        self:TriggerResearches()
+     end
+end
+
 
 local origButtons = Hive.GetTechButtons
 function Hive:GetTechButtons(techId)

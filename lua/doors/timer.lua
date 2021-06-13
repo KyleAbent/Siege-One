@@ -214,6 +214,9 @@ if Server then
         local isLess = currentAmount < whenFrontOpened
         local isMore = currentAmount > whenFrontOpened
         
+        
+        Print("self:GetSiegeLength() is %s", self:GetSiegeLength())
+        Print("GetRatioToSiege() is %s", GetRatioToSiege())
         Print("currentAmount is %s", currentAmount)
         Print("whenFrontOpened is %s",whenFrontOpened )
         Print("isLess is %s",isLess )
@@ -221,7 +224,11 @@ if Server then
         
         local adj = 0
         if isLess then      //540                               /0.42
-            adj = (self:GetSiegeLength() * GetRatioToSiege()) * (currentAmount/whenFrontOpened)
+            adj = whenFrontOpened - currentAmount
+            adj = adj * 30
+            adj = adj * (whenFrontOpened/currentAmount)
+            adj = adj * -1
+            //adj = (self:GetSiegeLength() * GetRatioToSiege()) * (currentAmount/whenFrontOpened)
             //(whenFrontOpened 3
             //currentAmount 1 
             //(GetSiegeLength 900, 15 minutes
@@ -229,7 +236,10 @@ if Server then
             //3 minutes removed
             adj = adj * -1
         elseif isMore then
-            adj = (whenFrontOpened/currentAmount) * (self:GetSiegeLength() * GetRatioToSiege())
+            adj = whenFrontOpened - currentAmount
+            adj = adj * 45
+            adj = adj * (currentAmount/whenFrontOpened)
+            //adj = (whenFrontOpened/currentAmount) * (self:GetSiegeLength() * GetRatioToSiege())
             //(whenFrontOpened 3
             //currentAmount 5 
             //(GetSiegeLength 900, 15 minutes

@@ -15,9 +15,9 @@ if Server then
             local powerPoint = GetPowerPointForLocation(self.name)
                 if powerPoint ~= nil then
                     if entity:isa("Marine") then --and marine/alien enabled
-                        if not powerPoint:GetIsBuilt() and not powerPoint:GetIsSocketed() then //powerPoint:GetIsDisabled() and not powerPoint:GetIsSocketed() then
-                            powerPoint:SetInternalPowerState(PowerPoint.kPowerState.socketed)
-                        end
+                       // if not powerPoint:GetIsBuilt() and not powerPoint:GetIsSocketed() then //powerPoint:GetIsDisabled() and not powerPoint:GetIsSocketed() then
+                        //    powerPoint:SetInternalPowerState(PowerPoint.kPowerState.socketed)
+                       // end
                         if not GetFrontDoorOpen() then
                             powerPoint:SetConstructionComplete()
                             powerPoint.hasBeenToggledDuringSetup = true

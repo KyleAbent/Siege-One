@@ -3,6 +3,7 @@ ModLoader.SetupFileHook( "lua/TargetCache.lua", "lua/TargetCache_Siege.lua", "po
 ModLoader.SetupFileHook( "lua/bots/CommanderBot.lua", "lua/bots/CommanderBot_Siege21.lua", "post" )
 ModLoader.SetupFileHook( "lua/bots/CommanderBrain.lua", "lua/bots/CommanderBrain_Siege21.lua", "post" )
 ModLoader.SetupFileHook( "lua/bots/PlayerBrain.lua", "lua/bots/PlayerBrain_Siege21.lua", "post" )
+ModLoader.SetupFileHook( "lua/bots/VoteManager.lua", "lua/bots/VoteManager_Siege21.lua", "post" )
 ModLoader.SetupFileHook( "lua/bots/AlienCommanderBrain.lua", "lua/bots/AlienCommanderBrain_Siege21.lua", "replace" )
 ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain.lua", "lua/bots/MarineCommanderBrain_Siege21.lua", "replace" )
 ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain_Data.lua", "lua/bots/MarineCommanderBrain_Data_Siege21.lua", "replace" )

@@ -21,7 +21,9 @@ function PowerPoint:OnInitialized()
         self.activeObs = 0
         self.activePGs = 0
         self.activeProtos = 0
+        self:SetInternalPowerState(PowerPoint.kPowerState.socketed)
     end
+    
 end
 
 if Server then

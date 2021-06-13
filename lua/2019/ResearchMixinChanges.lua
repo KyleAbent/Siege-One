@@ -79,6 +79,11 @@ if Server then
         if self:GetTeamNumber() == 1 then
             return GetIsImaginatorMarineEnabled()
         else
+            if self:isa("Egg") then
+                if self:isa("GorgeEgg") or self:isa("LerkEgg") or self:isa("FadeEgg") or self:isa("OnosEgg") then
+                    return false
+                end
+            end
             return GetIsImaginatorAlienEnabled()
         end
         

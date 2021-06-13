@@ -1,3 +1,10 @@
+function GetIsPointWithinChairRadius(point)     
+  
+   local cc = GetEntitiesWithinRange("CommandStation", point, ARC.kFireRange)
+   if #cc >= 1 then return true end
+
+   return false
+end
 function GetRandomCC()
     local ccs = {}
     for _, cc in ientitylist(Shared.GetEntitiesWithClassname("CommandStation")) do
@@ -390,6 +397,13 @@ function AdjustCystsHPArmor()
         //if not cyst is king?
         cyst:AdjustMaxHPOnTier()
     end
+end
+function TurnLoneCystsIntoRegular()//Bleh a for loop
+    local cysts = {}
+    for _, lonecyst in ientitylist(Shared.GetEntitiesWithClassname("LoneCyst")) do
+        lonecyst:SetTechId(kTechId.Cyst)
+    end
+
 end
 function GetRandomCyst()//Bleh a for loop
     local cysts = {}

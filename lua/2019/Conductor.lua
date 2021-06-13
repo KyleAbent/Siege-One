@@ -321,10 +321,13 @@ local function Touch(who, where, what, number)
             if number == 2 then
                cost = kHarvesterCost
              --doChain(tower)
-              local cyst = CreateEntity(Cyst.kMapName, FindFreeSpace(tower:GetOrigin(), 1, kCystRedeployRange),2)
-                          if not GetSetupConcluded() then
-                               -- cyst:SetConstructionComplete()
-                           end
+                local notNearCyst = GetEntitiesWithinRange("LoneCyst",who:GetOrigin(), kCystRedeployRange-1) == 0
+                 if notNearCyst then
+                  local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(tower:GetOrigin(), 1, kCystRedeployRange),2)
+                              if not GetSetupConcluded() then
+                                   cyst:SetConstructionComplete()
+                               end
+               end
             end
            -- tower:GetTeam():SetTeamResources(tower:GetTeam():GetTeamResources() - cost)
             return tower
@@ -475,11 +478,13 @@ end
 function Conductor:ManageCysts()
     --print("ManageCysts")
     local cystsMax = 0
+    doMax = 4
     --local doMax = math.random(1,4)
      local noncysted = {}
      for _, infestable in ipairs(GetEntitiesWithMixinForTeam("InfestationTracker", 2)) do
         --print("found something to check for infestation")
        -- if cystsMax < doMax and not infestable:GetGameEffectMask(kGameEffect.OnInfestation) then
+       /*
        if not infestable:GetGameEffectMask(kGameEffect.OnInfestation) then
             --print("Found something not on infestation")
             table.insert(noncysted, infestable)
@@ -488,6 +493,16 @@ function Conductor:ManageCysts()
                  break 
            -- end
         end
+       */
+        local notNearCyst = GetEntitiesWithinRange("LoneCyst",infestable:GetOrigin(), kCystRedeployRange-1) == 0
+        if notNearCyst then
+            table.insert(noncysted, infestable)
+             cystsMax = cystsMax + 1
+           -- if cystsMax == doMax then
+           --      break 
+           -- end
+        end
+
      end
     
     --print("Number of non infested is %s", ToString(cystsMax))
@@ -496,7 +511,8 @@ function Conductor:ManageCysts()
   
      for _, spawnEnt in ipairs(noncysted) do
         --print("Spawned cyst on %s", ToString(spawnEnt))
-        local cyst = CreateEntity(Cyst.kMapName, FindFreeSpace(spawnEnt:GetOrigin(), 1, kCystRedeployRange),2)
+            local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(spawnEnt:GetOrigin(), 1, kCystRedeployRange),2)
+       // local cyst = CreateEntity(Cyst.kMapName, FindFreeSpace(spawnEnt:GetOrigin(), 1, kCystRedeployRange),2)
             if not GetSetupConcluded() then
                 cyst:SetConstructionComplete()
              end

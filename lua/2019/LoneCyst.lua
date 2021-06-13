@@ -205,6 +205,7 @@ function LoneCyst:OnInitialized()
     
     InitMixin(self, IdleMixin)
 
+    if not GetIsImaginatorAlienEnabled() then
         local lonecysts = #GetEntitiesForTeam( "LoneCyst", 2 )
         if lonecysts == 5 then
             NotifyCommanderLimitReached(self)
@@ -215,6 +216,13 @@ function LoneCyst:OnInitialized()
               return lonesome:Kill()
             end
         end
+    else
+         local notNearCyst = GetEntitiesWithinRange("LoneCyst",self:GetOrigin(), kCystRedeployRange-1) == 0
+         if not notNearCyst then
+            self:Kill()
+         end
+    
+    end
     
 end
 

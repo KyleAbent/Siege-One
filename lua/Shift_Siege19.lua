@@ -37,6 +37,10 @@ function Shift:ManageShifts()
         local destination = findDestinationForAlienConst(self)
         if destination then
             self:TriggerTeleport(5, self:GetId(), FindFreeSpace(destination:GetOrigin(), 4), 0)
+            local cyst = GetEntitiesWithinRange("Cyst",self:GetOrigin(), kCystRedeployRange-1)
+            if not cyst then
+                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
+            end
             return
         end
     end

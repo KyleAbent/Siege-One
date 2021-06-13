@@ -34,3 +34,17 @@ table = origbuttons(self, techId)
  return table
 
 end
+
+function PrototypeLab:OnPowerOn()
+	 GetRoomPower(self):ToggleCountMapName(self:GetMapName(),1) 
+end
+
+function PrototypeLab:OnPowerOff()
+	 GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
+end
+
+ function PrototypeLab:PreOnKill(attacker, doer, point, direction)
+	  if self:GetIsPowered() then
+	    GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1) 
+	  end
+end

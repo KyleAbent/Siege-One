@@ -1,5 +1,7 @@
 --Kyle 'Avoca' Abent
 Script.Load("lua/doors/timer.lua")
+Script.Load("lua/2019/Conductor.lua")
+Script.Load("lua/2019/Imaginator.lua")
 Script.Load("lua/2019/Functions19.lua")//hook the notifycommander
 Plugin.Version = "1.0"
 ------------------------------------------------------------
@@ -261,6 +263,8 @@ end
 ------------------------------------------------------------
 function Plugin:MapPostLoad()
       Server.CreateEntity(Timer.kMapName)
+      Server.CreateEntity(Conductor.kMapName)
+      Server.CreateEntity(Imaginator.kMapName)
       --GetDoorLengthByMapName()
 end
 function Plugin:OnFirstThink()
@@ -284,6 +288,28 @@ function Plugin:OnSide()
         self:NotifyTimer( nil, "Side Doors now open!!!!", true)
     end
 end
+------------------------------------------------------------
+function Plugin:OnShowWarningForToggleMarinesOff() 
+self:NotifyAutoComm( nil, "AutoComm for Marines has been set to OFF", true)
+end
+------------------------------------------------------------
+function Plugin:OnShowWarningForToggleAliensOff() 
+self:NotifyAutoComm( nil, "AutoComm for team Aliens has been set to OFF", true)
+end
+function Plugin:OnShowWarningForToggleMarinesOn() 
+self:NotifyAutoComm( nil, "AutoComm for Marines has been set to ON", true)
+end
+------------------------------------------------------------
+function Plugin:OnShowWarningForToggleAliensOn() 
+self:NotifyAutoComm( nil, "AutoComm for team Aliens has been set to ON", true)
+end
+------------------------------------------------------------
+Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePost" ) 
+Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePost" ) 
+Shine.Hook.SetupClassHook( "Imaginator", "ShowWarningForToggleMarinesOff", "OnShowWarningForToggleMarinesOff", "PassivePost" )
+Shine.Hook.SetupClassHook( "Imaginator", "ShowWarningForToggleAliensOff", "OnShowWarningForToggleAliensOff", "PassivePost" )
+Shine.Hook.SetupClassHook( "Imaginator", "ShowWarningForToggleMarinesOn", "OnShowWarningForToggleMarinesOn", "PassivePost" )
+Shine.Hook.SetupClassHook( "Imaginator", "ShowWarningForToggleAliensOn", "OnShowWarningForToggleAliensOn", "PassivePost" )
 ------------------------------------------------------------
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePost" ) 
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySide", "OnSide", "PassivePost" ) 

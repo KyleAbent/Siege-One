@@ -1,3 +1,5 @@
+kAutoCommMaxWhips = 12
+
 kStructureBeaconBuildTime = 8
 kJumpPackCost = 19
 

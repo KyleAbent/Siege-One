@@ -50,5 +50,18 @@ function Armory:GetTechButtons(techId)
     
 end
 
+function Armory:OnPowerOn()
+	GetRoomPower(self):ToggleCountMapName(self:GetMapName(),1)
+end
+
+function Armory:OnPowerOff()
+	 GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
+end
+
+ function Armory:PreOnKill(attacker, doer, point, direction)
+	  if self:GetIsPowered() then
+	    GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1) 
+	  end
+end
 
 Shared.LinkClassToMap("Armory", Armory.kMapName, networkVars, true)

@@ -735,7 +735,7 @@ local function doSpawn(self,tospawn,randomspawn)
                 if HasMixin(entity, "Research") then
                     entity:TriggerResearches()
                 end
-                  local notNearCyst = GetEntitiesWithinRange("LoneCyst",entity:GetOrigin(), kCystRedeployRange-1)  == 0
+                  local notNearCyst = #GetEntitiesWithinRange("LoneCyst",entity:GetOrigin(), kCystRedeployRange-1)  == 0
                  if notNearCyst then
                     local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
                  end

@@ -217,10 +217,10 @@ function LoneCyst:OnInitialized()
             end
         end
     else
-         local notNearCyst = GetEntitiesWithinRange("LoneCyst",self:GetOrigin(), kCystRedeployRange-1) == 0
-         if not notNearCyst then
-            self:Kill()
-         end
+        -- local notNearCyst = #GetEntitiesWithinRange("LoneCyst",self:GetOrigin(), kCystRedeployRange-1) == 0
+         --if not notNearCyst then
+         --   self:Kill()
+        -- end
     
     end
     

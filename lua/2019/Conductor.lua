@@ -321,7 +321,7 @@ local function Touch(who, where, what, number)
             if number == 2 then
                cost = kHarvesterCost
              --doChain(tower)
-                local notNearCyst = GetEntitiesWithinRange("LoneCyst",who:GetOrigin(), kCystRedeployRange-1) == 0
+                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",who:GetOrigin(), kCystRedeployRange-1) == 0
                  if notNearCyst then
                   local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(tower:GetOrigin(), 1, kCystRedeployRange),2)
                               if not GetSetupConcluded() then
@@ -494,7 +494,7 @@ function Conductor:ManageCysts()
            -- end
         end
        */
-        local notNearCyst = GetEntitiesWithinRange("LoneCyst",infestable:GetOrigin(), kCystRedeployRange-1) == 0
+        local notNearCyst = #GetEntitiesWithinRange("LoneCyst",infestable:GetOrigin(), kCystRedeployRange-1) == 0
         if notNearCyst then
             table.insert(noncysted, infestable)
              cystsMax = cystsMax + 1

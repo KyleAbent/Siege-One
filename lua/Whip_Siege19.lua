@@ -36,7 +36,11 @@ if Server then
     function Whip:OnOrderComplete(currentOrder)     
         --doChain(self)
             if GetIsImaginatorAlienEnabled() and not self:GetGameEffectMask(kGameEffect.OnInfestation) then
-                local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
+                //local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
+                local notNearCyst = #GetEntitiesWithinRange("Cyst",self:GetOrigin(), kCystRedeployRange-1) == 0
+                if notNearCyst then
+                    local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
+                end
             end
     end
     
@@ -46,9 +50,9 @@ if Server then
             self:ClearOrders()
             self:GiveOrder(kTechId.Stop, nil, self:GetOrigin(), nil, true, true)  
             --doChain(self)
-            local cyst = GetEntitiesWithinRange("Cyst",self:GetOrigin(), kCystRedeployRange-1)
-            if not cyst then
-                local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
+            local notNearCyst = #GetEntitiesWithinRange("Cyst",self:GetOrigin(), kCystRedeployRange-1) == 0
+            if notNearCyst then
+                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
             end
         end
     end

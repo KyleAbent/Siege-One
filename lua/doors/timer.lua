@@ -271,7 +271,7 @@ if Server then
                     end
                     if self.frontOpened  and not self.siegeOpened then
                         if not self.timeLastTimeCheck or self.timeLastTimeCheck + math.random(30,45) <= Shared.GetTime() then
-                            self:TimeCheck()
+                         --   self:TimeCheck()
                             self.timeLastTimeCheck = Shared.GetTime()
                          end
                     end

@@ -196,6 +196,7 @@ local function OrganizedIPCheck(who, self) //spacecow:CC SPawned on top, IPS spa
           if not GetSetupConcluded() then
             arms:SetConstructionComplete()
           end
+       arms:TriggerResearches()
       end
 
 end

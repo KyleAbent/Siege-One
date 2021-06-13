@@ -123,7 +123,7 @@ function BackupBattery:OnInitialized()
     
         InitMixin(self, UnitStatusMixin)
         InitMixin(self, HiveVisionMixin)
-        self:MakeLight()
+        --self:MakeLight() bugged? lol
         
     end
     
@@ -150,7 +150,7 @@ if Client then
 
         self.blueLight:SetCoords(coords)
        -- self.flashlight:SetAngles( Angles(180,88,180) ) --face down shine light
-       */
+      
         self.flashlight = Client.CreateRenderLight()
         self.flashlight:SetType(RenderLight.Type_Spot)
         self.flashlight:SetColor(Color(.8, .8, 1))
@@ -167,7 +167,7 @@ if Client then
 
         self.flashlight:SetCoords(coords)
        -- self.flashlight:SetAngles( Angles(180,88,180) ) --face down shine light
-            
+        */     
         
     end
 

@@ -44,7 +44,7 @@ if Client then
         self.flashlight:SetType(RenderLight.Type_Point)
         self.flashlight:SetCastsShadows(false)
         self.flashlight:SetSpecular(true)
-        self.flashlight:SetRadius(64)
+        self.flashlight:SetRadius(12)
         self.flashlight:SetIntensity(15)
         self.flashlight:SetColor(Color(0, .2, 0.9))
         

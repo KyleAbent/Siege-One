@@ -78,6 +78,7 @@ if Server then
         if isSetup or GetIsOriginInHiveRoom(self:GetOrigin()) then 
             self.hasBeenToggledDuringSetup = true
         end
+        PowerSourceMixin.OnKill(self)
      end
      
     function GetPossibleAlienResRoomNode()
@@ -110,6 +111,7 @@ if Server then
                         gameinfo:AddActivePower()
                     end
         end      
+        PowerSourceMixin.SetPoweringState(self, state)
     end  
     
    local function GetMarineSpawnList(self) // Count should be based on size of location(s).

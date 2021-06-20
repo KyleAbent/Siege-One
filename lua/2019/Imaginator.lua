@@ -544,12 +544,16 @@ local function UpgChambers()
           if Spur < 3  and TresCheck(2, kSpurCost)  then
            table.insert(tospawn, kTechId.Spur)
           end
+     else
+        ResearchShiftHive()
        end
 
     if GetHasCragHive()  then
         local  Shell = #GetEntitiesForTeam( "Shell", 2 )
         if Shell < 3 and TresCheck(2, kShellCost) then
          table.insert(tospawn, kTechId.Shell) end
+     else
+         ResearchCragHive()
         end
 
     if GetHasShadeHive()  then
@@ -557,6 +561,8 @@ local function UpgChambers()
         if Veil < 3 and TresCheck(2, kVeilCost) then
          table.insert(tospawn, kTechId.Veil)
         end
+     else
+        ResearchShadeHive()
     end
 
     for _, techid in pairs(tospawn) do

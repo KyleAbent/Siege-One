@@ -1,3 +1,57 @@
+function ResearchShiftHive()
+  local hivey = nil
+    for _, hive in ientitylist(Shared.GetEntitiesWithClassname("Hive")) do 
+        if hive:GetTechId() == kTechId.Hive and not hive:GetIsResearching() and hive:GetIsBuilt() then
+                hivey = hive
+        end
+    end
+    if hivey ~= nil then
+        local techId = kTechId.UpgradeToShiftHive
+        local tree = GetTechTree(hivey:GetTeamNumber())
+        local techNode = tree:GetTechNode(techId)
+        if tree:GetTechAvailable(techId) and not techNode:GetResearching() then
+             //print("DoResearches [G]")
+            hivey:SetResearching(techNode, hivey)
+       end
+    end
+end
+function ResearchShadeHive()
+  local hivey = nil
+    for _, hive in ientitylist(Shared.GetEntitiesWithClassname("Hive")) do 
+        if hive:GetTechId() == kTechId.Hive and not hive:GetIsResearching() and hive:GetIsBuilt() then
+                hivey = hive
+        end
+    end
+    if hivey ~= nil then
+        local techId = kTechId.UpgradeToShadeHive
+        local tree = GetTechTree(hivey:GetTeamNumber())
+        local techNode = tree:GetTechNode(techId)
+        if tree:GetTechAvailable(techId) and not techNode:GetResearching() then
+             //print("DoResearches [G]")
+            hivey:SetResearching(techNode, hivey)
+       end
+    end
+end
+
+function ResearchCragHive()
+  local hivey = nil
+    for _, hive in ientitylist(Shared.GetEntitiesWithClassname("Hive")) do 
+        if hive:GetTechId() == kTechId.Hive and not hive:GetIsResearching() and hive:GetIsBuilt() then
+                hivey = hive
+        end
+    end
+    if hivey ~= nil then
+        local techId = kTechId.UpgradeToCragHive
+        local tree = GetTechTree(hivey:GetTeamNumber())
+        local techNode = tree:GetTechNode(techId)
+        if tree:GetTechAvailable(techId) and not techNode:GetResearching() then
+             //print("DoResearches [G]")
+            hivey:SetResearching(techNode, hivey)
+       end
+    end
+end
+
+
 function GetIsPointWithinChairRadius(point)     
   
    local cc = GetEntitiesWithinRange("CommandStation", point, ARC.kFireRange)

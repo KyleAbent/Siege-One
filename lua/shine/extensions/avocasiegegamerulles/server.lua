@@ -1,6 +1,6 @@
 --Kyle 'Avoca' Abent
 Script.Load("lua/doors/timer.lua")
-Script.Load("lua/Avoca_Arc.lua")
+Script.Load("lua/structures/ARC_Siege22.lua")
 Script.Load("lua/2019/Functions19.lua")//hook the notifycommander
 Plugin.Version = "1.0"
 ------------------------------------------------------------

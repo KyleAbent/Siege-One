@@ -1,5 +1,22 @@
 Script.Load("lua/Additions/LevelsMixin.lua")
 
+
+local networkVars = {}
+
+
+AddMixinNetworkVars(LevelsMixin, networkVars)
+
+
+local origIinit = Hydra.OnInitialized
+function Hydra:OnInitialized()
+    origIinit(self)
+    InitMixin(self, AvocaMixin)
+    InitMixin(self, LevelsMixin)
+end
+
+Shared.LinkClassToMap("Hydra", Hydra.kMapName, networkVars)
+
+
 class 'HydraAvoca' (Hydra)
 HydraAvoca.kMapName = "hydraavoca"
 

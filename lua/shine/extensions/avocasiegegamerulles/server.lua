@@ -1,7 +1,6 @@
 --Kyle 'Avoca' Abent
 Script.Load("lua/doors/timer.lua")
-Script.Load("lua/2019/Conductor.lua")
-Script.Load("lua/2019/Imaginator.lua")
+Script.Load("lua/Avoca_Arc.lua")
 Script.Load("lua/2019/Functions19.lua")//hook the notifycommander
 Plugin.Version = "1.0"
 ------------------------------------------------------------
@@ -9,8 +8,6 @@ function Plugin:Initialise()
 self.Enabled = true
 self:CreateCommands()
 kgameStartTime = 0
---kReduceDoorTimeBy = 0
-
 return true
 end
 
@@ -103,15 +100,9 @@ local sideTime = 540
         --siegeTime = 960
     end     
     
-    //Calculate reduction here 6.15.20
-    --Print("frontTime was %s",frontTime)
-    --kReduceDoorTimeBy = math.random(frontTime*0.5, frontTime*0.7)
-    --frontTime = frontTime - kReduceDoorTimeBy
     Print("mapName is %s", mapName)
     Print("frontTime is %s",frontTime)
     Print("siegeTime is %s", siegeTime)
-    --kFrontTime = frontTime
-    --kSiegeTime = siegeTime
     
     return frontTime, siegeTime, sideTime
 
@@ -200,39 +191,6 @@ local function grabDoorMapEditorSettings()
         Print("sideTime time is %s", sideTime)
     end
     
-    /*
-    if frontDoor.shortenTimer ~= nil then
-        Print("found front shortenTimer!, set to %s", frontDoor.shortenTimer)
-        if frontDoor.shortenTimer == true then
-            Print("shortentimer true, reducing front timer")
-            //Calculate reduction here 6.15.20
-            Print("frontTime was %s",frontTime)
-            kReduceDoorTimeBy = math.random(frontTime*0.5, frontTime*0.7)
-            frontTime = frontTime - kReduceDoorTimeBy
-            gameInfo:SetFrontTime(frontTime)
-            Print("mapName is %s", mapName)
-            Print("frontTime is %s",frontTime)
-            kFrontTime = frontTime
-       else
-        Print("frontTime is %s",frontTime)
-        kFrontTime = frontTime
-        gameInfo:SetFrontTime(frontTime)
-       end
-    end
-    
-    --lol
-    if frontDoor.shortenTimer == nil then
-            Print("shortentimer true, reducing front timer")
-            //Calculate reduction here 6.15.20
-            Print("frontTime was %s",frontTime)
-            kReduceDoorTimeBy = math.random(frontTime*0.5, frontTime*0.7)
-            frontTime = frontTime - kReduceDoorTimeBy
-            Print("mapName is %s", mapName)
-            Print("frontTime is %s",frontTime)
-            kFrontTime = frontTime
-            gameInfo:SetFrontTime(frontTime)
-    end
-    */
     
     Print("siegeTime is %s", siegeTime)
     
@@ -263,8 +221,6 @@ end
 ------------------------------------------------------------
 function Plugin:MapPostLoad()
       Server.CreateEntity(Timer.kMapName)
-      Server.CreateEntity(Conductor.kMapName)
-      Server.CreateEntity(Imaginator.kMapName)
       --GetDoorLengthByMapName()
 end
 function Plugin:OnFirstThink()
@@ -288,28 +244,9 @@ function Plugin:OnSide()
         self:NotifyTimer( nil, "Side Doors now open!!!!", true)
     end
 end
-------------------------------------------------------------
-function Plugin:OnShowWarningForToggleMarinesOff() 
-self:NotifyAutoComm( nil, "AutoComm for Marines has been set to OFF", true)
-end
-------------------------------------------------------------
-function Plugin:OnShowWarningForToggleAliensOff() 
-self:NotifyAutoComm( nil, "AutoComm for team Aliens has been set to OFF", true)
-end
-function Plugin:OnShowWarningForToggleMarinesOn() 
-self:NotifyAutoComm( nil, "AutoComm for Marines has been set to ON", true)
-end
-------------------------------------------------------------
-function Plugin:OnShowWarningForToggleAliensOn() 
-self:NotifyAutoComm( nil, "AutoComm for team Aliens has been set to ON", true)
-end
-------------------------------------------------------------
+
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePost" ) 
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySiege", "OnSiege", "PassivePost" ) 
-Shine.Hook.SetupClassHook( "Imaginator", "ShowWarningForToggleMarinesOff", "OnShowWarningForToggleMarinesOff", "PassivePost" )
-Shine.Hook.SetupClassHook( "Imaginator", "ShowWarningForToggleAliensOff", "OnShowWarningForToggleAliensOff", "PassivePost" )
-Shine.Hook.SetupClassHook( "Imaginator", "ShowWarningForToggleMarinesOn", "OnShowWarningForToggleMarinesOn", "PassivePost" )
-Shine.Hook.SetupClassHook( "Imaginator", "ShowWarningForToggleAliensOn", "OnShowWarningForToggleAliensOn", "PassivePost" )
 ------------------------------------------------------------
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplayFront", "OnFront", "PassivePost" ) 
 Shine.Hook.SetupClassHook( "NS2Gamerules", "DisplaySide", "OnSide", "PassivePost" ) 
@@ -334,7 +271,24 @@ function Plugin:OnAdjust()
 end
 Shine.Hook.SetupClassHook( "Timer", "AdjustSiegeTimer", "OnAdjust", "PassivePost" ) 
 ------------------------------------------------------------
+  function Plugin:OnRedemedHook(player) 
+        if not player:GetTeamNumber() == 2 or not player:GetIsAlive() then return end
+        if player:GetEligableForRebirth() then
+            --Shine.ScreenText.End(35)
+            return
+        end
+        local NowToCoolDownOver = player:GetRedemptionCoolDown() - (Shared.GetTime() - player.lastredeemorrebirthtime)
+        --Shine.ScreenText.End("Countdown") 
+                        --settext? not addtext? ugh.
+        --Shine.ScreenText.Add( 35, {X = 0.40, Y = 0.85,Text = "Rebirth/Redeem Cooldown: %s",Duration = NowToCoolDownOver,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
+       -- Shine.ScreenText.Add( 27, {X = 0.85, Y = 0.90,Text = "uhhhhhhh",Duration = 6,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
+        --self:NotifyOne(player:GetClient(), "Rebirth/Redeem Cooldown : %s seconds", true, NowToCoolDownOver )
+         Shine.ScreenText.Add( 87, {X = 0.20, Y = 0.90,Text = "Rebirth/Redeem Cooldown: %s",Duration = NowToCoolDownOver or 0,R = 255, G = 0, B = 0,Alignment = 0,Size = 1,FadeIn = 0,}, player ) 
 
+end
+ 
+ 
+Shine.Hook.SetupClassHook( "Alien", "TriggerRebirthRedeemCountdown", "OnRedemedHook", "Replace" )
 ------------------------------------------------------------
 ------------------------------------------------------------
 local function OpenAllBreakableDoors()
@@ -350,16 +304,8 @@ function Plugin:SetGameState( Gamerules, State, OldState )
          kgameStartTime = Shared.GetTime()
          grabDoorMapEditorSettings() --only do once per map? hm
          GetTimer():OnRoundStart()
-         if kReduceDoorTimeBy > 0 then
-            local adjustment = kReduceDoorTimeBy + kFrontTime
-            local adjMi = math.floor( adjustment / 60 )
-            local adjSe = math.floor( adjustment - adjMi * 60 )
-            self:NotifyTimer( nil, "Front Door default timer: %s:%s", true, adjMi,adjSe)
-            adjustment = kReduceDoorTimeBy
-            adjMi = math.floor( adjustment / 60 )
-            adjSe = math.floor( adjustment - adjMi * 60 )
-            self:NotifyTimer( nil, "Front Door adjustment is: -%s:%s", true, adjMi,adjSe)
-         end
+            local where = FindFreeSpace(GetRandomCC():GetOrigin())
+            local ent = CreateEntity(AvocaArc.kMapName, where, 1)  
          OpenAllBreakableDoors()
       else
          Shine.ScreenText.End(1) 
@@ -367,93 +313,13 @@ function Plugin:SetGameState( Gamerules, State, OldState )
       
      if State ==  kGameState.Team1Won  or State ==  kGameState.Team2Won then
      
-       elseif State == kGameState.Countdown then
-       //GetTimer():OnRoundStart()
-       //self:NotifyTimer( nil, "Front Door time has been reduced by this many seconds: %s", true, kReduceDoorTimeBy)
+       //elseif State == kGameState.Countdown then
        elseif State == kGameState.NotStarted then
        GetTimer():OnPreGame()
      end
      
 end
-------------------------------------------------------------
-function Plugin:OnTriggerInsurance(who) 
-    local message = ""
-    local techId = who:GetTechId()
-    
-        if techId == kTechId.CragHive then
-        message = "CragHive"
-    elseif techId == kTechId.ShiftHive then
-         message = "ShiftHive"
-    elseif techId == kTechId.ShadeHive then
-       message = "ShadeHive"
-    else
-       message = "DefaultHive"
-     end
-     
 
-        self:NotifyHiveLifeInsurance(nil, "LOL SUCK IT MARINES! HiveLifeInsurance triggered for this particular Hive: %s", true,message)
-
-end
-Shine.Hook.SetupClassHook( "Hive", "TriggerInsurance", "OnTriggerInsurance", "PassivePost" ) 
-function Plugin:OnInsure(who) 
-    local commander = who:GetTeam():GetCommander()
-    local message = ""
-    local techId = who:GetTechId()
-    
-        if techId == kTechId.CragHive then
-        message = "CragHive"
-    elseif techId == kTechId.ShiftHive then
-         message = "ShiftHive"
-    elseif techId == kTechId.ShadeHive then
-       message = "ShadeHive"
-    else
-       message = "DefaultHive"
-     end
-     
-    if commander ~= nil then
-        local client = commander:GetClient()
-        for i = 1, 10 do
-            self:NotifyOne(client, "Insurance Succeeded. See you next OnKill for this particular Hive: %s", true,message)
-         end
-    end
-end
-Shine.Hook.SetupClassHook( "Hive", "Insure", "OnInsure", "PassivePost" ) 
-
-function Plugin:OnNotInsure(who) 
-    local commander = who:GetTeam():GetCommander()
-    local message = ""
-    local techId = who:GetTechId()
-    
-        if techId == kTechId.CragHive then
-        message = "CragHive"
-    elseif techId == kTechId.ShiftHive then
-         message = "ShiftHive"
-    elseif techId == kTechId.ShadeHive then
-       message = "ShadeHive"
-    else
-       message = "DefaultHive"
-     end
-     
-    if commander ~= nil then
-        local client = commander:GetClient()
-        for i = 1, 10 do
-            self:NotifyOne(client, "Insurance FAILED. particular Hive: %s", true,message)
-         end
-    end
-end
-Shine.Hook.SetupClassHook( "Hive", "NotInsure", "OnNotInsure", "PassivePost" ) 
-
-------------------------------------------------------------
-function Plugin:OnNotifyAlienCommander(who) 
-  local commander = who:GetTeam():GetCommander()
-    if commander ~= nil then
-        local client = commander:GetClient()
-         self:NotifyOne(client, "To Build a Hive on this AlienTechPoint, Select the AlienTechPoint then click the AlienTechPointHive TechButton to build", true)
-         self:NotifyOne(client, "AlienTechPoint doesn't allow traditional Hive Building by Drag and Drop due to technical difficulties :P.", true)
-    end
-end
-Shine.Hook.SetupClassHook( "AlienTechPoint", "NotifyAlienCommander", "OnNotifyAlienCommander", "PassivePost" ) 
-------------------------------------------------------------
 
 function Plugin:NotifyOne( Player, String, Format, ... )
 Shine:NotifyDualColour( Player, 255, 165, 0,  "[Siege One]",  0, 255, 0, String, Format, ... )
@@ -674,206 +540,5 @@ BringAllCommand:Help( "sh_go - cheats 1 and forceroundstart" )
 --------------------------------
 end//CreateCommands
 
-function Plugin:DontSpamCommanders(player)
-
-  local mist = GetEntitiesWithinRange("NutrientMist", player:GetOrigin(), 9)
-  local hasFailed = false
-  local string = "lol"
-  
-   if #mist >=1 then 
-    string = "Failed to buy: Found mist within radius"
-    hasFailed = true
-   end
-   
-   if not hasFailed then
-       if player:GetResources() == 0 then
-            string = "You're broke. Go to the bank. Get Res."
-            hasFailed = true
-       end
-    end  
-    
-    if not hasFailed then
-        string = "You have purchased mist for 1 resource"
-        player:GiveItem(NutrientMist.kMapName)
-        player:SetResources( player:GetResources() - 1 )
-    end
-    
-    local client = player:GetClient()
-    Shine.ScreenText.Add( "One", {X = 0.40, Y = 0.65,Text = string,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
-
-end
-
-Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMist", "DontSpamCommanders", "Replace" )
-
-function Plugin:DontSpamCommandersMed(player)
-
-  local mist = GetEntitiesWithinRange("MedPack", player:GetOrigin(), 9)
-  local hasFailed = false
-  local string = "lol"
-  
-   if #mist >=2 then 
-    string = "Failed to buy: Found 2 medpack within radius"
-    hasFailed = true
-   end
-   
-   if not hasFailed then
-       if player:GetResources() == 0 then
-            string = "You're broke. Go to the bank. Get Res."
-            hasFailed = true
-       end
-    end  
-    
-    if not hasFailed then
-        string = "You have purchased medpack for 1 resource"
-        --player:GiveItem(NutrientMist.kMapName)
-          player:DelayMedPack()
-    end
-    
-    local client = player:GetClient()
-    Shine.ScreenText.Add( "One", {X = 0.40, Y = 0.65,Text = string,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
-
-end
-
-Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyMed", "DontSpamCommandersMed", "Replace" )
-
-function Plugin:DontSpamCommandersAmmo(player)
-
-  local mist = GetEntitiesWithinRange("AmmoPack", player:GetOrigin(), 9)
-  local hasFailed = false
-  local string = "lol"
-  
-   if #mist >=2 then 
-    string = "Failed to buy: Found 2 ammopack within 9 radius"
-    hasFailed = true
-   end
-   
-   if not hasFailed then
-       if player:GetResources() == 0 then
-            string = "You're broke. Go to the bank. Get Res."
-            hasFailed = true
-       end
-    end  
-    
-    if not hasFailed then
-        string = "You have purchased ammopack for 1 resource"
-        player:DelayAmmoPack()
-    end
-    
-    local client = player:GetClient()
-    Shine.ScreenText.Add( "One", {X = 0.40, Y = 0.65,Text = string,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
-
-end
-Shine.Hook.SetupClassHook( "Player", "HookWithShineToBuyAmmo", "DontSpamCommandersAmmo", "Replace" )
-
-/*
-
-function Plugin:doitcomm(who,techid)
-    //print("lolcommlolcommlolcommlolcommlolcomm")
-    //self:NotifyTimer(nil, "[A] Setup Time: Giving you free upgrade: %s", true, EnumToString(kTechId, techid) )
-    local commander = who:GetTeam():GetCommander()
-    if commander ~= nil then
-        local client = commander:GetClient()
-        self:NotifyOne(client, "[Setup-Owned_Territory] Constructing: %s", true, EnumToString(kTechId, techid) )
-    end
-end
-
-Shine.Hook.SetupGlobalHook( "helpcommander", "doitcomm", "Replace" )
-
-*/
-
-function Plugin:HookNotifyCommanderLimitReached(who)
-    local commander = who:GetTeam():GetCommander()
-    if commander ~= nil then
-        local client = commander:GetClient()
-        self:NotifyOne(client, "LoneCyst count is 5. Next placement will delete the 1st.", true )
-    end
-end
-
-Shine.Hook.SetupGlobalHook( "NotifyCommanderLimitReached", "HookNotifyCommanderLimitReached", "Replace" )
-
-function Plugin:HookNotifyCommanderKill(who)
-    local commander = who:GetTeam():GetCommander()
-    if commander ~= nil then
-        local client = commander:GetClient()
-        local location = GetLocationForPoint(who:GetOrigin())
-        if location then
-            self:NotifyOne(client, "Deleted LoneCyst in %s", true, location.name )
-        end
-    end
-end
-
-Shine.Hook.SetupGlobalHook( "NotifyCommanderKill", "HookNotifyCommanderKill", "Replace" )
-
-local function NewUpdateBatteryState( self )
-        return -- lol no
-end
-
-
-OldUpdateBatteryState = Shine.Hook.ReplaceLocalFunction( Sentry.OnUpdate, "UpdateBatteryState", NewUpdateBatteryState )
-
-
-
-/*
-
-function Plugin:ShowRebirthRedemptionSettings(player)
-
-  if not player:GetTeamNumber() == 2 or not player:GetIsAlive() then return end
-  local rebirth = "Rebirth: Disabled"
-  local redemption = "Redemption: Disabled"
-    
-    if player.hasRedeem then
-        redemption = "Redemption: Enabled"
-    end
-    if player.hasRebirth then
-        rebirth = "Rebirth: Enabled"
-    end
-    
-    local client = player:GetClient()
-    self:NotifyGorilla(player:GetClient(), "%s", true, redemption )
-    self:NotifyGorilla(player:GetClient(), "%s", true, rebirth )
-    --Shine.ScreenText.Add( 94, {X = 0.50, Y = 0.80,Text = rebirth,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
-    --Shine.ScreenText.Add( 54, {X = 0.30, Y = 0.80,Text = redemption,Duration = 4,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, client )
-     --Shine.ScreenText.End(25)
-end
-
-Shine.Hook.SetupClassHook( "Onos", "ShowRebirthSetting", "ShowRebirthRedemptionSettings", "Replace" )
-
-*/
-
---Shine.Hook.SetupClassHook( "Onos", "ShowRedemptionSetting", "ShowRebirthRedemptionSettings", "Replace" )
-
-
-  function Plugin:OnRedemedHook(player) 
-        if not player:GetTeamNumber() == 2 or not player:GetIsAlive() then return end
-        if player:GetEligableForRebirth() then
-            --Shine.ScreenText.End(35)
-            return
-        end
-        local NowToCoolDownOver = player:GetRedemptionCoolDown() - (Shared.GetTime() - player.lastredeemorrebirthtime)
-        --Shine.ScreenText.End("Countdown") 
-                        --settext? not addtext? ugh.
-        --Shine.ScreenText.Add( 35, {X = 0.40, Y = 0.85,Text = "Rebirth/Redeem Cooldown: %s",Duration = NowToCoolDownOver,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
-       -- Shine.ScreenText.Add( 27, {X = 0.85, Y = 0.90,Text = "uhhhhhhh",Duration = 6,R = 255, G = 255, B = 255,Alignment = 0,Size = 2,FadeIn = 0,}, player ) 
-        self:NotifyOne(player:GetClient(), "Rebirth/Redeem Cooldown : %s seconds", true, NowToCoolDownOver )
-end
- 
- 
-Shine.Hook.SetupClassHook( "Alien", "TriggerRebirthRedeemCountdown", "OnRedemedHook", "Replace" )
-
-/*
-  function Plugin:TellThemToGetOutOfCombat(player) 
-            if not player:GetTeamNumber() == 2 or not player:GetIsAlive() then return end
-            --Shine.ScreenText.Add( 25, {X = 0.50, Y = 0.65,Text = "Get out of Combat!!!",Duration = 2,R = 255, G = 255, B = 255,Alignment = 0,Size = 3,FadeIn = 0,}, player ) 
-            self:NotifyGorilla(player:GetClient(), "Get out of Combat!!!", true )
-end
- 
- 
-Shine.Hook.SetupClassHook( "Onos", "GetOutOfComebat", "TellThemToGetOutOfCombat", "PassivePre" )
-*/
-
-
-
-
-Shine.Hook.SetupClassHook( "Alien", "TriggerRebirthCountDown", "DoCountdown", "PassivePre" )
 
 

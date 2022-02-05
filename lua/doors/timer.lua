@@ -1,6 +1,3 @@
--- Kyle 'Avoca' Abent
---http://twitch.tv/kyleabent
---https://github.com/KyleAbent/
 class 'Timer' (ScriptActor)
 Timer.kMapName = "timer"
 
@@ -19,7 +16,6 @@ local networkVars =
    SideTimer = "integer",
    sideOpened = "boolean",
    initialSiegeLength = "integer",
-   previouspowercountadj = "integer",
 }
 
 function Timer:TimerValues()
@@ -31,7 +27,6 @@ function Timer:TimerValues()
    self.siegeOpened = false
    self.frontOpened = false
    self.siegeBeaconed = false
-   self.previouspowercountadj = -1
 end
 function Timer:GetInitialSiegeLength() 
     return self.initialSiegeLength
@@ -185,76 +180,6 @@ function Timer:GetIsSideOpen(gameinfo)
            return  gameLength >= self.SideTimer
 end
 if Server then
-    function Timer:OldKingCystDied()
-        self:Throne()
-        self.timeLastKing = Shared.GetTime()
-    end
-    function Timer:Throne()
-       // local king = GetKingCyst()
-       // local hasKing = false
-       // if king ~= nill then
-        //   hasKing = true
-        //end
-        
-        //if not hasKing then
-            local cyst = GetRandomCyst()
-            if cyst then
-                cyst:Throne()
-            end
-        //end
-    end
-    
-    function Timer:TimeCheck()
-        Print("Timecheck A")
-        local gameinfo = GetGameInfoEntity()
-        local whenFrontOpened = gameinfo.countofpowerwhensetup
-        local currentAmount =  gameinfo.countofpowercurrently
-        if self.previouspowercountadj == currentAmount then return end
-        Print("Timecheck B")
-        local isLess = currentAmount < whenFrontOpened
-        local isMore = currentAmount > whenFrontOpened
-        
-        
-        Print("self:GetSiegeLength() is %s", self:GetSiegeLength())
-        Print("GetRatioToSiege() is %s", GetRatioToSiege())
-        Print("currentAmount is %s", currentAmount)
-        Print("whenFrontOpened is %s",whenFrontOpened )
-        Print("isLess is %s",isLess )
-        Print(" isMoreis %s",isMore )
-        
-        local adj = 0
-        if isLess then      //540                               /0.42
-            adj = whenFrontOpened - currentAmount
-            adj = adj * 30
-            adj = adj * (whenFrontOpened/currentAmount)
-            adj = adj * -1
-            //adj = (self:GetSiegeLength() * GetRatioToSiege()) * (currentAmount/whenFrontOpened)
-            //(whenFrontOpened 3
-            //currentAmount 1 
-            //(GetSiegeLength 900, 15 minutes
-            //* GetRatioToSiege 0.6 9 minutes gone by, 6 minutes remaining
-            //3 minutes removed
-            adj = adj * -1
-        elseif isMore then
-            adj = whenFrontOpened - currentAmount
-            adj = adj * 45
-            adj = adj * (currentAmount/whenFrontOpened)
-            //adj = (whenFrontOpened/currentAmount) * (self:GetSiegeLength() * GetRatioToSiege())
-            //(whenFrontOpened 3
-            //currentAmount 5 
-            //(GetSiegeLength 900, 15 minutes
-            //* GetRatioToSiege 0.6 9 minutes gone by, 6 minutes remaining
-           //900*0.6=540
-        end
-        
-        Print(" adj %s",adj )
-        
-        if isLess or isMore then
-            self:AdjustSiegeTimer(adj)
-            self.previouspowercountadj = currentAmount
-        end
-    
-    end
     
      function Timer:OnUpdate(deltatime)
           local gamestarted = GetGamerules():GetGameStarted()
@@ -265,10 +190,6 @@ if Server then
                     if not self.siegeOpened then self:SiegeDoorTimer(gameinfo) end   
                     if not self.sideOpened then self:SideDoorTimer(gameinfo) end  
                     self.timelasttimerup = Shared.GetTime()  
-                    if not self.timeLastKing or self.timeLastKing + 30 <= Shared.GetTime() then
-                        self:Throne()
-                        self.timeLastKing = Shared.GetTime()
-                    end
                     if self.frontOpened  and not self.siegeOpened then
                         if not self.timeLastTimeCheck or self.timeLastTimeCheck + math.random(30,45) <= Shared.GetTime() then
                          --   self:TimeCheck()
@@ -286,74 +207,10 @@ function Timer:SiegeDoorTimer(gameinfo)
        end
 end
 
-local function getLists()
-    --local marineList,alienList = {} -- why does this say alienList is nil? wtf?
-    local marineList = {}
-    local alienList = {}
-    --local totalThisIteration = 10 //make sure its even lol
-    --local currentMarineCount = 0
-    --local currentAlienCount = 0
-    
-    for index, entity in ipairs(GetEntitiesWithMixin("Construct")) do
-    
-        if not entity:GetIsBuilt() then
-        
-            if entity:GetTeamNumber() == 1 then
-                        --PowerPoints..
-                if entity.GetIsPowered and entity:GetIsPowered() then --not sure if this works unbuilt 
-                    table.insert(marineList,entity)
-                end
-                                                            --or if somehow is a comm struct lol
-            elseif entity:GetTeamNumber() == 2 and not entity:isa("Cyst") and not entity:isa("TunnelEntrance") and not entity:isa("GorgeTunnel") and not entity:isa("Hydra") then
-            
-                  if entity:GetGameEffectMask(kGameEffect.OnInfestation) then
-                        table.insert(alienList, entity)
-                  end
-                --I want to do make sure power not build, but that's a lot of calculation inside a for loop like this.
-                
-        
-            end
-            
-        end
-        
-    end
-    
-    return marineList,alienList
-
-end
-function Timer:BuildSpeedBonus()
-        --powered unbuilt
-        local marineList,alienList = getLists()
-        
-        if marineList and #marineList >= 1 then
-            for i = 1, #marineList do
-                local ent = marineList[i]
-                ent:SetConstructionComplete()
-                helpcommander(ent, ent:GetTechId())
-            end
-        end
-        
-        if alienList and #alienList >= 1 then
-            for i = 1, #alienList do
-                local ent = alienList[i]
-                ent:SetConstructionComplete()
-                helpcommander(ent, ent:GetTechId())
-            end
-        end
-        --infested unbuilt
-end
-
 function Timer:FrontDoorTimer(gameinfo)
 
     if self:GetIsFrontOpen(gameinfo) then
        self:OpenFrontDoors()
-       /*
-    else
-        if not self.timelastBonus or self.timelastBonus + 10 <= Shared.GetTime() then
-            self:BuildSpeedBonus()
-            self.timelastBonus = Shared.GetTime()
-        end
-        */
      end
 end
 function Timer:SideDoorTimer(gameinfo)

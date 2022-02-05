@@ -61,17 +61,24 @@ local function TriggerPrimal(self, lerk)
      --  end
       
 
-      GetEffectManager():AddEffectData("AlienWeaponEffects", GetWeaponEffects()) --Ghetto alienweaponeffects.lua   
-      lerk:TriggerEffects("primal")
+      --GetEffectManager():AddEffectData("AlienWeaponEffects", GetWeaponEffects()) --Ghetto alienweaponeffects.lua   
+      --lerk:TriggerEffects("primal")
      if Server then 
-       CreateEntity(EnzymeCloud.kMapName, lerk:GetOrigin(), 2)  
-       local aliens = GetEntitiesForTeamWithinRange("Alien", 2, lerk:GetOrigin(), kSporesDustCloudRadius)
-       for i = 1, #aliens do
-           local alien = aliens[i]
-           alien:AddEnergy(kPrimalScreamTeamEnergyBoost)
-       end
+        local parent = self:GetParent()
+        if parent then
+            parent:PrimalScream(kPrimalScreamDuration)
+            local aliens = GetEntitiesForTeamWithinRange("Alien", 2, lerk:GetOrigin(), kPrimalScreamRange)
+            for i = 1, #aliens do
+               local alien = aliens[i]
+               if alien ~= parent then
+                   alien:PrimalScream(kPrimalScreamDuration)
+                   alien:AddEnergy(kPrimalScreamTeamEnergyBoost)
+                   alien.primaledID = self:GetParent():GetId()
+                end   
+            end
+        end
     end
-     
+
      
     
       

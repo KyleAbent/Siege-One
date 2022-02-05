@@ -1,6 +1,6 @@
 Script.Load("lua/Weapons/PredictedProjectile.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
-Script.Load("lua/CloakableMixin.lua") //to allow the hook
+//Script.Load("lua/CloakableMixin.lua") //to allow the hook
 
 local networkVars =
 {
@@ -23,6 +23,7 @@ if Server then
 
 end
 
+/*
 local triggerBlink = Fade.TriggerBlink
 function Fade:TriggerBlink()
     triggerBlink(self)
@@ -35,6 +36,7 @@ function Fade:OnBlinkEnd()
     endBlinkEnd(self)
     self:TriggerUncloak()
 end
+*/
 
 
 

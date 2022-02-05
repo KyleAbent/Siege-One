@@ -26,40 +26,14 @@ end
 
 local kSiege_TechIds =
 {
-   
-    'EggBeacon',
-    'StructureBeacon',
-    'Wall',
-    'DualWelderExosuit',
-    'DualFlamerExosuit',
     'PrimalScream',
     'AcidRocket',
-    'BackupBattery',
-    'GorillaGlue',
-    'DualGrenaderExosuit',
     'Rebirth',
     'Redemption',
     'CragHiveTwo',
     'ShiftHiveTwo',
     'Hunger',
     'ThickenedSkin',
-    'SiegeBeacon',
-    'AdvancedBeacon',
-    'LoneCyst',
-    'LerkLift',
-    'JumpPack',
-    'ArmoryBeefUp',
-    'HiveLifeInsurance',
-    'AlienTechPoint',
-    'CystMenu',
-    'DoubleCystHP',
-    'TripleCystHP',
-    'QuadrupleCystHP',
-    'DoubleCystArmor',
-    'TripleCystArmor',
-    'QuadrupleCystArmor',
-    'AlienTechPointHive',
-    --'KingCyst',
 
 }
 

@@ -2,9 +2,6 @@ local networkVars =
 {
     wallWalking = "compensated boolean",
     timeLastWallWalkCheck = "private compensated time",
-    isriding = "boolean",
-    gorgeusingLerkID = "entityid",
-     wantstobelifted = "boolean",
 }
 
 local kBallFlagAttachPoint = "babbler_attach1"
@@ -25,22 +22,17 @@ local kVerticalWallJumpForce = 4.3
 
 local origcreate = Gorge.OnCreate
 function Gorge:OnCreate()
-
     origcreate(self)
     InitMixin(self, WallMovementMixin)
-    
     self.wallWalking = false
     self.wallWalkingNormalGoal = Vector.yAxis
     self.timeLastWallJump = 0
-    self.isriding = false
-    self.gorgeusingLerkID = Entity.invalidI
-    self.wantstobelifted = true
-    self.timeLastLerkCheck = 0
 end
 
 function Gorge:GetTunnelColor()
     return self.tunnelColor
 end
+
 local originit = Gorge.OnInitialized
 function Gorge:OnInitialized()
 
@@ -57,11 +49,6 @@ end
 function Gorge:GetRedemptionCoolDown()
 return 15
 end
-function Gorge:GetBaseArmor()
-    return kGorgeArmor
-end
-
-
 
 
 function Gorge:GetCanJump()
@@ -282,55 +269,12 @@ function Gorge:PreUpdateMove(input, runningPrediction)
         // When not wall walking, the goal is always directly up (running on ground).
         self.wallWalkingNormalGoal = Vector.yAxis
     end
-
-
-  //  if self.leaping and Shared.GetTime() > self.timeOfLeap + kLeapTime then
-  //      self.leaping = false
-  //  end
     
     self.currentWallWalkingAngles = self:GetAnglesFromWallNormal(self.wallWalkingNormalGoal or Vector.yAxis) or self.currentWallWalkingAngles
 
-    
-    if self.isriding and (self.gorgeusingLerkID ~= Entity.invalidI) then
-        local lerk = Shared.GetEntity(self.gorgeusingLerkID)
-        if lerk then 
-                self:SetOrigin(lerk:GetOrigin() +  Vector(0, .5,0))
-                input.move.z = 0
-                input.move.x = 0
-                input.move.y = 0
-        else
-           --Print("Lerk which was carrying gorge has been lost. Resetting Gorge Status")
-           --self:TriggerRebirth()
-           self.isriding = false
-           self.gorgeusingLerkID = Entity.invalidI 
-        end
-    end
- 
+
 end
 
-/*
-if Server then
-    --If Lerk Gestates or any other thing while LerkLift is active than OnKill
-    function Gorge:OnUpdate(deltaTime)
-        if self.isriding and GetIsTimeUp(self.timeLastLerkCheck, 1) then
-            local lerk = Shared.GetEntity(self.gorgeusingLerkID)
-            if lerk then 
-                if lerk:isa("Lerk") and lerk.lerkcarryingGorgeId == self:GetId() then
-                    --No Problem Here
-                    Print("OnUpdate found LerkLift Lerk no problem")
-                else
-                    --Something happened
-                    Print("OnUpdate found LerkLift Lerk WITH problem.")
-                    self.isriding = false
-                    self.gorgeusingLerkID = Entity.invalidI 
-                end
-            end
-            self.timeLastLerkCheck = Shared.GetTime()
-        end
-
-    end
-end
-*/
 
 function Gorge:GetMoveSpeedIs2D()
     return not self:GetIsWallWalking()
@@ -383,68 +327,5 @@ if Server then
 
 end
 
-function Gorge:OnUse(player, elapsedTime, useSuccessTable)
-  
-       
-      if not player.isoccupied and not self.isriding then
-        player.isoccupied = true 
-        self.gorgeusingLerkID = player:GetId()
-        player.lerkcarryingGorgeId = self:GetId()
-        self.isriding = true
-        //Print("Gorge On Use A")
-        self.lastToggled = Shared.GetTime()
-    elseif player.isoccupied and self.isriding and player.lerkcarryingGorgeId == self:GetId() then
-        player.isoccupied = false
-        self.gorgeusingLerkID = Entity.invalidI
-        player.lerkcarryingGorgeId = Entity.invalidI
-        self.isriding = false
-        //Print("Gorge On Use B")
-        self.lastToggled = Shared.GetTime()
-        self:SetOrigin(self:GetOrigin() - Vector(0, 0.5, 0) )
-     end
-       
-       
-end
-
-function Gorge:ModifyGravityForce(gravityTable)
-
-    if self.isriding then--self:GetIsWallWalking() and not self:GetCrouching() or self.isriding or self:GetIsOnGround() then
-        gravityTable.gravity = 0
-    end
-       // if self.gravity ~= 0 then
-       // gravityTable.gravity = self.gravity
-   // end
-    
-end
-
-function Gorge:GetCanBeUsed(player, useSuccessTable)
-    local boolean = false
-    if player:isa("Lerk") and GetIsTimeUp(self.lastToggled, 2) and self.wantstobelifted then
-       if ( GetHasTech(player, kTechId.LerkLift) or Shared.GetCheatsEnabled ) then
-            if ( not player.isoccupied and not self.isriding ) then
-                boolean = true
-                //Print("Neither Gorge or Lerk is occupied, can Gorge can be used")
-            elseif ( self.isriding and player.isoccupied and player.lerkcarryingGorgeId == self:GetId()  )then
-                boolean = true
-                //Print("Gorge is riding, Lerk is Occupied, Lerk's GorgeID Matches this gorge, Gorge can be used")
-            end
-        end
-   end
-        useSuccessTable.useSuccess = boolean
-end
-
-local orig = Gorge.OnKill
-function Gorge:OnKill()
-    orig(self)
-   if self.isriding then
-        self.isriding = false
-        local lerk = Shared.GetEntity(self.gorgeusingLerkID)
-        if lerk then
-                lerk.isoccupied = false 
-                lerk.lerkcarryingGorgeId = Entity.invalidI 
-         end
-   end
-
-end
 
 Shared.LinkClassToMap("Gorge", Gorge.kMapName, networkVars, true)

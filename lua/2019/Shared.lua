@@ -3,17 +3,26 @@ Script.Load("lua/doors/BreakableDoor.lua")
 Script.Load("lua/doors/timer.lua")
 Script.Load("lua/2019/Functions19.lua")
 Script.Load("lua/2019/AntiExploit.lua")
-Script.Load("lua/WeldPoint.lua")
-Script.Load("lua/Convars19.lua")
 Script.Load("lua/2019/EEM/PushTrigger.lua")
 Script.Load("lua/2019/EEM/LogicBreakable.lua")
 Script.Load("lua/2019/EEM/LogicMixin.lua")
 Script.Load("lua/2019/EEM/PushTrigger.lua")
 Script.Load("lua/2019/EEM/ScaledModelMixin.lua")
-Script.Load("lua/2019/PowerConsumerChanges.lua")
-Script.Load("lua/2019/LoneCyst.lua")
-Script.Load("lua/2019/ResearchMixinChanges.lua")
-Script.Load("lua/2019/Conductor.lua")
-Script.Load("lua/2019/Balancer.lua")
-Script.Load("lua/2019/Imaginator.lua")
 --Script.Load("lua/Weapons/Marine/ExoGrenade.lua")
+Script.Load("lua/Additions/LayStructures.lua")
+Script.Load("lua/Additions/ARC_Credits.lua")
+Script.Load("lua/Additions/MAC_Credits.lua")
+Script.Load("lua/Modifications/Modifications.lua")
+kAlienDefaultLvl = 25
+kAlienDefaultAddXp = 0.25
+
+function LoadPathing(mapName, groupName, values)
+
+
+     if mapName == "tech_point" or mapName == "nav_point" then
+        Pathing.AddFillPoint(values.origin) 
+    end
+
+
+end
+Event.Hook("MapLoadEntity", LoadPathing)

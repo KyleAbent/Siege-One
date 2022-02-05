@@ -1,8 +1,3 @@
-kAutoCommMaxWhips = 12
-
-kStructureBeaconBuildTime = 8
-kJumpPackCost = 19
-
 kHiveInfestationRadius = 10 // Common for hive infestation to leech over in siege  ... 
 
 kFrontTime = 300
@@ -15,7 +10,7 @@ kReduceDoorTimeBy = 0
 kJetpackUseFuelRate = .15 //I'm really not happy about this.
 
 
---kPlayingTeamInitialTeamRes = 200
+kPlayingTeamInitialTeamRes = 200
 kMaxTeamResources = 999
 
 kHarvesterMaturationTime = 30
@@ -35,27 +30,50 @@ kAlienEggsPerHive = 5
 kEggGenerationRate = 9
 
 
-kEggBeaconCost = 30
-kEggBeaconCoolDown = 12
-kStructureBeaconCoolDown = 25
-kStructureBeaconCost = 50
-kEggBeaconBuildTime = 10
-kEggBeaconIntervalDelay = 2 -- was 1
-kEggBeaconLifeSpan = 10 --was 8
-kWallBuildTime = 14
-kWallTresCost = 50
-//kWallsPerRoom = 1 hardcoded, would have to be rewritten to allow more than 1. not a problem. just. another time. lol.
 
 
-kExoFlamerDamage = 16 --disabled -- uses default flamethrower right now
-kExoWelderDamagePerSecond = 28
-kExoPlayerWeldRate = 15
-kExoStructureWeldRate = 30
+kMarineInitialIndivRes = 40--15
+kAlienInitialIndivRes = 70 --12
+
+--kWhipSlapDamage = 125
+kWhipBombardDamage = 350
+kMaxSupply = 600
 
 
+
+
+kChargeResearchCost = 0
+kChargeResearchTime = 0
+kLeapResearchCost = 0
+kLeapResearchTime = 0
+kBileBombResearchCost = 0
+kBileBombResearchTime = 0
+kShadowStepResearchCost = 0
+kShadowStepResearchTime = 0
+kUmbraResearchCost = 0
+kUmbraResearchTime = 0
+kBoneShieldResearchCost = 0
+kBoneShieldResearchTime = 0
+kSporesResearchCost = 0
+kSporesResearchTime = 0
+kStompResearchCost = 0
+kStompResearchTime = 0
+kStabResearchCost = 0
+kStabResearchTime = 0
+kMetabolizeEnergyResearchCost = 0
+kMetabolizeEnergyResearchTime = 0
+kMetabolizeHealthResearchCost = 0
+kMetabolizeHealthResearchTime = 0
+kXenocideResearchCost = 0
+kXenocideResearchTime = 0
+
+kPrimalScreamRange = 10
 kPrimalScreamEnergyCost = 20
 kPrimalScreamROF = 1
-kPrimalScreamTeamEnergyBoost = 10
+kPrimalScreamROFIncrease = .3
+kPrimalScreamTeamEnergyBoost = 60
+kPrimalScreamDuration = 4
+kPrimalScreamEnergyGain = 60
 
 
 kAcidRocketDamage = 55
@@ -65,22 +83,11 @@ kAcidRocketEnergyCost = 10
 kAcidRocketRadius = 2.4
 
 
-kXenocideRange = 12 -- was 14
 
 
 kRedemptionCooldown = 45
 kRedemptionEHPThresholdMin = 1
 kRedemptionEHPThresholdMax = 30
-
-
-
-kMarineInitialIndivRes = 40--15
-kAlienInitialIndivRes = 70 --12
-
-kWhipSlapDamage = 125
-kWhipBombardDamage = 350
-
-
 
 kThickenedSkinCost = 2
 kHungerCost = 2

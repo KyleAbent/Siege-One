@@ -123,7 +123,7 @@ local entities = {}
             if #entities > 0 then
             local entity = table.random(entities)
              if entity:GetMapName() == Sentry.kMapName or entity:GetMapName() == Observatory.kMapName or entity:GetMapName() == ARCCredit.kMapName  then return true end
-                 DestroyEntity(entity)
+                DestroyEntity(entity)
                  self:NotifyCredit( Client, "Deleted your old %s so you can spawn a new one, newb.", true, mapname)
                  return false
             end
@@ -565,12 +565,12 @@ local function PerformBuy(self, who, String, whoagain, cost, reqlimit, reqground
             return
         end
         else     
+            if self:HasLimitOf(whoagain, mapname, whoagain:GetTeamNumber(), limitof, who) then 
+                self:NotifyCredit(who, "Limit of %s per %s per player ya noob", true, limitof, mapname)
+                return
+            end
     end
     */
-    if self:HasLimitOf(whoagain, mapname, whoagain:GetTeamNumber(), limitof, who) then 
-        self:NotifyCredit(who, "Limit of %s per %s per player ya noob", true, limitof, mapname)
-        return
-    end
 
     if reqground then
 
@@ -598,23 +598,21 @@ local function PerformBuy(self, who, String, whoagain, cost, reqlimit, reqground
         whoagain:GiveLayStructure(techid, mapname)
     else
         entity = CreateEntity(mapname, FindFreeSpace(whoagain:GetOrigin(), 1, 4), whoagain:GetTeamNumber()) 
-        if entity then
-            if entity.SetOwner then 
-                entity:SetOwner(whoagain) 
-            end
-            if entity.SetConstructionComplete then 
-                entity:SetConstructionComplete() 
-            end
-            if entity.SetOwner then 
-                entity:SetOwner(whoagain) 
-            end
-            if HasMixin(structure, "Avoca") then 
-                structure:SetIsACreditStructure(true) 
-            end
-        end    
+        if entity.SetOwner then 
+            entity:SetOwner(whoagain) 
+        end
+        if entity.SetConstructionComplete then 
+            entity:SetConstructionComplete() 
+        end
+        if entity.SetOwner then 
+            entity:SetOwner(whoagain) 
+        end
     end
 
-
+    if entity then 
+        local supply = LookupTechData(entity:GetTechId(), kTechDataSupply, nil) or 0
+        whoagain:GetTeam():RemoveSupplyUsed(supply)
+    end
     local delaytoadd = not GetSetupConcluded() and 4 or delayafter --requires siege
     Shine.ScreenText.SetText("Credit", string.format( "%s Credit", self:GetPlayerCreditInfo(who) ), who) 
     self.BuyUsersTimer[who] = Shared.GetTime() + delaytoadd

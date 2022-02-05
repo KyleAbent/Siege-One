@@ -1,29 +1,14 @@
 Script.Load("lua/Additions/LevelsMixin.lua")
 Script.Load("lua/Additions/AvocaMixin.lua")
-
-local networkVars = {}
-
-
-AddMixinNetworkVars(LevelsMixin, networkVars)
-AddMixinNetworkVars(AvocaMixin, networkVars)
-
-local origIinit = Whip.OnInitialized
-function Whip:OnInitialized()
-    origIinit(self)
-    InitMixin(self, AvocaMixin)
-    InitMixin(self, LevelsMixin)
-end
-
-Shared.LinkClassToMap("Whip", Whip.kMapName, networkVars)
-
------------------------------------------------------
 Script.Load("lua/InfestationMixin.lua")
+
 class 'WhipAvoca' (Whip)
 WhipAvoca.kMapName = "whipavoca"
 
 local networkVars = {}
 
-
+AddMixinNetworkVars(LevelsMixin, networkVars)
+AddMixinNetworkVars(AvocaMixin, networkVars)
 AddMixinNetworkVars(InfestationMixin, networkVars)
 function WhipAvoca:GetInfestationRadius()
     return 1
@@ -32,19 +17,11 @@ function WhipAvoca:OnOrderGiven()
    if self:GetInfestationRadius() ~= 0 then self:SetInfestationRadius(0) end
 end
     function WhipAvoca:OnInitialized()
-        Whip.OnInitialized(self)
-        
-        InitMixin(self, InfestationMixin)
-        
+     Whip.OnInitialized(self)
+         InitMixin(self, LevelsMixin)
+           InitMixin(self, InfestationMixin)
+        InitMixin(self, AvocaMixin)
         self:SetTechId(kTechId.Whip)
-    end
-    
-    local origCreate = Whip.OnCreate
-    function Whip:OnCreate()
-        origCreate(self)
-        if Server then
-            InitMixin(self, OwnerMixin)
-        end
     end
     
         function WhipAvoca:GetTechId()

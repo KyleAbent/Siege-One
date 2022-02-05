@@ -57,17 +57,8 @@ if Server then
     
 
 
-    --adjusted in AvocaMixin
+    --require only commander structures to take supply
     function SupplyUserMixin:__initmixin()
         return
     end
-    
-    function SupplyUserMixin:OnKill()
-        return
-    end
 
-    function SupplyUserMixin:OnDestroy()
-        return
-    end
-
-end

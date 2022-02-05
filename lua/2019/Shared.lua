@@ -10,6 +10,8 @@ Script.Load("lua/2019/EEM/PushTrigger.lua")
 Script.Load("lua/2019/EEM/ScaledModelMixin.lua")
 --Script.Load("lua/Weapons/Marine/ExoGrenade.lua")
 Script.Load("lua/Additions/LayStructures.lua")
+Script.Load("lua/Additions/ARC_Credits.lua")
+Script.Load("lua/Additions/MAC_Credits.lua")
 Script.Load("lua/Modifications/Modifications.lua")
 kAlienDefaultLvl = 25
 kAlienDefaultAddXp = 0.25

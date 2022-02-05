@@ -189,6 +189,7 @@ function LayStructures:OnPrimaryAttack(player)
     
 end
 
+
 local function DropStructure(self, player)
 
     if Server then
@@ -199,7 +200,14 @@ local function DropStructure(self, player)
             // Create mine.
             local structure = CreateEntity(self:GetDropMapName(), coords.origin, player:GetTeamNumber())
             if structure then
-               if not self.mapname == BreakableDoor.kMapName then  structure:SetOwner(player) end --aboos
+                if HasMixin(structure, "Avoca") then 
+                    structure:SetIsACreditStructure(true) 
+                end
+                
+               if not self.mapname == BreakableDoor.kMapName then  
+                    structure:SetOwner(player) 
+                end --aboos
+                
                 if structure.SetConstructionComplete  then
                if structure:GetTeamNumber() == 1 then
                  if not GetIsPointOnInfestation(structure:GetOrigin()) then
@@ -215,11 +223,11 @@ local function DropStructure(self, player)
                    end --not siege
                 
                 end--teamnum 
-                end--structure
                 structure:SetOwner(player)
-                if HasMixin(structure, "Avoca") then 
-                    structure:SetIsACreditStructure(true) 
-                end
+                end--structure
+                
+
+
 
                 
                 // Check for space
@@ -360,20 +368,23 @@ function LayStructures:GetPositionForStructure(player)
 
     
     // If it hits something, position on this surface (must be the world or another structure)
-    if trace.fraction < 1 then
+    --disable during pregame
+    if trace.fraction < 1 then 
         
         foundPositionInRange = true
     
         if trace.entity == nil then
             isPositionValid = true
-       -- elseif HasMixin(trace.entity, "Avoca") and trace.entity:GetTeamNumber() == 1  then
-       --     isonstructure = false --( trace.entity.GetCanStick and trace.entity:GetCanStick() )
-       --     isPositionValid = isonstructure
+            if not IsPathable(displayOrigin) then
+                isPositionValid = false
+            end
+         --disable
+        --elseif HasMixin(trace.entity, "Avoca") and trace.entity:GetTeamNumber() == 1  then
+            --isonstructure = ( trace.entity.GetCanStick and trace.entity:GetCanStick() )
+            --isPositionValid = not isonstructure
         end
   
-             if not IsPathable(displayOrigin) then
-                    isPositionValid = false
-                end
+
                 
         displayOrigin = trace.endPoint 
 

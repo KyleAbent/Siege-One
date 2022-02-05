@@ -1,5 +1,24 @@
 Script.Load("lua/Additions/LevelsMixin.lua")
 Script.Load("lua/Additions/AvocaMixin.lua")
+
+local networkVars = {}
+
+
+AddMixinNetworkVars(LevelsMixin, networkVars)
+AddMixinNetworkVars(AvocaMixin, networkVars)
+
+local origIinit = Shade.OnInitialized
+function Shade:OnInitialized()
+    origIinit(self)
+    InitMixin(self, AvocaMixin)
+    InitMixin(self, LevelsMixin)
+end
+
+
+Shared.LinkClassToMap("Shade", Shade.kMapName, networkVars)
+
+
+-------------------------
 Script.Load("lua/InfestationMixin.lua")
 
 class 'ShadeAvoca' (Shade)

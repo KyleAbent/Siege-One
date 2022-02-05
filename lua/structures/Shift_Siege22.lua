@@ -1,5 +1,24 @@
 Script.Load("lua/Additions/LevelsMixin.lua")
 Script.Load("lua/Additions/AvocaMixin.lua")
+
+local networkVars = {}
+
+
+AddMixinNetworkVars(LevelsMixin, networkVars)
+AddMixinNetworkVars(AvocaMixin, networkVars)
+
+local origIinit = Shift.OnInitialized
+function Shift:OnInitialized()
+    origIinit(self)
+    InitMixin(self, AvocaMixin)
+    InitMixin(self, LevelsMixin)
+end
+
+
+Shared.LinkClassToMap("Shift", Shift.kMapName, networkVars)
+
+
+--------------------
 Script.Load("lua/InfestationMixin.lua")
 
 class 'ShiftAvoca' (Shift)

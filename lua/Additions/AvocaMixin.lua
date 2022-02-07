@@ -16,7 +16,7 @@ function AvocaMixin:__initmixin()
 end
 
 function AvocaMixin:DoAddSupplyTimer()
-    if not self.isacreditstructure then
+    if not self.isacreditstructure then--what happens if structure dies less than this 0.5 seconds? o_O
         self:AddSupply()
     end
     return false

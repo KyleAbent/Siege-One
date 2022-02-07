@@ -1,3 +1,28 @@
+/*
+if Server then
+    function doBuyLocation(who,where,playername)
+        --already purchased?
+        for _, location in ientitylist(Shared.GetEntitiesWithClassname("Location")) do 
+            if location.name == playername then
+                return false
+            end
+        end
+        locations = GetAllLocationsWithSameName(where)
+        --make sure player doesn't have the word "Siege" in it lol
+        local hasSiegeInName = string.find(playername, "siege") or string.find(playername, "Siege")
+        if #locations == 0 or GetIsInSiege(who) or hasSiegeInName then
+            return false
+        end
+        for i = 1, #locations do
+            location = locations[i]
+            location.name = playername
+            Shared.PrecacheString(playername)
+        end
+        return true
+    end
+end
+*/
+
 function ResearchShiftHive()
   local hivey = nil
     for _, hive in ientitylist(Shared.GetEntitiesWithClassname("Hive")) do 

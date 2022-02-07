@@ -72,6 +72,9 @@ end
 function LayStructures:GetDropStructureId()
     return self.techId
 end
+function LayStructures:GetDropStructureMapName()
+    return self.mapname
+end
 function LayStructures:SetTechId(techid)
      self.techId = techid
 end

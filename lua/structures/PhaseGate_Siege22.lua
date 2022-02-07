@@ -145,4 +145,12 @@ end
     return success, blipType, blipTeam, isAttacked, false --isParasited
 end
 
+function PizzaGate:CorrodeOnInfestation()
+    return false
+end
+
+function PizzaGate:GetTechId()
+    return kTechId.PhaseGate --this will cause LevelsMixin to give the same armor as PG rather than tunnelentrance-bug
+end
+
 Shared.LinkClassToMap("PizzaGate", PizzaGate.kMapName, networkVars) 

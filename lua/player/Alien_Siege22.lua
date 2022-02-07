@@ -466,9 +466,16 @@ if Server then
         if GetHasRebirthUpgrade(self) and self.canredeemorrebirth then
             self:TriggerRebirthCountDown(self:GetClient():GetControllingPlayer())
         end
-    end
-    
-    
+        /*
+        if player.GetHasLayStructure and player:GetHasLayStructure() then 
+            local weapon = player:GetWeaponInHUDSlot(5)
+            local builder = false
+            if (weapon) then
+                    self:GiveLayStructure(weapon:GetDropStructureId(), weapon:GetDropStructureMapName())
+            end
+        end
+        */
+    end    
 end
 
 function Alien:GetHasPrimalScream()

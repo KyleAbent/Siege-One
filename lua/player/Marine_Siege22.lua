@@ -85,10 +85,29 @@ orig_Marine_UpdateGhostModel(self)
 end --function
 
 
-function Marine:AddGhostGuide(origin, radius)
+    function Marine:AddGhostGuide(origin, radius)
 
-return
+    return
 
-end
+    end
 
 end -- client
+
+
+if Server then
+
+    local origderp = Marine.CopyPlayerDataFrom
+    function Marine:CopyPlayerDataFrom(player)
+        origderp(self, player)
+        /*
+        if player.GetHasLayStructure and player:GetHasLayStructure() then 
+            local weapon = player:GetWeaponInHUDSlot(5)
+            local builder = false
+            if (weapon) then
+                    self:GiveLayStructure(weapon:GetDropStructureId(), weapon:GetDropStructureMapName())
+            end
+        end
+        */
+    end    
+        
+end--Server

@@ -853,6 +853,7 @@ local Player = Client:GetControllingPlayer()
 local cost = 4
 local delayafter = 8
  if FirstCheckRulesHere(self, Client, Player, String, cost, false ) == true then return end
+    /*
       local exit, nearhive, count = FindPlayerTunnels(Player)
               if not exit then
               --  Print("No Exit Found!")
@@ -861,10 +862,20 @@ local delayafter = 8
                self:TunnelExistsNearHiveFor(Player)
              return
              end
-     if String == "TunnelEntrance" and Player:isa("Gorge") then
-       GorgeWantsEasyEntrance(Player, exit, nearhive)
-       DeductBuy(self, Player, cost, delayafter)
+     
+     if String == "Location" then
+       --make sure player is in location first of all
+       doProceed = doBuyLocation(Player,Player:GetOrigin(),Player:GetName())
+       if doProceed then
+            local cost= 100
+            DeductBuy(self, Player, cost, delayafter)
+            self:NotifyCredit( Client, "Room name purchased. Don't ruin this for everybody by making explicit names or else i'll have to start logging steamids with purchases", true)
+            self:NotifyCredit( Client, "Note: This version won't save your location name on map change, and also someone may buy this location name after you and override your purchase. May require respawning to see updated Location Name on Minimap", true)
+       else
+            self:NotifyCredit( Client, "Purchasing Location Name has failed, either you're not in a Location or you tried to purchase a room with Siege in it, or your name has Siege in it, or your name matches an already existing room", true)
+       end
      end
+     */
 end
 
 local BuyCustomCommand = self:BindCommand("sh_buycustom", "buycustom", BuyCustom, true)

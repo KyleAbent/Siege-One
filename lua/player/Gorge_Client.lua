@@ -97,3 +97,81 @@ function Gorge:ModifyViewModelCoords(viewModelCoords)
     return viewModelCoords
 
 end
+
+    
+function Gorge:GetShowGhostModel()
+    
+        local weapon = self:GetActiveWeapon()
+        if weapon and weapon:isa("DropStructureAbility") then
+            return weapon:GetShowGhostModel()
+        else
+            return Alien.GetShowGhostModel(self)    
+        end
+        
+        return false
+        
+    end
+    
+    function Gorge:GetGhostModelOverride()
+    
+        local weapon = self:GetActiveWeapon()
+        if weapon and weapon:isa("DropStructureAbility") and weapon.GetGhostModelName then
+            return weapon:GetGhostModelName(self)
+        end
+        
+    end
+    
+    function Gorge:GetGhostModelTechId()
+    
+        local weapon = self:GetActiveWeapon()
+        if weapon then
+            if weapon:isa("DropStructureAbility") then
+                return weapon:GetGhostModelTechId()
+            else
+                return Alien.GetGhostModelTechId(self)
+            end    
+        end
+        
+    end
+    
+    function Gorge:GetGhostModelCoords()
+    
+        local weapon = self:GetActiveWeapon()
+        if weapon then
+            if weapon:isa("DropStructureAbility") then
+                return weapon:GetGhostModelCoords()
+            else 
+                return Alien.GetGhostModelCoords(self)
+            end    
+        end
+        
+    end
+    
+    function Gorge:GetLastClickedPosition()
+    
+        local weapon = self:GetActiveWeapon()
+        if weapon and weapon:isa("DropStructureAbility") then
+            return weapon.lastClickedPosition
+        end
+        
+    end
+
+    function Gorge:GetIsPlacementValid()
+    
+        local weapon = self:GetActiveWeapon()
+        if weapon and weapon:isa("DropStructureAbility") then
+            return weapon:GetIsPlacementValid()
+        else
+            return Alien.GetIsPlacementValid(self)    
+        end
+    
+    end
+
+    function Gorge:GetIgnoreGhostHighlight()
+    
+        local weapon = self:GetActiveWeapon()
+        if weapon and weapon:isa("DropStructureAbility") and weapon.GetIgnoreGhostHighlight then
+            return weapon:GetIgnoreGhostHighlight()
+        end
+        
+    end  

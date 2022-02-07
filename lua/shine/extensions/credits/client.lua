@@ -7,6 +7,19 @@ self.Enabled = true
 return true
 end
 
+/*
+Shine.VoteMenu:AddPage ("SpendExpensive", function( self )
+    local player = Client.GetLocalPlayer()
+    self:AddSideButton( "Location Name(100)", function() Shared.ConsoleCommand ("sh_buycustom Location")  end)
+    if player:GetTeamNumber() == 1 then 
+    
+    elseif player:GetTeamNumber() == 2 then
+   end
+
+    self:AddBottomButton( "Back", function()self:SetPage("SpendCredits")end) 
+end)
+*/
+
 Shine.VoteMenu:AddPage ("SpendStructures", function( self )
        local player = Client.GetLocalPlayer()
     if player:GetTeamNumber() == 1 then 
@@ -86,6 +99,7 @@ Shine.VoteMenu:AddPage ("SpendCredits", function( self )
 
      self:AddSideButton( "Classes", function() self:SetPage( "SpendClasses" ) end) 
      self:AddSideButton( "Structures", function() self:SetPage( "SpendStructures" ) end)
+     --self:AddSideButton( "Expensive", function() self:SetPage( "SpendExpensive" ) end)
      self:AddBottomButton( "Back", function()self:SetPage("Main")end)
 end)
 

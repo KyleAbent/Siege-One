@@ -25,9 +25,10 @@ GUIInsight_TopBar.kSideTimeBackgroundPos = Vector(-100, -175, 0)
 GUIInsight_TopBar.kSiegeTimeBackgroundSize = Vector(180, 58, 0)
 GUIInsight_TopBar.kSiegeTimeBackgroundPos = Vector(100, -175, 0)
 
-
+/*
 GUIInsight_TopBar.kPowerBackgroundSize = Vector(180, 58, 0)
 GUIInsight_TopBar.kPowerBackgroundPos = Vector(300, -175, 0) 
+*/
 
 GUIInsight_TopBar.kTextFontName = Fonts.kAgencyFB_Small
 
@@ -82,11 +83,13 @@ function GUIInsight_TopBar:Initialize()
     self.sideBackground:SetPosition(GUIInsight_TopBar.kSideTimeBackgroundPos)
     self.frame:AddChild(self.sideBackground)
     
+    /*
     self.powerBackground =  GUIManager:CreateGraphicItem()
     self.powerBackground:SetAnchor(GUIItem.Center, GUIItem.Bottom)
     --self.powerBackground:SetTexture(kBackgroundTextures[style.textureSet])
      self.powerBackground:SetPosition(GUIInsight_TopBar.kPowerBackgroundPos)
     self.frame:AddChild(self.powerBackground)
+    */
     
     self.frontDoor = GUIManager:CreateTextItem()
     self.frontDoor:SetAnchor(GUIItem.Left, GUIItem.Center)
@@ -116,6 +119,7 @@ function GUIInsight_TopBar:Initialize()
     self.sideDoor:SetFontName(GUIInsight_TopBar.kTextFontName)
     self.sideBackground:AddChild(self.sideDoor)
     
+    /*
     self.powerTxt = GUIManager:CreateTextItem()
     self.powerTxt:SetAnchor(GUIItem.Left, GUIItem.Center)
     self.powerTxt:SetTextAlignmentX(GUIItem.Align_Max)
@@ -124,6 +128,7 @@ function GUIInsight_TopBar:Initialize()
     self.powerTxt:SetFontIsBold(true)
     self.powerTxt:SetFontName(GUIInsight_TopBar.kTextFontName)
     self.powerBackground:AddChild(self.powerTxt)
+    */
     
     
 end
@@ -139,7 +144,7 @@ function GUIInsight_TopBar:Update(deltaTime)
      local fLength = PlayerUI_GetFrontLength()
      local sLength = PlayerUI_GetSiegeLength()
      local ssLength = PlayerUI_GetSideLength()
-     local adjustment = PlayerUI_GetDynamicLength()
+     --local adjustment = PlayerUI_GetDynamicLength()
      
         local frontRemain = Clamp(fLength - gLength, 0, fLength)
         local Frontminutes = math.floor( frontRemain / 60 )
@@ -173,6 +178,7 @@ function GUIInsight_TopBar:Update(deltaTime)
     --fallacy
     end
     
+    /*
     local isNegative = false
         if adjustment < 0 then
             isNegative = true
@@ -192,6 +198,7 @@ function GUIInsight_TopBar:Update(deltaTime)
             self.powerTxt:SetText(string.format("Adj: %s:%s", adjMi, adjSe))
         end
     end
+    */
     
 end
 

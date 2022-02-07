@@ -10,16 +10,20 @@ function AvocaMixin:__initmixin()
     -- Print("%s initmiin avoca mixin", self:GetClassName())
     self.isacreditstructure = false
     if Server then
-        self:AddSupply()
+        self:AddTimedCallback(AvocaMixin.DoAddSupplyTimer, 0.5) 
     end    
     --  Print("%s isacreditstructure is %s", self:GetClassName(), self.isacreditstructure)
 end
 
+function AvocaMixin:DoAddSupplyTimer()
+    if not self.isacreditstructure then
+        self:AddSupply()
+    end
+    return false
+end
+
 function AvocaMixin:SetIsACreditStructure(boolean)
-    self.isacreditstructure = boolean
-    if Server and boolean == true then
-        self:RemoveSupply()
-    end        
+    self.isacreditstructure = boolean 
     --Print("AvocaMixin SetIsACreditStructure %s isacreditstructure is %s", self:GetClassName(), self.isacreditstructure)
 end
 

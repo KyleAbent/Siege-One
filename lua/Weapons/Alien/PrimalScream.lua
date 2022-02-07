@@ -62,10 +62,11 @@ local function TriggerPrimal(self, lerk)
       
 
       --GetEffectManager():AddEffectData("AlienWeaponEffects", GetWeaponEffects()) --Ghetto alienweaponeffects.lua   
-      --lerk:TriggerEffects("primal")
+     
      if Server then 
         local parent = self:GetParent()
         if parent then
+            parent:TriggerEffects("taunt")
             parent:PrimalScream(kPrimalScreamDuration)
             local aliens = GetEntitiesForTeamWithinRange("Alien", 2, lerk:GetOrigin(), kPrimalScreamRange)
             for i = 1, #aliens do
@@ -140,7 +141,7 @@ function Primal:OnPrimaryAttack(player)
 
     if not self.secondaryAttacking then 
         if player:GetEnergy() >= self:GetEnergyCost() and self:GetCanScream() then
-            self:TriggerEffects("primal_scream")
+            --self:TriggerEffects("primal_scream")
             if Server then        
                 TriggerPrimal(self, player)
             end
@@ -197,7 +198,8 @@ function Primal:OnSecondaryAttack(player)
             player:DeductAbilityEnergy(self:GetSecondaryEnergyCost())            
             self.timeLastLerkBileBomb = Shared.GetTime()
             
-            self:TriggerEffects("LerkBileBomb_attack")
+            --self:TriggerEffects("LerkBileBomb_attack")
+            
             
             if Client then
             

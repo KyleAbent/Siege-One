@@ -1,3 +1,5 @@
+Script.Load("lua/PhaseGateUserMixin.lua")
+
 local networkVars = {
 
 lastredeemorrebirthtime = "time", 
@@ -7,10 +9,13 @@ primaledID = "entityid",
   
  }
  
+ AddMixinNetworkVars(PhaseGateUserMixin, networkVars)
+ 
 local ogCreate = Alien.OnCreate
  
 function Alien:OnCreate()
     ogCreate(self)
+    InitMixin(self, PhaseGateUserMixin)
      self.lastredeemorrebirthtime = Shared.GetTime()
      self.hasTriggered = false
      self.primaled = false

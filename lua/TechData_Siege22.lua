@@ -157,7 +157,7 @@ local kSiege_TechData =
         [kTechDataDisplayName] = "Hunger", 
       [kTechDataSponitorCode] = "B",  
       [kTechDataCostKey] = kHungerCost, 
-     [kTechDataTooltipInfo] = "On Player Kill: Enzyme and +10% health/energy ", }, --"Non Gorges On Player Kill: Enzyme and +10% health/energy  Gorge:+10%Energy/Enzyme on  ", },
+     [kTechDataTooltipInfo] = "Player (or Construct/MAC/ARC if Gorge) Kill: Enzyme and +10% health/energy.", }, --"Non Gorges On Player Kill: Enzyme and +10% health/energy  Gorge:+10%Energy/Enzyme on  ", },
    
         
         

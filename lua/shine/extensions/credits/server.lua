@@ -124,7 +124,7 @@ local entities = {}
             local entity = table.random(entities)
              if entity:GetMapName() == Sentry.kMapName or entity:GetMapName() == Observatory.kMapName or entity:GetMapName() == ARCCredit.kMapName  then return true end
                  DestroyEntity(entity)
-                 self:NotifyCredit( Client, "Deleted your old %s so you can spawn a new one, newb.", true, mapname)
+                 self:NotifyCredit( Client, "Limit reached for %s , so the first one placed has been deleted", true, mapname)
                  return false
             end
       end
@@ -770,6 +770,11 @@ elseif String == "Hydra" then
 CreditCost = 1
 mapnameof = HydraAvoca.kMapName
 techid = kTechId.Hydra
+elseif String == "PizzaGate" then
+CreditCost = 10
+mapnameof = PizzaGate.kMapName
+techid = kTechId.PhaseGate
+limit = 2
 end
 
 return mapnameof, delay, reqground, reqpathing, CreditCost, limit, techid

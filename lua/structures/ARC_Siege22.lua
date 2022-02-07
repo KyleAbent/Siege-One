@@ -13,6 +13,15 @@ function ARC:OnInitialized()
     InitMixin(self, AvocaMixin)
 end
 
+local orig = ARC.GetCanFireAtTarget
+function ARC:GetCanFireAtTarget(target, targetPoint)   
+    if not GetFrontDoorOpen() then
+        return false
+    else
+        orig(self, target, targetPoint)
+    end
+end
+
 Shared.LinkClassToMap("ARC", ARC.kMapName, networkVars)
 
 

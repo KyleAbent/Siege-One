@@ -112,12 +112,14 @@ if Server then
             self:DoResearch(kTechId.Umbra, false)
             self:DoResearch(kTechId.Spores, false)
             self:DoResearch(kTechId.BoneShield, false)
+            self:DoResearch(kTechId.PrimalScream, false)
          end
         if biomass >=9 then
             --print("Biomass 9!")
             self:DoResearch(kTechId.Stab, false)
             self:DoResearch(kTechId.Stomp, false)
             self:DoResearch(kTechId.Xenocide, false)
+            self:DoResearch(kTechId.AcidRocket, false)
         end
 
         return false    

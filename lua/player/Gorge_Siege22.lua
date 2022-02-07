@@ -8,7 +8,7 @@ local kBallFlagAttachPoint = "babbler_attach1"
 
 
 if Client then
-    Script.Load("lua/Gorge_Client.lua", true)
+    Script.Load("lua/player/Gorge_Client.lua", true)
 end
 
 local kNormalWallWalkFeelerSize = 0.25

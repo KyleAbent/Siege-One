@@ -1,6 +1,6 @@
-local origUpdate = GUIMarineHUD.Update
+local origUpdate = GUIAlienHUD.Update
 
-function GUIMarineHUD:Update(deltaTime)
+function GUIAlienHUD:Update(deltaTime)
     origUpdate(self, deltaTime)
     --Update front and siege timers through the resource display
     
@@ -10,9 +10,11 @@ function GUIMarineHUD:Update(deltaTime)
         PlayerUI_GetGameLengthTime(),
         PlayerUI_GetFrontLength(),
         PlayerUI_GetSiegeLength(),
-        PlayerUI_GetSideLength(),
-        PlayerUI_GetDynamicLength()
+        PlayerUI_GetSideLength()
+        --PlayerUI_GetDynamicLength()
     }
+    
+    
 
     self.resourceDisplay:UpdateFrontSiege(deltaTime, resourceUpdate)
 end

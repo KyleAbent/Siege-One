@@ -39,6 +39,8 @@ end
 function AcidRocket:GetPrimaryAttackDelay(player) --  Alien:OnUpdateAnimationInput(modelMixin)
     local attackSpeed = kAcidRocketFireDelay 
     local bonus = player:GetIsEnzymed() and kEnzymeAttackSpeed or 1
+    local primalbonus = player:GetHasPrimalScream() and .3 or 0
+    bonus = bonus + primalbonus
     attackSpeed = attackSpeed - (attackSpeed * bonus) + attackSpeed -- dont add time lol 
     attackSpeed = attackSpeed * ( player.electrified and kElectrifiedAttackSpeed or 1 )
     return attackSpeed

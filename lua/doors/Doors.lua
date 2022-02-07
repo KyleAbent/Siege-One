@@ -74,7 +74,7 @@ function SiegeDoor:OnUpdate(deltaTime)
             if self.opened then
                 self.opening = false
             else
-                self:SetOrigin(self:GetOrigin() + Vector(0,.001,0) ) 
+                self:SetOrigin(self:GetOrigin() + Vector(0,.01,0) ) 
                 if not self.timeLastPhys or ( self.timeLastPhys + 2 < Shared.GetTime() )  then
                     self:UpdatePosition(waypointreached)//hmm will this spam too much? Im not sure
                     self:MakeSurePlayersCanGoThroughWhenMoving()//hmm will this spam too much? Im not sure

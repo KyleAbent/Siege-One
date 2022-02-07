@@ -8,14 +8,15 @@
 
 -- Debug with: {player_cinematic = "cinematics/locateorigin.cinematic"},
 
- /*
+ 
 kAlienWeaponEffects =
 {
    
-    shockwave_trail =
+    primal_scream =
     {
         {
-            {cinematic = "cinematics/alien/onos/shockwave.cinematic"},
+            --{cinematic = "cinematics/alien/onos/shockwave.cinematic"},
+            {sound = "sound/NS2.fev/alien/lerk/taunt", silenceupgrade = true, done = true}, 
         }
     },
     
@@ -23,5 +24,5 @@ kAlienWeaponEffects =
 
 -- "false" means play all effects in each block
 GetEffectManager():AddEffectData("AlienWeaponEffects", kAlienWeaponEffects)
-*/
+
 

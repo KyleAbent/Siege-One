@@ -1,13 +1,3 @@
-local origInit =  MaturityMixin.__initmixin
-function MaturityMixin:__initmixin()
-    if Server then
-        self:SetMature()
-        print("hello")
-    end    
-        origInit(self)
-        
-end
-
 if Server then 
 
     local function AddFullScore(attacker, victim)
@@ -57,17 +47,6 @@ if Server then
     
 
 
-    --adjusted in AvocaMixin
-    function SupplyUserMixin:__initmixin()
-        return
-    end
-    
-    function SupplyUserMixin:OnKill()
-        return
-    end
 
-    function SupplyUserMixin:OnDestroy()
-        return
-    end
 
 end

@@ -220,7 +220,7 @@ end
 
 ------------------------------------------------------------
 function Plugin:MapPostLoad()
-      Server.CreateEntity(Timer.kMapName)
+      --Server.CreateEntity(Timer.kMapName)
       --GetDoorLengthByMapName()
 end
 function Plugin:OnFirstThink()

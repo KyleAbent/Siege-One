@@ -9,7 +9,7 @@ local function SharedUpdate(self)
             --marines can still find PizzaGate because is considered PhaseGate
     end
         
-        for _, phaseGate in ipairs(GetEntitiesForTeamWithinRange(entity, self:GetTeamNumber(), self:GetOrigin(), 0.5)) do
+        for _, phaseGate in ipairs(GetEntitiesForTeamWithinRange(entity, self:GetTeamNumber(), self:GetOrigin(), 1.3)) do
         
             if phaseGate:GetIsDeployed() and GetIsUnitActive(phaseGate) and phaseGate:Phase(self) then
 

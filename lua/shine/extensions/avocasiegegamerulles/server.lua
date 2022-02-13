@@ -1,7 +1,7 @@
 --Kyle 'Avoca' Abent
 Script.Load("lua/doors/timer.lua")
 Script.Load("lua/structures/ARC_Siege22.lua")
-Script.Load("lua/2019/Functions19.lua")//hook the notifycommander
+Script.Load("lua/2019/Functions22.lua")//hook the notifycommander
 Plugin.Version = "1.0"
 ------------------------------------------------------------
 function Plugin:Initialise()
@@ -321,8 +321,58 @@ function Plugin:SetGameState( Gamerules, State, OldState )
 end
 
 
+function Plugin:OnPostInitGorge(player,tunnel)
+        local Player = player --who:GetClient():GetControllingPlayer()
+        local client = Player:GetClient()
+        local hasKilled = FindPlayerTunnels(Player,tunnel)
+
+        if hasKilled then
+            self:NotifyOne(client, "Your previously placed PizzaGate has been replaced with this new one", true )
+            return
+        end
+        
+end
+
+Shine.Hook.SetupGlobalHook("HookGorgeViaServer", "OnPostInitGorge", "Replace" )
+-----------------------------------------------------------
+function Plugin:HookNotifyCommanderLimitReached(who)
+    local commander = who:GetTeam():GetCommander()
+    if commander ~= nil then
+        local client = commander:GetClient()
+        self:NotifyOne(client, "LoneCyst count is 5. Next placement will delete the 1st.", true )
+    end
+end
+
+Shine.Hook.SetupGlobalHook( "NotifyCommanderLimitReached", "HookNotifyCommanderLimitReached", "Replace" )
+
+function Plugin:HookNotifyCommanderKill(who)
+    local commander = who:GetTeam():GetCommander()
+    if commander ~= nil then
+        local client = commander:GetClient()
+        local location = GetLocationForPoint(who:GetOrigin())
+        if location then
+            self:NotifyOne(client, "Deleted LoneCyst in %s", true, location.name )
+        end
+    end
+end
+
+Shine.Hook.SetupGlobalHook( "NotifyCommanderKill", "HookNotifyCommanderKill", "Replace" )
+
+
+------------------------------------------------------------
+function Plugin:OnNotifyAlienCommander(who) 
+  local commander = who:GetTeam():GetCommander()
+    if commander ~= nil then
+        local client = commander:GetClient()
+         self:NotifyOne(client, "To Build a Hive on this AlienTechPoint, Select the AlienTechPoint then click the AlienTechPointHive TechButton to build", true)
+         self:NotifyOne(client, "AlienTechPoint doesn't allow traditional Hive Building by Drag and Drop due to technical difficulties :P.", true)
+    end
+end
+Shine.Hook.SetupClassHook( "AlienTechPoint", "NotifyAlienCommander", "OnNotifyAlienCommander", "PassivePost" ) 
+------------------------------------------------------------
+
 function Plugin:NotifyOne( Player, String, Format, ... )
-Shine:NotifyDualColour( Player, 255, 165, 0,  "[Siege One]",  0, 255, 0, String, Format, ... )
+Shine:NotifyDualColour( Player, 255, 165, 0,  "[Siege 2022]",  0, 255, 0, String, Format, ... )
 end
 function Plugin:NotifyHiveLifeInsurance( Player, String, Format, ... )
 Shine:NotifyDualColour( Player, 255, 165, 0,  "[Hive Life Insurance ]",  0, 255, 0, String, Format, ... )

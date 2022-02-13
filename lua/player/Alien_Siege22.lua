@@ -274,12 +274,13 @@ function Alien:AddKill()
 end
 
 
-function Alien:GiveLayStructure(techid, mapname)
+function Alien:GiveLayStructure(techid, mapname,is_gorge_pizza)
   --  if not self:GetHasLayStructure() then
            local laystructure = self:GiveItem(LayStructures.kMapName)
            self:SetActiveWeapon(LayStructures.kMapName)
            laystructure:SetTechId(techid)
            laystructure:SetMapName(mapname)
+           laystructure.pizzaforgorge = is_gorge_pizza
   -- else
    --  self:TellMarine(self)
   -- end
@@ -333,7 +334,7 @@ if Client then
         return self.showGhostModel
     end    
     function Alien:GetGhostModelTechId()
-        return self.currentTechId
+            return self.currentTechId  
     end
     function Alien:GetGhostModelCoords()
         return self.ghostStructureCoords

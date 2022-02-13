@@ -51,11 +51,11 @@ end
     function HydraAvoca:GetAddXPAmount()
     return kAlienDefaultAddXp
     end
-    /*
+    
     function HydraAvoca:OnAddXp(amount)
        Hydra.kDamage = Hydra.kDamage * (self.level/100) + Hydra.kDamage
     end
-    */
+    
 Shared.LinkClassToMap("HydraAvoca", HydraAvoca.kMapName, networkVars) 
 
 

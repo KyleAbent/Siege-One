@@ -1,3 +1,13 @@
+kStructureBeaconBuildTime = 8
+kEggBeaconCost = 30
+kEggBeaconCoolDown = 12
+kStructureBeaconCoolDown = 25
+kStructureBeaconCost = 50
+kEggBeaconBuildTime = 10
+kEggBeaconIntervalDelay = 2 -- was 1
+kEggBeaconLifeSpan = 10 --was 8
+
+
 kHiveInfestationRadius = 10 // Common for hive infestation to leech over in siege  ... 
 
 kFrontTime = 300
@@ -97,3 +107,6 @@ kRedemptionCooldown = 45
 kRedemptionCooldown = 45
 kRedemptionEHPThresholdMin = 15
 kRedemptionEHPThresholdMax = 30
+
+
+kAdvancedBeaconCoolDown = 30

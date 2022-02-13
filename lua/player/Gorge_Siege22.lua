@@ -40,6 +40,10 @@ function Gorge:OnInitialized()
     self.currentWallWalkingAngles = Angles(0.0, 0.0, 0.0)
     self.timeLastWallJump = 0
     self.lastToggled = Shared.GetTime()
+    if Server then
+        self:GiveLayStructure(kTechId.PhaseGate, PizzaGate.kMapName)
+        self:SetActiveWeapon(SpitSpray.kMapName)
+    end
 end
 
 

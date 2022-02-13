@@ -7,7 +7,8 @@ kRoboticsFactorySupply = 7
 kInfantryPortalSupply = 1
 kPhaseGateSupply = 1
 
-kWhipSupply = 15
-kCragSupply = 15
-kShadeSupply = 15
-kShiftSupply = 15
+kWhipSupply = 13
+kCragSupply = 13
+kShadeSupply = 13
+kShiftSupply = 13
+kLoneCystSupply = 3

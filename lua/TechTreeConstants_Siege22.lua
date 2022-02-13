@@ -34,7 +34,21 @@ local kSiege_TechIds =
     'ShiftHiveTwo',
     'Hunger',
     'ThickenedSkin',
-
+    'LoneCyst',
+    'EggBeacon',
+    'StructureBeacon',
+    'AlienTechPoint',
+    'CystMenu',
+    'CragMenu',
+    'WhipMenu',
+    'ShiftMenu',
+    'ShadeMenu',
+    'CragStackOne',
+    'CragStackTwo',
+    'CragStackThree',
+    'AdvancedBeacon',
+    'SiegeBeacon',
+    'AlienTechPointHive',
 }
 
 for i = 1, #kSiege_TechIds do

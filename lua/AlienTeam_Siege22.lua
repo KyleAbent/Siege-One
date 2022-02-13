@@ -53,21 +53,43 @@ function AlienTeam:InitTechTree()
     self.techTree.SetComplete = function() end
     orig_AlienTeam_InitTechTree(self)
     self.techTree.SetComplete = orig_TechTree_SetComplete
-   
-self.techTree:AddResearchNode(kTechId.PrimalScream, kTechId.BioMassFive, kTechId.None, kTechId.AllAliens)
-self.techTree:AddResearchNode(kTechId.AcidRocket, kTechId.BioMassSeven, kTechId.None, kTechId.AllAliens)
+
+    self.techTree:AddResearchNode(kTechId.PrimalScream, kTechId.BioMassFive, kTechId.None, kTechId.AllAliens)
+    self.techTree:AddResearchNode(kTechId.AcidRocket, kTechId.BioMassSeven, kTechId.None, kTechId.AllAliens)
 
 
-self.techTree:AddBuyNode(kTechId.Hunger, kTechId.Spur, kTechId.None, kTechId.AllAliens)
-self.techTree:AddBuyNode(kTechId.ThickenedSkin, kTechId.Spur, kTechId.None, kTechId.AllAliens)
+    self.techTree:AddResearchNode(kTechId.CragStackOne, kTechId.BioMassThree, kTechId.CragHive, kTechId.AllAliens)
+    self.techTree:AddResearchNode(kTechId.CragStackTwo, kTechId.BioMassSix, kTechId.CragStackOne, kTechId.AllAliens)
+    self.techTree:AddResearchNode(kTechId.CragStackThree, kTechId.BioMassNine, kTechId.CragStackTwo, kTechId.AllAliens)
 
- self.techTree:AddBuyNode(kTechId.Rebirth, kTechId.Shell, kTechId.None, kTechId.AllAliens)
- self.techTree:AddBuyNode(kTechId.Redemption, kTechId.Shell, kTechId.None, kTechId.AllAliens)
+    self.techTree:AddBuyNode(kTechId.Hunger, kTechId.Spur, kTechId.None, kTechId.AllAliens)
+    self.techTree:AddBuyNode(kTechId.ThickenedSkin, kTechId.Spur, kTechId.None, kTechId.AllAliens)
+
+    self.techTree:AddBuyNode(kTechId.Rebirth, kTechId.Shell, kTechId.None, kTechId.AllAliens)
+    self.techTree:AddBuyNode(kTechId.Redemption, kTechId.Shell, kTechId.None, kTechId.AllAliens)
 
     self.techTree:AddPassive(kTechId.CragHiveTwo, kTechId.CragHive)
     self.techTree:AddPassive(kTechId.ShiftHiveTwo, kTechId.ShiftHive)
 
 
+    self.techTree:AddBuildNode(kTechId.LoneCyst, kTechId.None) 
+    self.techTree:AddBuildNode(kTechId.EggBeacon, kTechId.CragHive)
+    self.techTree:AddBuildNode(kTechId.StructureBeacon, kTechId.ShiftHive)
+
+
+    self.techTree:AddMenu(kTechId.CystMenu)
+    self.techTree:AddMenu(kTechId.CragMenu)
+    self.techTree:AddMenu(kTechId.WhipMenu)
+    self.techTree:AddMenu(kTechId.ShiftMenu)
+    self.techTree:AddMenu(kTechId.ShadeMenu)
+    
+    self.techTree:AddBuildNode(kTechId.AlienTechPoint, kTechId.BioMassNine)
+    self.techTree:AddActivation(kTechId.AlienTechPointHive, kTechId.None, kTechId.None, kTechId.AllAliens)
+    
+    
+
+    
+  
 
     self.techTree:SetComplete()
     PlayingTeam.InitTechTree = orig_PlayingTeam_InitTechTree

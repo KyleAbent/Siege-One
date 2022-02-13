@@ -6,6 +6,6 @@ Server: lua/2019/Server.lua,
 	
 Predict: lua/2019/Predict.lua,
 
-	Shared: lua/2019/Shared.lua, FileHooks: lua/FileHooks19.lua, 
+	Shared: lua/2019/Shared.lua, FileHooks: lua/FileHooks22.lua, 
 Priority: 75
 ]]

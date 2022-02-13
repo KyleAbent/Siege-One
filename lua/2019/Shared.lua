@@ -1,7 +1,7 @@
 Script.Load("lua/doors/Doors.lua")
 Script.Load("lua/doors/BreakableDoor.lua")
 Script.Load("lua/doors/timer.lua")
-Script.Load("lua/2019/Functions19.lua")
+Script.Load("lua/2019/Functions22.lua")
 Script.Load("lua/2019/AntiExploit.lua")
 Script.Load("lua/2019/EEM/PushTrigger.lua")
 Script.Load("lua/2019/EEM/LogicBreakable.lua")

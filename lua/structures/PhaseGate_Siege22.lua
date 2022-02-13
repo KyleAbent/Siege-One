@@ -1,6 +1,7 @@
 Script.Load("lua/Additions/LevelsMixin.lua")
 Script.Load("lua/Additions/AvocaMixin.lua")
 
+
 local networkVars = {}
 
 AddMixinNetworkVars(LevelsMixin, networkVars)
@@ -19,13 +20,16 @@ Shared.LinkClassToMap("PhaseGate", PhaseGate.kMapName, networkVars)
 
 
 ------------------
+Script.Load("lua/ConsumeMixin.lua")
 class 'PizzaGate' (PhaseGate)
 PizzaGate.kMapName = "pizzagate"
 
---PizzaGate.kModelName = PrecacheAsset("models/alien/tunnel/mouth.model")
---local kAnimationGraph = PrecacheAsset("models/alien/tunnel/mouth.animation_graph")
+PizzaGate.kModelName = PrecacheAsset("models/alien/tunnel/mouth.model")
+local kAnimationGraph = PrecacheAsset("models/alien/tunnel/mouth.animation_graph")
 
 local networkVars = {}
+
+AddMixinNetworkVars(ConsumeMixin, networkVars)
 
 function PizzaGate:GetRequiresPower()
     return false
@@ -35,18 +39,25 @@ function PizzaGate:PoweredUpNow()
     if not self.powered then
         self.powered = true
     end
-    
+    if not self.deployed then
+        self.deployed = true
+    end    
     return true
 end
+
+function PizzaGate:GetIsDeployed()
+    return self:GetIsBuilt()
+end    
 
 
 function PizzaGate:OnInitialized()
     PhaseGate.OnInitialized(self)
+    InitMixin(self, ConsumeMixin)
     if Server then
         self:AdjustMaxArmor(kTunnelEntranceHealth)
         self:AdjustMaxHealth(kTunnelEntranceArmor)
     end    
-     --self:SetModel(PizzaGate.kModelName, kAnimationGraph)
+     self:SetModel(PizzaGate.kModelName, kAnimationGraph)
 
 end
 
@@ -55,6 +66,7 @@ function PizzaGate:OnConstructionComplete()
         self:AdjustMaxArmor(kMatureTunnelEntranceHealth)
         self:AdjustMaxHealth(kMatureTunnelEntranceArmor)
         self.powered = true
+        self.deployed = true
         self:AddTimedCallback( self.PoweredUpNow, 4 )
     end
 end
@@ -136,7 +148,7 @@ end
     local blipType = kMinimapBlipType.Undefined
     local blipTeam = -1
     local isAttacked = HasMixin(self, "Combat") and self:GetIsInCombat()
-    blipType = kMinimapBlipType.PhaseGate
+    blipType = kMinimapBlipType.TunnelEntrance
      blipTeam = self:GetTeamNumber()
     if blipType ~= 0 then
         success = true

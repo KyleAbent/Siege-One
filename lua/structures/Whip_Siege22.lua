@@ -14,6 +14,25 @@ function Whip:OnInitialized()
     InitMixin(self, LevelsMixin)
 end
 
+function Whip:OnConstructionComplete()
+    if Server then
+        self:GiveUpgrade(kTechId.WhipBombard)
+    end    
+end
+
+function Whip:GetMatureMaxHealth()
+    return kMatureWhipHealth
+end 
+
+function Whip:GetMatureMaxArmor()
+    return kMatureWhipArmor
+end
+
+--Override
+function Whip:GetHasUpgrade(what)
+    return true
+end
+ 
 Shared.LinkClassToMap("Whip", Whip.kMapName, networkVars)
 
 -----------------------------------------------------

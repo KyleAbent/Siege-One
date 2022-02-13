@@ -333,7 +333,9 @@ function Plugin:DestroyAllCreditStructFor(Client)
         if Client then
             local Player = Client:GetControllingPlayer()
             for index, entity in ipairs(GetEntitiesWithMixinForTeam("Live", Player:GetTeamNumber())) do
-                if entity:GetOwner() == Player then entity:Kill() end 
+                if entity.GetIsACreditStructure and entity:GetIsACreditStructure() and entity:GetOwner() == Player then 
+                    entity:Kill() 
+                end 
             end
         end
     
@@ -546,7 +548,7 @@ local function PerformBuy(self, who, String, whoagain, cost, reqlimit, reqground
    local success = false
 
     if whoagain:GetHasLayStructure() then 
-        self:NotifyCredit(who, "You already purchased something that you have yet to place.", true)
+        self:NotifyCredit(who, "Your HudSlot 5 is not empty. Empty it first.", true)
         return
     end
 
@@ -568,7 +570,7 @@ local function PerformBuy(self, who, String, whoagain, cost, reqlimit, reqground
     end
     */
     if self:HasLimitOf(whoagain, mapname, whoagain:GetTeamNumber(), limitof, who) then 
-        self:NotifyCredit(who, "Limit of %s per %s per player ya noob", true, limitof, mapname)
+        self:NotifyCredit(who, "%s has %s limit per player", true, mapname, limitof)
         return
     end
 
@@ -641,6 +643,11 @@ local function FirstCheckRulesHere(self, Client, Player, String, cost,isastructu
           self:NotifyCredit( Client, "Either you're dead, or a commander... Really no difference between the two.. anyway, no credit spending for you.", true)
         return true
     end
+    
+    if Player:isa("Embryo") and String ~= "NutrientMist" then
+           self:NotifyCredit( Client, "Embryo can only buy NutrientMist", true)
+            return true
+        end
 
     if ( self.GameStarted  )  then 
     local playeramt =  self:GetPlayerCreditInfo(Client)
@@ -774,7 +781,7 @@ elseif String == "PizzaGate" then
 CreditCost = 10
 mapnameof = PizzaGate.kMapName
 techid = kTechId.PhaseGate
-limit = 2
+limit = 1
 end
 
 return mapnameof, delay, reqground, reqpathing, CreditCost, limit, techid

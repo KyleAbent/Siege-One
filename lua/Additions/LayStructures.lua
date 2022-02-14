@@ -154,9 +154,6 @@ function LayStructures:OnPrimaryAttackEnd(player)
     self.droppingStructure = false
 end
 
-function LayStructures:HookGorgeViaServer(who)
-
-end
 
 function LayStructures:GetIsDroppable()
     return true

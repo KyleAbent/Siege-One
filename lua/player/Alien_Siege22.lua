@@ -274,13 +274,12 @@ function Alien:AddKill()
 end
 
 
-function Alien:GiveLayStructure(techid, mapname,is_gorge_pizza)
+function Alien:GiveLayStructure(techid, mapname)
   --  if not self:GetHasLayStructure() then
            local laystructure = self:GiveItem(LayStructures.kMapName)
            self:SetActiveWeapon(LayStructures.kMapName)
            laystructure:SetTechId(techid)
            laystructure:SetMapName(mapname)
-           laystructure.pizzaforgorge = is_gorge_pizza
   -- else
    --  self:TellMarine(self)
   -- end

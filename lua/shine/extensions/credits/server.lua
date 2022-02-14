@@ -332,7 +332,7 @@ function Plugin:DestroyAllCreditStructFor(Client)
 //Intention: Kill Credit Structures if client f4s, otherwise 'limit' becomes nil and infinite 
         if Client then
             local Player = Client:GetControllingPlayer()
-            for index, entity in ipairs(GetEntitiesWithMixinForTeam("Live", Player:GetTeamNumber())) do
+            for index, entity in ipairs(GetEntitiesWithMixinForTeam("Avoca", Player:GetTeamNumber())) do
                 if entity.GetIsACreditStructure and entity:GetIsACreditStructure() and entity:GetOwner() == Player then 
                     entity:Kill() 
                 end 

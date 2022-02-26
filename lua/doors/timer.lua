@@ -97,6 +97,24 @@ local function OpenEightTimes(who)
     //end
 end
 
+function Timer:OpenFrontDoors()
+    self.FrontTimer = 0
+    self.frontOpened = true
+    GetGamerules():SetDamageMultiplier(1) 
+    CloseAllBreakableDoors()
+
+    for index, frontdoor in ientitylist(Shared.GetEntitiesWithClassname("FrontDoor")) do
+        OpenEightTimes(frontdoor)
+    end 
+    
+    if GetGameStarted() then 
+        GetGamerules():DisplayFront()
+        for _, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
+            StartSoundEffectForPlayer(Timer.kFrontDoorSound, player)
+        end
+    end  
+        
+end
 function Timer:OpenSiegeDoors()
      self.SiegeTimer = 0
      self.siegeOpened = true
@@ -121,29 +139,7 @@ function Timer:OpenSideDoors()
         GetGamerules():DisplaySide()
         end
 end
-local function CloseAllBreakableDoors()
-  for _, door in ientitylist(Shared.GetEntitiesWithClassname("BreakableDoor")) do 
-           door.open = false
-           door:SetHealth(door:GetHealth() + 10)
-  end
-end
 
-function Timer:OpenFrontDoors()
-         self.frontOpened = true
-          GetGamerules():SetDamageMultiplier(1) 
-           CloseAllBreakableDoors()
-           self.FrontTimer = 0
-               for index, frontdoor in ientitylist(Shared.GetEntitiesWithClassname("FrontDoor")) do
-                      OpenEightTimes(frontdoor)
-              end 
-               if GetGameStarted() then 
-                GetGamerules():DisplayFront()
-              
-                      for _, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
-                      StartSoundEffectForPlayer(Timer.kFrontDoorSound, player)
-                      end
-               end          
-end
 function Timer:AdjustFrontTimer(time)
         Print("Old front timer is %s", self.FrontTimer)
         self.FrontTimer = self.FrontTimer + (time)

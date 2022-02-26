@@ -11,6 +11,7 @@ Script.Load("lua/2019/EEM/ScaledModelMixin.lua")
 --Script.Load("lua/Weapons/Marine/ExoGrenade.lua")
 Script.Load("lua/Additions/LayStructures.lua")
 Script.Load("lua/Modifications/Modifications.lua")
+Script.Load("lua/Additions/StunWall.lua")
 kAlienDefaultLvl = 25
 kAlienDefaultAddXp = 0.25
 

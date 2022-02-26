@@ -38,6 +38,12 @@ function GetMaterialXYOffset(techId)
       return origIndex(kTechId.HealWave)  
     elseif techId == kTechId.AlienTechPointHive then
       return origIndex(kTechId.Hive)  
+   -- elseif techId == kTechId.DropARC then
+     -- return origIndex(kTechId.ARC)  
+    elseif techId == kTechId.AdvancedBeacon then
+      return origIndex(kTechId.DistressBeacon)  
+    elseif techId == kTechId.SiegeBeacon then
+      return origIndex(kTechId.DistressBeacon)  
     else
         return origIndex(techId)
     end

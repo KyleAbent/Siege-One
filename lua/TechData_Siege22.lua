@@ -4,6 +4,7 @@ Script.Load("lua/2019/LoneCyst.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 Script.Load("lua/2019/AlienTechPoint.lua")
+--Script.Load("lua/structures/ARC_Siege22.lua")
 
 
 
@@ -209,7 +210,7 @@ local kSiege_TechData =
     [kTechDataCategory] = kTechId.Fade,   
     [kTechDataMapName] = AcidRocket.kMapName,  
     [kTechDataCostKey] = kStabResearchCost,
-    [kTechDataResearchTimeKey] = kStabResearchTime, 
+    [kTechDataResearchTimeKey] = kStabRese1hTime, 
     [kTechDataDamageType] = kAcidRocketDamageType,  
     [kTechDataDisplayName] = "AcidRocket",
     [kTechDataTooltipInfo] = "Ranged Projectile dealing damage only to armor and structures"},
@@ -370,6 +371,31 @@ local kSiege_TechData =
     [kTechDataTooltipInfo] = "Teleports Exos and Revives Dead Players. Also shuts down power to this observatory for 15 seconds (cannot be surged)"},
    
     
+    /*
+    {
+        [kTechDataId] = kTechId.DropARC,
+        [kTechDataSupply] = kARCSupply,
+        [kTechDataHint] = "Droppable ARC",
+        [kTechDataGhostModelClass] = "MarineGhostModel",
+        [kTechDataRequiresPower] = true,
+        [kTechDataMapName] = ARC.kMapName,
+        [kTechDataDisplayName] = "ARC",
+        [kTechDataCostKey] = kARCCost,
+        [kTechDataBuildTime] = 4,
+        [kTechDataMaxHealth] = kARCHealth,
+        [kVisualRange] = ARC.kFireRange,
+        [kTechDataMaxArmor] = kARCArmor,
+        [kTechDataDamageType] = kDamageType.StructuresOnly,
+        [kTechDataEngagementDistance] = kArmoryEngagementDistance,
+        [kTechDataModel] = ARC.kModelName,
+        [kTechDataPointValue] = kARCPointValue,
+        [kTechDataNotOnInfestation] = False,
+        [kStructureAttachId] = kTechId.ARCRoboticsFactory,
+        [kStructureAttachRange] = kArmoryWeaponAttachRange,
+        [kTechDataTooltipInfo] = "ARC But Droppable! EH!",
+    },
+    */
+        
   }
     
     

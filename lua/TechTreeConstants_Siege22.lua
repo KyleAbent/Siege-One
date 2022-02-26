@@ -49,6 +49,7 @@ local kSiege_TechIds =
     'AdvancedBeacon',
     'SiegeBeacon',
     'AlienTechPointHive',
+    --'DropARC',
 }
 
 for i = 1, #kSiege_TechIds do

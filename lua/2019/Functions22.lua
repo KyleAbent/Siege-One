@@ -1,3 +1,11 @@
+
+function CloseAllBreakableDoors()
+      for _, door in ientitylist(Shared.GetEntitiesWithClassname("BreakableDoor")) do 
+               door.open = false
+               door:SetHealth(door:GetHealth() + 10)
+      end
+end
+
 function HookGorgeViaServer(player,tunnel,destroy)
     //goes to FindPlayerTunnels -- this is just for shine hook messaging player in both cases
 end

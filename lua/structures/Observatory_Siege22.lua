@@ -75,7 +75,7 @@ function Observatory:GetTechButtons(techId)
         else
              techButtons[4] = kTechId.None
         end
-        techButtons[5] = kTechId.Detector
+        techButtons[6] = kTechId.Detector
         
         return techButtons
     end

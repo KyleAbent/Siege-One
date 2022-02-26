@@ -39,6 +39,8 @@ function LevelsMixin:OnHealSpray(gorge)
       self:AddXP(self:GetAddXPAmount()) --missing score for player
       if oldlevel ~= self.level then  gorge:AddScore(0.05) end --hm?
 end
+
+
 function LevelsMixin:AddXP(amount)
     --Print("add xp triggered")
      if self.OnAddXp then self:OnAddXp(amount) end
@@ -47,13 +49,24 @@ function LevelsMixin:AddXP(amount)
         self.level = self.level + xpReward
         
      --if self:GetTeamNumber() == 1 then
-        local defaultarmor = LookupTechData(self:GetTechId(), kTechDataMaxArmor)
-        self:AdjustMaxArmor(defaultarmor * (self.level/100) +  defaultarmor) 
+        --local defaultarmor = LookupTechData(self:GetTechId(), kTechDataMaxArmor)
+        --self:AdjustMaxArmor(defaultarmor * (self.level/100) +  defaultarmor) 
     -- end
       
-    return xpReward
-    
+    --return xpReward
 end
+
+/*
+function LevelsMixin:ComputeDamageAttackerOverrideMixin(_, damage, _, _, _, overshieldDamage)
+    if self.level ~= 0 then
+        local olddamage = damage
+        damage = damage * (self.level/100) + damage 
+        print("olddamage: %s, newdamage is now %s", olddamage, damage)
+    end   
+    return damage, overshieldDamage
+end
+*/
+
 function LevelsMixin:GetLevel()
         return Round(self.level, 2)
 end

@@ -39,6 +39,7 @@ ModLoader.SetupFileHook( "lua/GUIAlienBuyMenu.lua", "lua/GUIAlienBuyMenu_Siege20
 ModLoader.SetupFileHook( "lua/Marine.lua", "lua/player/Marine_Siege22.lua", "post" )
 --ModLoader.SetupFileHook( "lua/MarineCommander.lua", "lua/MarineCommander_Siege19.lua", "post" ) 
 ModLoader.SetupFileHook( "lua/MarineTeam.lua", "lua/MarineTeam_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/Exo.lua", "lua/player/Exo_Siege22.lua", "post" )
 
 
 
@@ -46,12 +47,8 @@ ModLoader.SetupFileHook( "lua/MarineTeam.lua", "lua/MarineTeam_Siege22.lua", "po
 ModLoader.SetupFileHook( "lua/SupplyUserMixin.lua", "lua/Mixins/SupplyUserMixin_Siege.lua", "post" )
 ModLoader.SetupFileHook( "lua/PhaseGateUserMixin.lua", "lua/Mixins/PhaseGateUserMixin_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/MaturityMixin.lua", "lua/Mixins/MaturityMixin_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/Mixins/RollOutMixin_Siege22.lua", "post" )
 
--------------Tech---------
-ModLoader.SetupFileHook( "lua/TechTreeButtons.lua", "lua/TechTreeButtons_Siege22.lua", "post" )
-ModLoader.SetupFileHook( "lua/TechTreeConstants.lua", "lua/TechTreeConstants_Siege22.lua", "post" )
-ModLoader.SetupFileHook( "lua/TechData.lua", "lua/TechData_Siege22.lua", "post" ) 
-ModLoader.SetupFileHook( "lua/TechNode.lua", "lua/TechNode_Siege.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/InputHandler.lua", "lua/InputHandler_Siege.lua", "post" )
 --ModLoader.SetupFileHook( "lua/AlienWeaponEffects.lua", "lua/AlienWeaponEffects_Siege.lua", "post" )
@@ -79,3 +76,10 @@ ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/structures/TunnelEntranc
 
 -------------------------Commander----------------------
 ModLoader.SetupFileHook( "lua/AlienCommander.lua", "lua/AlienCommander_Siege22.lua", "post" )
+
+
+-------------Tech---------Keep this way on bottum to load last
+ModLoader.SetupFileHook( "lua/TechTreeButtons.lua", "lua/TechTreeButtons_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/TechTreeConstants.lua", "lua/TechTreeConstants_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/TechData.lua", "lua/TechData_Siege22.lua", "post" ) 
+ModLoader.SetupFileHook( "lua/TechNode.lua", "lua/TechNode_Siege.lua", "post" )

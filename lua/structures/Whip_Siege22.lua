@@ -3,10 +3,14 @@ Script.Load("lua/Additions/AvocaMixin.lua")
 
 local networkVars = {}
 
-
 AddMixinNetworkVars(LevelsMixin, networkVars)
 AddMixinNetworkVars(AvocaMixin, networkVars)
 
+local origCreate = Whip.OnCreate
+function Whip:OnCreate()
+    origCreate(self)
+    
+end
 local origIinit = Whip.OnInitialized
 function Whip:OnInitialized()
     origIinit(self)
@@ -24,15 +28,30 @@ function Whip:GetMatureMaxHealth()
     return kMatureWhipHealth
 end 
 
-function Whip:GetMatureMaxArmor()
-    return kMatureWhipArmor
-end
 
 --Override
 function Whip:GetHasUpgrade(what)
     return true
 end
- 
+
+
+/*
+if Server then
+    --add xp
+    local origFunc = Whip.OnAttackHit--Avoca --- :) 
+    function Whip:OnAttackHit()
+        local doProceed = false
+        if self.attackStarted then
+            origFunc(self)
+            if self.targetId ~= Entity.invalidId then
+                self:AddXp(1)
+            end
+       end
+    end
+
+end
+*/
+
 Shared.LinkClassToMap("Whip", Whip.kMapName, networkVars)
 
 -----------------------------------------------------
@@ -82,12 +101,7 @@ end
     
     return success, blipType, blipTeam, isAttacked, false --isParasited
 end
-    function WhipAvoca:GetMaxLevel()
-    return kAlienDefaultLvl
-    end
-    function WhipAvoca:GetAddXPAmount()
-    return kAlienDefaultAddXp
-    end
+
 Shared.LinkClassToMap("WhipAvoca", WhipAvoca.kMapName, networkVars) 
 
 local originit = Whip.OnInitialized

@@ -20,7 +20,7 @@ local function On_Contam_chanceWhip(origin,imaginator)
             if whip  then 
                 whip:SetOrigin(origin)
                 //doChain(whip)
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
+                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(whip:GetOrigin(), 1, kCystRedeployRange),2)
                 return 
             end
         end
@@ -42,7 +42,7 @@ local function On_Contam_chanceShift(origin,imaginator)
             if shift then 
                 shift:SetOrigin(origin)
                 //doChain(shift)
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
+                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(shift:GetOrigin(), 1, kCystRedeployRange),2)
                 return 
             end
         end
@@ -64,7 +64,7 @@ local function On_Contam_chanceShade(origin,imaginator)
             if shade then 
                 shade:SetOrigin(origin)
                 //doChain(shade)
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
+                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(shade:GetOrigin(), 1, kCystRedeployRange),2)
                 return 
             end
         end
@@ -86,7 +86,7 @@ local function On_Contam_chanceCrag(origin,imaginator)
             if crag then 
                 crag:SetOrigin(origin)
                // doChain(crag)
-               local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
+               local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(crag:GetOrigin(), 1, kCystRedeployRange),2)
                 return 
             end
         end

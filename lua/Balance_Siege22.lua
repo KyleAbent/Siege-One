@@ -1,3 +1,5 @@
+kAutoCommMaxWhips = 16
+
 kStructureBeaconBuildTime = 8
 kEggBeaconCost = 30
 kEggBeaconCoolDown = 12

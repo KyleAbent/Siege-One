@@ -12,6 +12,11 @@ Script.Load("lua/2019/EEM/ScaledModelMixin.lua")
 Script.Load("lua/Additions/LayStructures.lua")
 Script.Load("lua/Modifications/Modifications.lua")
 Script.Load("lua/Additions/StunWall.lua")
+Script.Load("lua/2019/ResearchMixinChanges.lua")
+Script.Load("lua/2019/Conductor.lua")
+Script.Load("lua/2019/Balancer.lua")
+Script.Load("lua/2019/Imaginator.lua")
+
 kAlienDefaultLvl = 25
 kAlienDefaultAddXp = 0.25
 

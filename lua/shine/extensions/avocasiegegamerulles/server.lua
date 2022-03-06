@@ -2,6 +2,10 @@
 Script.Load("lua/doors/timer.lua")
 Script.Load("lua/structures/ARC_Siege22.lua")
 Script.Load("lua/2019/Functions22.lua")//hook the notifycommander
+
+Script.Load("lua/2019/Conductor.lua")
+Script.Load("lua/2019/Imaginator.lua")
+
 Plugin.Version = "1.0"
 ------------------------------------------------------------
 function Plugin:Initialise()
@@ -222,6 +226,8 @@ end
 function Plugin:MapPostLoad()
       --Server.CreateEntity(Timer.kMapName)
       --GetDoorLengthByMapName()
+      Server.CreateEntity(Conductor.kMapName)
+      Server.CreateEntity(Imaginator.kMapName)
 end
 function Plugin:OnFirstThink()
       --GetDoorLengthByMapName()

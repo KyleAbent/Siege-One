@@ -45,4 +45,19 @@ function RoboticsFactory:GetTechButtons(techId)
 end
 */
 
+function RoboticsFactory:OnPowerOn()
+	GetRoomPower(self):ToggleCountMapName(self:GetMapName(),1)
+end
+
+function RoboticsFactory:OnPowerOff()
+	GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1) 
+end
+
+ function RoboticsFactory:PreOnKill(attacker, doer, point, direction)
+      
+	  if self:GetIsPowered() then
+	   GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
+	  end
+end
+
 Shared.LinkClassToMap("RoboticsFactory", RoboticsFactory.kMapName, networkVars) 

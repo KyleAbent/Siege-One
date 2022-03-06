@@ -1,16 +1,15 @@
-Script.Load("lua/Additions/LevelsMixin.lua")
-Script.Load("lua/Additions/AvocaMixin.lua")
-
-local networkVars = {}
-
-AddMixinNetworkVars(LevelsMixin, networkVars)
-AddMixinNetworkVars(AvocaMixin, networkVars)
-
-local origInit = SentryBattery.OnInitialized
+local ogIn = SentryBattery.OnInitialized
 function SentryBattery:OnInitialized()
-    origInit(self)
-    InitMixin(self, LevelsMixin)
-    InitMixin(self, AvocaMixin)
+    ogIn(self)
+    --InitMixin(self, PowerSourceMixin)
+    if Server then
+        GetRoomPower(self):ToggleCountMapName(self:GetMapName(),1)
+    end
+    --if Client then
+     --   self:MakeLight()
+    --end
 end
 
-Shared.LinkClassToMap("SentryBattery", SentryBattery.kMapName, networkVars) 
+ function SentryBattery:PreOnKill(attacker, doer, point, direction)
+	    GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
+end

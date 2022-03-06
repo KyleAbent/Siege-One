@@ -16,6 +16,7 @@ function Whip:OnInitialized()
     origIinit(self)
     InitMixin(self, AvocaMixin)
     InitMixin(self, LevelsMixin)
+    GetImaginator().activeWhips = GetImaginator().activeWhips + 1  
 end
 
 function Whip:OnConstructionComplete()
@@ -51,6 +52,38 @@ if Server then
 
 end
 */
+
+function Whip:PreOnKill(attacker, doer, point, direction)
+	GetImaginator().activeWhips  = GetImaginator().activeWhips - 1
+end
+
+if Server then
+
+    function Whip:OnOrderComplete(currentOrder)     
+        --doChain(self)
+            if GetIsImaginatorAlienEnabled() and not self:GetGameEffectMask(kGameEffect.OnInfestation) then
+                //local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
+                local notNearCyst = #GetEntitiesWithinRange("Cyst",self:GetOrigin(), kCystRedeployRange-1) == 0
+                if notNearCyst then
+                    local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
+                end
+            end
+    end
+    
+    
+    function Whip:OnEnterCombat() 
+        if self.moving and GetIsImaginatorAlienEnabled() then  
+            self:ClearOrders()
+            self:GiveOrder(kTechId.Stop, nil, self:GetOrigin(), nil, true, true)  
+            --doChain(self)
+            local notNearCyst = #GetEntitiesWithinRange("Cyst",self:GetOrigin(), kCystRedeployRange-1) == 0
+            if notNearCyst then
+                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
+            end
+        end
+    end
+    
+end//Server
 
 Shared.LinkClassToMap("Whip", Whip.kMapName, networkVars)
 

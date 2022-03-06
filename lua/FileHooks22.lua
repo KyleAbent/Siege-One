@@ -73,6 +73,11 @@ ModLoader.SetupFileHook( "lua/Shade.lua", "lua/structures/Shade_Siege22.lua", "p
 ModLoader.SetupFileHook( "lua/Hydra.lua", "lua/structures/Hydra_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/Hive.lua", "lua/structures/Hive_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/structures/TunnelEntrance_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/structures/SentryBattery_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/ArmsLab.lua", "lua/structures/ArmsLab_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/PowerPoint.lua", "lua/structures/PowerPoint_Siege22.lua", "post" ) 
+
+
 
 -------------------------Commander----------------------
 ModLoader.SetupFileHook( "lua/AlienCommander.lua", "lua/AlienCommander_Siege22.lua", "post" )
@@ -83,3 +88,17 @@ ModLoader.SetupFileHook( "lua/TechTreeButtons.lua", "lua/TechTreeButtons_Siege22
 ModLoader.SetupFileHook( "lua/TechTreeConstants.lua", "lua/TechTreeConstants_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/TechData.lua", "lua/TechData_Siege22.lua", "post" ) 
 ModLoader.SetupFileHook( "lua/TechNode.lua", "lua/TechNode_Siege.lua", "post" )
+
+
+----------AutoComm--------------
+ModLoader.SetupFileHook( "lua/bots/CommanderBot.lua", "lua/bots/CommanderBot_Siege21.lua", "post" )
+ModLoader.SetupFileHook( "lua/bots/CommanderBrain.lua", "lua/bots/CommanderBrain_Siege21.lua", "post" )
+ModLoader.SetupFileHook( "lua/bots/PlayerBrain.lua", "lua/bots/PlayerBrain_Siege21.lua", "post" )
+ModLoader.SetupFileHook( "lua/bots/VoteManager.lua", "lua/bots/VoteManager_Siege21.lua", "post" )
+ModLoader.SetupFileHook( "lua/VotingAddCommanderBots.lua", "lua/VotingAddCommanderBots_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/bots/AlienCommanderBrain.lua", "lua/bots/AlienCommanderBrain_Siege21.lua", "replace" )
+ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain.lua", "lua/bots/MarineCommanderBrain_Siege21.lua", "replace" )
+ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain_Data.lua", "lua/bots/MarineCommanderBrain_Data_Siege21.lua", "replace" )
+ModLoader.SetupFileHook( "lua/bots/AlienCommanderBrain_Data.lua", "lua/bots/AlienCommanderBrain_Data_Siege21.lua", "replace" )
+
+

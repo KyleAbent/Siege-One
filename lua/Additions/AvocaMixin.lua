@@ -10,7 +10,7 @@ function AvocaMixin:__initmixin()
     -- Print("%s initmiin avoca mixin", self:GetClassName())
     self.isacreditstructure = false
     if Server then
-        self:AddTimedCallback(AvocaMixin.DoAddSupplyTimer, 0.5) 
+        self:AddTimedCallback(AvocaMixin.DoAddSupplyTimer, 0.6) 
     end    
     --  Print("%s isacreditstructure is %s", self:GetClassName(), self.isacreditstructure)
 end

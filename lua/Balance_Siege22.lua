@@ -112,3 +112,16 @@ kRedemptionEHPThresholdMax = 30
 
 
 kAdvancedBeaconCoolDown = 30
+
+
+kStartBlinkEnergyCost = 13 -- default 14
+kBlinkEnergyCost = 29 -- default 32
+
+-- default 0.8
+kUmbraShotgunModifier = 0.7
+kUmbraBulletModifier = 0.7
+kUmbraMinigunModifier = 0.7
+kUmbraRailgunModifier = 0.7
+kUmbraGrenadeModifier = 0.7
+
+kUmbraEnergyCost = 25 --default 27

@@ -12,13 +12,51 @@ function ARC:OnInitialized()
     InitMixin(self, LevelsMixin)
     InitMixin(self, AvocaMixin)
     self.manageARCTime = 0
+    //remove priority of hive
+    if Server then
+        self.targetSelector = TargetSelector():Init(
+            self,
+            ARC.kFireRange,
+            false, 
+            { kMarineStaticTargets, kMarineMobileTargets },
+            { self.FilterTarget(self) })
+    end        
 end
 
+function ARC:GetMaxLevel()
+    return 15
+end
 
-
+function ARC:GetAddXPAmount()
+    return 0.25
+end
+    
 if Server then
 
 
+    function ARC:OnDamageDone(doer, target)
+    
+        if self:GetIsAlive() and doer == self then
+            self:AddXP(self:GetAddXPAmount())
+        end
+
+    end
+   
+    
+    function ARC:PostDoDamage(target,damage)
+        if target then
+            if damage == ARC.kAttackDamage and target.GetIsAlive and target:GetIsAlive() then
+                local levelBonusDmg = (ARC.kAttackDamage * (self.level/100) + ARC.kAttackDamage) - ARC.kAttackDamage
+                local targetPoint = target:GetEngagementPoint()
+                local attackOrigin = self:GetEyePos()
+                local hitDirection = targetPoint - attackOrigin
+                local hitPosition = targetPoint - hitDirection * 0.5
+                self:DoDamage(levelBonusDmg, target, hitPosition, hitDirection, nil, true)
+                --Print("dmg bonus is %s", levelBonusDmg)
+            end
+        end
+    end
+    
     function ARC:Instruct(where)
        self:SpecificRules(where)
        return true
@@ -38,28 +76,30 @@ if Server then
             return
         end   
     end
+    
     local function MoveToRandomChair(who) --Closest hive from origin
-     local commandstation = GetEntitiesForTeam( "CommandStation", 1 )
-      commandstation = table.random(commandstation)
-     
-                   if commandstation then
+        local commandstation = GetEntitiesForTeam( "CommandStation", 1 )
+        commandstation = table.random(commandstation)
+        if commandstation then
             local origin = commandstation:GetOrigin() -- The arc should auto deploy beforehand
             who:GiveOrder(kTechId.Move, nil, origin, nil, true, true)
-                        return
-                    end  
+            return
+        end  
         -- Print("No closest hive????")    
     end
+    
     local function CheckForAndActAccordingly(who)
-    local stopanddeploy = false
-              for _, enemy in ipairs(GetEntitiesWithMixinForTeamWithinRange("Live", 2, who:GetOrigin(), kARCRange)) do
-                 if who:GetCanFireAtTarget(enemy, enemy:GetOrigin()) then
-                 stopanddeploy = true
-                 break
-                 end
-              end
-            --Print("stopanddeploy is %s", stopanddeploy)
-           return stopanddeploy
+        local stopanddeploy = false
+        for _, enemy in ipairs(GetEntitiesWithMixinForTeamWithinRange("Live", 2, who:GetOrigin(), kARCRange)) do
+            if who:GetCanFireAtTarget(enemy, enemy:GetOrigin()) then
+            stopanddeploy = true
+            break
+            end
+        end
+        --Print("stopanddeploy is %s", stopanddeploy)
+        return stopanddeploy
     end
+    
     local function GiveUnDeploy(who)
          --Print("GiveUnDeploy")
          who:CompletedCurrentOrder()
@@ -68,22 +108,26 @@ if Server then
          who:TriggerEffects("arc_stop_charge")
          who:TriggerEffects("arc_undeploying")
     end
+    
     local function GiveDeploy(who)
         --Print("GiveDeploy")
-    who:GiveOrder(kTechId.ARCDeploy, who:GetId(), who:GetOrigin(), nil, true, true)
+        who:GiveOrder(kTechId.ARCDeploy, who:GetId(), who:GetOrigin(), nil, true, true)
     end
+    
     local function FindNewParent(who)
         local where = who:GetOrigin()
         local player =  GetNearest(where, "Player", 1, function(ent) return ent:GetIsAlive() end)
         if player then
-        who:SetOwner(player)
+            who:SetOwner(player)
         end
     end
+    
     function ARC:GetIsDeployed()
-    return  self.deployMode == ARC.kDeployMode.Deployed
+        return  self.deployMode == ARC.kDeployMode.Deployed
     end
+    
     function ARC:SetDeployed()
-    GiveDeploy(self) 
+        GiveDeploy(self) 
     end
 
     function ARC:SpecificRules(where)
@@ -134,6 +178,7 @@ if Server then
     end//function
 
 
+    /*
     local origrules = ARC.AcquireTarget
     function ARC:AcquireTarget() 
 
@@ -142,6 +187,7 @@ if Server then
     if not canfire then return end
     return origrules(self)
     end
+    */
 
 end//server
 

@@ -21,7 +21,8 @@ function RoboticsFactory:OverrideCreateManufactureEntity(techId)
     
         self.researchId = techId
         self.builtEntity = self:ManufactureEntity()
-        self.builtEntity:Rollout(self, 3)
+        self.builtEntity:Rollout(self:GetOrigin())
+        self:ClearResearch()
 
         return self.builtEntity
      

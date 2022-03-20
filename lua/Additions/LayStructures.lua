@@ -225,17 +225,6 @@ local function DropStructure(self, player)
                  --if not structure:isa("Hydra") and not structure:GetGameEffectMask(kGameEffect.OnInfestation) then CreateEntity(Clog.kMapName, structure:GetOrigin(), structure:GetTeamNumber()) end
                    end --not siege
                    
-                   if self.mapname == PizzaGate.kMapName then
-                            structure:SetOwner(player)
-                            --So this is a bug because its written to not exploit for gorge without use of credits
-                            --the credits implemntation is contradictory with reverse logic, lol
-                            --the definition of "is credit purchase" is grey.
-                                HookGorgeViaServer(player,structure)    
-                            //if structure is nil, 
-                                //then always destroy structure that was just placed, 
-                            //else if gorge and not credit structure, 
-                                //look for prev to destroy. ensuring only 1 in both case multi use
-                   end
                 
                 end--teamnum 
                 structure:SetOwner(player)

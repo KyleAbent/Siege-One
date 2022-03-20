@@ -1,6 +1,6 @@
 --Kyle 'Avoca' Abent
 Script.Load("lua/doors/timer.lua")
-Script.Load("lua/structures/ARC_Siege22.lua")
+--Script.Load("lua/structures/ARC_Siege22.lua")
 Script.Load("lua/2019/Functions22.lua")//hook the notifycommander
 
 Script.Load("lua/2019/Conductor.lua")
@@ -310,8 +310,8 @@ function Plugin:SetGameState( Gamerules, State, OldState )
          kgameStartTime = Shared.GetTime()
          grabDoorMapEditorSettings() --only do once per map? hm
          GetTimer():OnRoundStart()
-            local where = FindFreeSpace(GetRandomCC():GetOrigin())
-            local ent = CreateEntity(AvocaArc.kMapName, where, 1)  
+            --local where = FindFreeSpace(GetRandomCC():GetOrigin())
+            --local ent = CreateEntity(AvocaArc.kMapName, where, 1)  
          OpenAllBreakableDoors()
       else
          Shine.ScreenText.End(1) 

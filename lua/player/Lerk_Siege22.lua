@@ -18,5 +18,15 @@ if Server then
 end
 
 
+local orig = Lerk.GetMaxSpeed
+function Lerk:GetMaxSpeed(possible)
+
+    local returnValue = orig(self,possible)
+    local defaultValue = returnValue
+    returnValue = returnValue * (10/100) + returnValue
+    --Print("default speed is: %s, buff speed is %s", defaultValue,returnValue)
+    return returnValue
+end
+
 
 //Shared.LinkClassToMap("Lerk", Lerk.kMapName, networkVars, true)

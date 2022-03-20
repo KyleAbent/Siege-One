@@ -15,23 +15,12 @@ end
 
 --hack it
 origRollOut = RolloutMixin.Rollout
-function RolloutMixin:Rollout(factory, factoryRolloutLength)
+function RolloutMixin:Rollout(where)
     print("Rollout hook")
-    --orig formula from hooked file
-    local rearEndSize = math.abs(self:GetModelExtents().z)
-    local rolloutLength = factoryRolloutLength + rearEndSize
-    local rearEndSize = math.abs(self:GetModelExtents().z)
-    local rolloutLength = factoryRolloutLength + rearEndSize
-    local direction = Vector(factory:GetAngles():GetCoords().zAxis)    
-    local rolloutPoint = factory:GetOrigin() + direction * rolloutLength
-    self.rolloutTargetPoint = rolloutPoint
-        --get to the point
-        --self:SetIgnoreOrders(false)
-        --self:ClearOrders()
-        freeOrigin = FindFreeSpace(self.rolloutTargetPoint,2,6)
+        freeOrigin = FindFreeSpace(where,2,6)
         self:SetOrigin(freeOrigin)
-        factory:CompleteRollout(self)
-    --self.rolloutSourceFactory:CompleteRollout(self)
+        self:ClearOrders()
+        self:SetIgnoreOrders(false)
 end
 
 

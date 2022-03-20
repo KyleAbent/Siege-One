@@ -17,3 +17,10 @@ kMatureLoneCystHealth = 400    kMatureLoneCystArmor = 75    kLoneCystPointValue 
 kMinMatureLoneCystHealth = 300 kMinLoneCystScalingDistance = 48 kMaxLoneCystScalingDistance = 168
 
 kCystArmor = 50
+
+
+kFadeHealth = 275 --default 250
+kFadeArmor = 88 -- default 80
+
+kLerkHealth = 198 -- default 180
+kLerkArmor = 33 --default 30

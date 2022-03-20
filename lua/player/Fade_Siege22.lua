@@ -38,6 +38,15 @@ function Fade:OnBlinkEnd()
 end
 */
 
+local orig = Fade.GetMaxSpeed
+function Fade:GetMaxSpeed(possible)
+
+    local returnValue = orig(self,possible)
+    local defaultValue = returnValue
+    returnValue = returnValue * (10/100) + returnValue
+    --Print("default speed is: %s, buff speed is %s", defaultValue,returnValue)
+    return returnValue
+end
 
 
 Shared.LinkClassToMap("Fade", Fade.kMapName, networkVars, true)

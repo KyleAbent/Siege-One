@@ -1,28 +1,10 @@
 
+
 function CloseAllBreakableDoors()
       for _, door in ientitylist(Shared.GetEntitiesWithClassname("BreakableDoor")) do 
                door.open = false
                door:SetHealth(door:GetHealth() + 10)
       end
-end
-
-function HookGorgeViaServer(player,tunnel,destroy)
-    //goes to FindPlayerTunnels -- this is just for shine hook messaging player in both cases
-end
-function FindPlayerTunnels(player,pizzatoppings)
-    local hasKilled = false
-    local toppingsowner = pizzatoppings:GetOwner()
-    for _, pizzagate in ipairs( GetEntitiesForTeam("PizzaGate", 2)) do
-        if  pizzagate:GetOwner()  ==  toppingsowner then
-            if pizzagate ~= pizzatoppings then
-                pizzagate:Kill()
-                hasKilled = true
-                print("HasKilled!")
-                --return hasKilled
-            end
-        end
-    end
-    return hasKilled
 end
 
 

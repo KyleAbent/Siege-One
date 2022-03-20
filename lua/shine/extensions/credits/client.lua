@@ -40,7 +40,6 @@ Shine.VoteMenu:AddPage ("SpendStructures", function( self )
     self:AddSideButton( "Crag(10)", function() Shared.ConsoleCommand ("sh_buy Crag")  end)
     self:AddSideButton( "Whip(10)", function() Shared.ConsoleCommand ("sh_buy Whip")  end)
     self:AddSideButton( "Shift(10)", function() Shared.ConsoleCommand ("sh_buy Shift")  end)
-    self:AddSideButton( "PizzaGate(10)", function() Shared.ConsoleCommand ("sh_buy PizzaGate")  end)
     //self:AddSideButton( "LowerSupplyLimit(5)", function() Shared.ConsoleCommand ("sh_buy LowerSupplyLimit")  end)
    end
 

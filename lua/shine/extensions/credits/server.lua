@@ -775,7 +775,7 @@ mapnameof = ShiftAvoca.kMapName
 techid = kTechId.Shift
 elseif String == "Hydra" then
 CreditCost = 1
-mapnameof = HydraAvoca.kMapName
+mapnameof = Hydra.kMapName
 techid = kTechId.Hydra
 elseif String == "PizzaGate" then
 CreditCost = 10

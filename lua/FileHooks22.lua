@@ -45,7 +45,6 @@ ModLoader.SetupFileHook( "lua/Exo.lua", "lua/player/Exo_Siege22.lua", "post" )
 
 -------Mixins----
 ModLoader.SetupFileHook( "lua/SupplyUserMixin.lua", "lua/Mixins/SupplyUserMixin_Siege.lua", "post" )
-ModLoader.SetupFileHook( "lua/PhaseGateUserMixin.lua", "lua/Mixins/PhaseGateUserMixin_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/MaturityMixin.lua", "lua/Mixins/MaturityMixin_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/Mixins/RollOutMixin_Siege22.lua", "post" )
 
@@ -53,7 +52,11 @@ ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/Mixins/RollOutMixin_Siege2
 ModLoader.SetupFileHook( "lua/InputHandler.lua", "lua/InputHandler_Siege.lua", "post" )
 --ModLoader.SetupFileHook( "lua/AlienWeaponEffects.lua", "lua/AlienWeaponEffects_Siege.lua", "post" )
 ModLoader.SetupFileHook( "lua/NS2Utility_Server.lua", "lua/NS2Utility_Server_Siege20.lua", "post" )
+
+-------------------------Weapons---------------------
 ModLoader.SetupFileHook( "lua/Weapons/Marine/Flamethrower.lua", "lua/Weapons/Marine/Flamethrower_Siege.lua", "post" )
+ModLoader.SetupFileHook( "lua/Weapons/Alien/Metabolize.lua", "lua/Weapons/Alien/Metabolize_Siege20.lua", "post" )
+
 
 -------------------------Structures---------------
 ModLoader.SetupFileHook( "lua/Clog.lua", "lua/structures/Clog_Siege22.lua", "post" )

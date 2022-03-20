@@ -14,8 +14,8 @@ end
 local origIinit = Whip.OnInitialized
 function Whip:OnInitialized()
     origIinit(self)
-    InitMixin(self, AvocaMixin)
     InitMixin(self, LevelsMixin)
+    InitMixin(self, AvocaMixin)
     GetImaginator().activeWhips = GetImaginator().activeWhips + 1  
 end
 
@@ -35,8 +35,14 @@ function Whip:GetHasUpgrade(what)
     return true
 end
 
+function Whip:GetMaxLevel()
+    return 15
+end
 
-/*
+function Whip:GetAddXPAmount()
+    return 1
+end
+
 if Server then
     --add xp
     local origFunc = Whip.OnAttackHit--Avoca --- :) 
@@ -45,13 +51,13 @@ if Server then
         if self.attackStarted then
             origFunc(self)
             if self.targetId ~= Entity.invalidId then
-                self:AddXp(1)
+                self:AddXP(self:GetAddXPAmount())
             end
        end
     end
 
 end
-*/
+
 
 function Whip:PreOnKill(attacker, doer, point, direction)
 	GetImaginator().activeWhips  = GetImaginator().activeWhips - 1
@@ -59,6 +65,21 @@ end
 
 if Server then
 
+    function Whip:PostDoDamage(target,damage)
+        if target then
+            if damage == Whip.kDamage and target.GetIsAlive and target:GetIsAlive() then
+                local levelBonusDmg = (Whip.kDamage * (self.level/100) + Whip.kDamage) - Whip.kDamage
+                local targetPoint = target:GetEngagementPoint()
+                local attackOrigin = self:GetEyePos()
+                local hitDirection = targetPoint - attackOrigin
+                local hitPosition = targetPoint - hitDirection * 0.5
+                self:DoDamage(levelBonusDmg, target, hitPosition, hitDirection, nil, true)
+                --Print("dmg bonus is %s", levelBonusDmg)
+            end
+        end
+    end
+    
+    
     function Whip:OnOrderComplete(currentOrder)     
         --doChain(self)
             if GetIsImaginatorAlienEnabled() and not self:GetGameEffectMask(kGameEffect.OnInfestation) then

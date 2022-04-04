@@ -48,5 +48,28 @@ function Fade:GetMaxSpeed(possible)
     return returnValue
 end
 
+---------messy override down below
+
+
+function Fade:TriggerMetab()
+   if self:GetActiveWeapon() ~= nil then
+        local weaponMapName = self:GetActiveWeapon():GetMapName()
+        local metabweapon = self:GetWeapon(Metabolize.kMapName)
+        if metabweapon and not metabweapon:GetHasAttackDelay() and self:GetEnergy() >= metabweapon:GetEnergyCost() then
+            self:SetActiveWeapon(Metabolize.kMapName)
+            self:PrimaryAttack()
+            if weaponMapName ~= Metabolize.kMapName then
+                self.previousweapon = weaponMapName
+            end
+        end
+    end
+end
+
+local origBlink = Fade.TriggerBlink
+function Fade:TriggerBlink()
+    --self:TriggerMetab()
+    self.ethereal = true
+    self.landedAfterBlink = false
+end
 
 Shared.LinkClassToMap("Fade", Fade.kMapName, networkVars, true)

@@ -55,7 +55,8 @@ ModLoader.SetupFileHook( "lua/NS2Utility_Server.lua", "lua/NS2Utility_Server_Sie
 
 -------------------------Weapons---------------------
 ModLoader.SetupFileHook( "lua/Weapons/Marine/Flamethrower.lua", "lua/Weapons/Marine/Flamethrower_Siege.lua", "post" )
-ModLoader.SetupFileHook( "lua/Weapons/Alien/Metabolize.lua", "lua/Weapons/Alien/Metabolize_Siege20.lua", "post" )
+ModLoader.SetupFileHook( "lua/Weapons/Alien/Metabolize.lua", "lua/Weapons/Alien/Metabolize_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/Weapons/Alien/Blink.lua", "lua/Weapons/Alien/Blink_Siege22.lua", "post" )
 
 
 -------------------------Structures---------------

@@ -115,7 +115,7 @@ kAdvancedBeaconCoolDown = 30
 
 
 kStartBlinkEnergyCost = 13 -- default 14
-kBlinkEnergyCost = 29 -- default 32
+kBlinkEnergyCost = 20--29 -- default 32
 
 -- default 0.8
 kUmbraShotgunModifier = 0.7

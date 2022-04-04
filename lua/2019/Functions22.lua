@@ -952,18 +952,21 @@ function GetGameStarted()
    end
 end
 function GetIsInSiege(who)
-local locationName = GetLocationForPoint(who:GetOrigin())
-                     locationName = locationName and locationName.name or nil
-                     if locationName== nil then return false end
-if locationName and string.find(locationName, "siege") or string.find(locationName, "Siege") then return true end
-return false
+    local locationName = GetLocationForPoint(who:GetOrigin())
+    locationName = locationName and locationName.name or nil
+    if locationName== nil then return false end
+    if locationName and string.find(locationName, "siege") or string.find(locationName, "Siege") then
+        Print("%s Is in siege, location name is %s", who:GetMapName(), locationName)
+        return true
+    end
+    return false
 end
 
 function GetWhereIsInSiege(where)
-local locationName = GetLocationForPoint(where)
-                     locationName = locationName and locationName.name or nil
-                     if locationName== nil then return false end
-if string.find(locationName, "siege") or string.find(locationName, "Siege") then return true end
-return false
+    local locationName = GetLocationForPoint(where)
+    locationName = locationName and locationName.name or nil
+    if locationName== nil then return false end
+    if string.find(locationName, "siege") or string.find(locationName, "Siege") then return true end
+    return false
 end
 

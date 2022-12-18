@@ -35,3 +35,7 @@ end
 function MarineCommanderBrain:GetSenses()
     return self.senses
 end
+
+function MarineCommanderBrain:SetLastPoofTime(locationName)
+    return
+end

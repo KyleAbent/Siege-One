@@ -68,10 +68,10 @@ if Server then
             local inradius = FindArcHiveSpawn(where)//This might get spammy having all arcs find spot again when it already did once globally (conductor).
             if inradius then
                 self:GiveOrder(kTechId.Move, nil, inradius, nil, true, true)
-                SetDirectorLockedOnEntity(self)
+                --SetDirectorLockedOnEntity(self)
             else
                 self:GiveOrder(kTechId.Move, nil, where, nil, true, true)//Try where, if 12 arc go in 1 spot then do .. ??
-                SetDirectorLockedOnEntity(self)
+                --SetDirectorLockedOnEntity(self)
             end
             return
         end   
@@ -655,6 +655,17 @@ end
     end
     
     return success, blipType, blipTeam, isAttacked, false --isParasited
+end
+
+--local origFunc = ARC.GetCanFireAtTargetActual
+function ARCCredit:GetCanFireAtTargetActual(target, targetPoint)    
+
+    if not self:GetIsBuilt() then 
+        return false
+    else
+        return ARC.GetCanFireAtTargetActual(self, target, targetPoint) --origFunc(target, targetPoint)
+    end    
+    
 end
   
 Shared.LinkClassToMap("ARCCredit", ARCCredit.kMapName, networkVars)

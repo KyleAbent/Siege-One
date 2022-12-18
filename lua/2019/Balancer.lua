@@ -119,7 +119,7 @@ end
         //doChain(contam)
         CreatePheromone(kTechId.ThreatMarker,contam:GetOrigin(), 2)
         //if not bot :getisincombat then setorigin
-        SetDirectorLockedOnEntity(contam)
+        --SetDirectorLockedOnEntity(contam)
         //local egg = CreateEntity(Egg.kMapName, FindFreeSpace(origin, 1, 8), 2)
         //egg:SetHive(GetRandomHive())
 
@@ -188,7 +188,7 @@ end
                 PackRulesHere(who, who:GetOrigin(), kTechId.CatPack, self)
             elseif random == 2 then//from else to if random == 2 (trying this instead of having a break (This currently does all marines at once lol) )
                 who:ActivateNanoShield()
-                SetDirectorLockedOnEntity(who)
+                --SetDirectorLockedOnEntity(who)
             end
     end
     

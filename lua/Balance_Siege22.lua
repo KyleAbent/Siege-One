@@ -125,3 +125,8 @@ kUmbraRailgunModifier = 0.7
 kUmbraGrenadeModifier = 0.7
 
 kUmbraEnergyCost = 25 --default 27
+
+
+
+
+kLeapEnergyCost = 25 --45

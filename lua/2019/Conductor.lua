@@ -546,7 +546,7 @@ function Conductor:ManageWhips()
                      else    //Well this will move it to the contamination. May not be ideal. Lets try.
                         whip:GiveOrder(kTechId.Move, focusTarget:GetId(), origin, nil, false, false)
                      end
-                     SetDirectorLockedOnEntity(whip)
+                     --SetDirectorLockedOnEntity(whip)
                      -- CreatePheromone(kTechId.ThreatMarker,power:GetOrigin(), 2)  if get is time up then
                end 
            end

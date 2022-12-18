@@ -14,3 +14,21 @@ kShiftSupply = 13
 kLoneCystSupply = 3
 
 kLerkFlapEnergyCost = 2 --default 3
+
+
+
+
+
+
+
+
+-----------
+-- Jetpack
+--kUpgradedJetpackUseFuelRate = --.19
+kJetpackingAccel = 0.99 --0.8
+--kJetpackUseFuelRate = 0.17 --.21
+--kJetpackReplenishFuelRate = 0.13 --.11
+
+
+---FadeBlink
+

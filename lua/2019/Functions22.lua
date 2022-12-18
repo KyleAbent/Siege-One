@@ -230,6 +230,7 @@ function GetASiegeLocation()
     end
     return nil
 end
+
 function SetDirectorLockedOnEntity(ent)
     if ent ~= nil then 
     
@@ -252,6 +253,7 @@ function SetDirectorLockedOnEntity(ent)
         end
      end
 end
+
 function findDestinationForAlienConst(who)
     
     if GetSiegeDoorOpen() and who:isa("Crag") or who:isa("Shift") and not GetIsPointWithinHiveRadiusForHealWave(who:GetOrigin()) then
@@ -873,14 +875,17 @@ function GetIsTimeUp(timeof, timelimitof)
 end
 
 function GetAutoCommEnabled()
-return GetIma
+return GetIma -- uhhh.. both sides have a toggle.. hmm? this will error right now lol 
 end
+
 function GetSetupConcluded()
 return GetFrontDoorOpen()
 end
+
 function GetFrontDoorOpen()
    return GetTimer():GetFrontOpenBoolean()
 end
+
 function GetSiegeDoorOpen()
    local boolean = GetTimer():GetSiegeOpenBoolean()
    return boolean

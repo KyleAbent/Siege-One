@@ -15,6 +15,19 @@ kgameStartTime = 0
 return true
 end
 
+----------Debug-------------
+
+function Plugin:ClientConfirmConnect(Client)
+    print("djahsdj")
+    if not Client:GetIsVirtual() then
+        Shared.ConsoleCommand("sh_randomrr") 
+        Shared.ConsoleCommand("sh_go") 
+        local bot = Server.CreateEntity(CommanderBot.kMapName)
+        bot:Initialize(1, not passive)
+        local bot = Server.CreateEntity(CommanderBot.kMapName)
+        bot:Initialize(2, not passive)
+    end    
+end
 
 ------------------------------------------------------------
 //Messy, Whatever. Deal with it. lol.
@@ -581,10 +594,13 @@ end
 local BringAllCommand = self:BindCommand( "sh_bringall", "bringall", BringAll )
 BringAllCommand:Help( "sh_bringall - teleports everyone to the same spot" )
 ------------------------------------------------------------
-
+//Intended to be Debugging command not for server with players :/ Root access?
 local function Go( Client )
     Shared.ConsoleCommand("cheats 1") 
     Shared.ConsoleCommand("sh_forceroundstart") 
+    for i = 1, 18 do
+        Shared.ConsoleCommand("addbot") 
+    end    
 end
 
 local BringAllCommand = self:BindCommand( "sh_go", "go", Go )

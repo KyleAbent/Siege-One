@@ -27,6 +27,9 @@ ModLoader.SetupFileHook( "lua/Alien.lua", "lua/player/Alien_Siege22.lua", "post"
 ModLoader.SetupFileHook( "lua/Skulk.lua", "lua/player/Skulk_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/AlienTeam.lua", "lua/AlienTeam_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/Lerk.lua", "lua/player/Lerk_Siege22.lua", "post" )
+
+--Lets be Gutsy with Fade. 
+ModLoader.SetupFileHook( "lua/Fade_Client.lua", "lua/player/Fade_Client_Siege_23.lua", "post" )
 ModLoader.SetupFileHook( "lua/Fade.lua", "lua/player/Fade_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/Gorge.lua", "lua/player/Gorge_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/EvolutionChamber.lua", "lua/EvolutionChamber_Siege22.lua", "post" )
@@ -47,7 +50,7 @@ ModLoader.SetupFileHook( "lua/Exo.lua", "lua/player/Exo_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/SupplyUserMixin.lua", "lua/Mixins/SupplyUserMixin_Siege.lua", "post" )
 ModLoader.SetupFileHook( "lua/MaturityMixin.lua", "lua/Mixins/MaturityMixin_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/Mixins/RollOutMixin_Siege22.lua", "post" )
-
+ModLoader.SetupFileHook( "lua/LeapMixin.lua", "lua/Mixins/LeapMixin_Siege23.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/InputHandler.lua", "lua/InputHandler_Siege.lua", "post" )
 --ModLoader.SetupFileHook( "lua/AlienWeaponEffects.lua", "lua/AlienWeaponEffects_Siege.lua", "post" )
@@ -105,4 +108,5 @@ ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain.lua", "lua/bots/MarineCo
 ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain_Data.lua", "lua/bots/MarineCommanderBrain_Data_Siege21.lua", "replace" )
 ModLoader.SetupFileHook( "lua/bots/AlienCommanderBrain_Data.lua", "lua/bots/AlienCommanderBrain_Data_Siege21.lua", "replace" )
 
-
+--Avoca Spectator Director
+ModLoader.SetupFileHook( "lua/Spectator.lua", "lua/Spectator_Avoca.lua", "post" )

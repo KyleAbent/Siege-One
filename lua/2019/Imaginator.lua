@@ -174,7 +174,7 @@ local function OrganizedIPCheck(who, self) //spacecow:CC SPawned on top, IPS spa
         local origin = FindFreeSpace(where, 4, kInfantryPortalAttachRange)
             if origin ~= where then
             local ip = CreateEntity(InfantryPortal.kMapName, origin,  1)
-            SetDirectorLockedOnEntity(ip)
+            --SetDirectorLockedOnEntity(ip)
                 if not GetSetupConcluded() then 
                      ip:SetConstructionComplete()
                      ip:GetTeam():SetTeamResources(ip:GetTeam():GetTeamResources() - kInfantryPortalCost)
@@ -191,7 +191,7 @@ local function OrganizedIPCheck(who, self) //spacecow:CC SPawned on top, IPS spa
         local where = who:GetOrigin()
         local origin = FindFreeSpace(where, 4, kInfantryPortalAttachRange)
         local arms = CreateEntity(ArmsLab.kMapName, origin,  1)
-        SetDirectorLockedOnEntity(arms)
+        --SetDirectorLockedOnEntity(arms)
         arms:GetTeam():SetTeamResources(arms:GetTeam():GetTeamResources() - kArmsLabCost)
           if not GetSetupConcluded() then
             arms:SetConstructionComplete()
@@ -220,7 +220,7 @@ local function OrganizedSentryCheck(who, self)
         local origin = FindFreeSpace(where, 1, 4)//range of battery??
             if origin ~= where then
             local sentry = CreateEntity(Sentry.kMapName, origin, 1)
-            SetDirectorLockedOnEntity(sentry)
+            --SetDirectorLockedOnEntity(sentry)
                 if not GetSetupConcluded() then sentry:SetConstructionComplete() end
                     sentry:GetTeam():SetTeamResources(sentry:GetTeam():GetTeamResources() - kSentryCost)
                 //end
@@ -600,7 +600,7 @@ function Imaginator:DoBetterUpgs()
 
             local entity = CreateEntityForTeam(tospawn, randomspawn, 2)
             
-            SetDirectorLockedOnEntity(entity)
+            --SetDirectorLockedOnEntity(entity)
             if not GetSetupConcluded() then
              entity:SetConstructionComplete()
             end
@@ -735,7 +735,7 @@ local function doSpawn(self,tospawn,randomspawn)
                 
                 entity = CreateEntityForTeam(tospawn, randomspawn, 2) // FindFreeSpace?
                 entity:GetTeam():SetTeamResources(entity:GetTeam():GetTeamResources() - GetCachedTechData(tospawn, kTechDataCostKey) )
-                SetDirectorLockedOnEntity(entity)
+                --SetDirectorLockedOnEntity(entity)
                 if not GetSetupConcluded() then
                     entity:SetConstructionComplete() 
                 end

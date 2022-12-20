@@ -124,3 +124,41 @@ local kUpgradeStructureTable =
 function AlienTeam.GetUpgradeStructureTable()
     return kUpgradeStructureTable
 end
+
+
+
+----This is a override to rid the requirement of Eggs being Skulk in order to spawn in. That's dumb. Ugh.
+function AlienTeam:AssignPlayerToEgg(player, enemyTeamPosition)
+
+    local success = false
+
+    local spawnPoint = player:GetDesiredSpawnPoint()
+
+    if not spawnPoint then
+        spawnPoint = enemyTeamPosition or player:GetOrigin()
+    end
+
+    local eggs = GetEntitiesForTeam("Egg", self:GetTeamNumber())
+    Shared.SortEntitiesByDistance(spawnPoint, eggs)
+
+    -- Find the closest egg, doesn't matter which Hive owns it.
+    for _, egg in ipairs(eggs) do
+
+        -- Any unevolved egg is fine as long as it is free, and make sure its not a lifeform egg.
+        if egg:GetIsFree() then
+
+            --if egg:GetGestateTechId() == kTechId.Skulk then
+
+                egg:SetQueuedPlayerId(player:GetId())
+                success = true
+                break
+
+            --end
+
+        end
+
+    end
+
+    return success
+
+end

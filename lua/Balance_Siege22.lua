@@ -130,3 +130,6 @@ kUmbraEnergyCost = 25 --default 27
 
 
 kLeapEnergyCost = 25 --45
+
+
+kInfestationCorrodeDamagePerSecond = 90 --30

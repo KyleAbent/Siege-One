@@ -16,18 +16,26 @@ kLoneCystSupply = 3
 kLerkFlapEnergyCost = 2 --default 3
 
 
-
-
-
-
-
-
 -----------
 -- Jetpack
 --kUpgradedJetpackUseFuelRate = --.19
-kJetpackingAccel = 0.99 --0.8
-kJetpackUseFuelRate = 0.27 --.21
-kJetpackReplenishFuelRate = 0.11 --.11
+kJetpackingAccel = 1 --0.8
+kJetpackUseFuelRate = 8 --.21
+kJetpackReplenishFuelRate = 0.2 --.11
+
+--Why did I have to make these variabes myself?
+kJetpackverticalAccel = 25 --22
+kJetpackverticalAccelWebbed = 8 --5
+kJetpackverticalAccelYOnly = 30 --23
+
+kJetpackFuelReplenishDelayGlobal = .9 --.4
+kJetpackGravityGlobal = 16 ---16
+kJetpackTakeOffTimeGlobal = .1 --.39
+
+kJetpackFlySpeed = 14 --9
+kJetpackFlyAcceleration = 32 --28
+
+kJetpackUseFuelRate = .45 --.15
 
 
 ---FadeBlink

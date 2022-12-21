@@ -532,6 +532,7 @@ function Plugin:CreateCommands()
     DirectCommand:AddParam{ Type = "clients" }
 end
 
+/*
 function Plugin:ClientConfirmConnect(client)
      if  client:GetUserId() == 22542592 then 
          --Shared.ConsoleCommand(string.format("sh_setteam %s 3", client:GetUserId() ))
@@ -542,3 +543,4 @@ function Plugin:ClientConfirmConnect(client)
           end)
       end
 end
+*/

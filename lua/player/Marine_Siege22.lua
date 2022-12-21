@@ -1,3 +1,14 @@
+Marine.kRunInfestationMaxSpeed = 2 --5
+
+local origMaxSpeed = Marine.GetMaxSpeed
+function Marine:GetMaxSpeed(possible)
+    orig = origMaxSpeed(self,possible)
+    if self:GetGameEffectMask(kGameEffect.OnInfestation) then
+        orig = orig/2
+    end
+    return orig
+end
+
 
 ----------------------
 --Error fix for MarineVariantMixin :l LayStructureWeapon cheap fix

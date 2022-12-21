@@ -43,6 +43,8 @@ ModLoader.SetupFileHook( "lua/Marine.lua", "lua/player/Marine_Siege22.lua", "pos
 --ModLoader.SetupFileHook( "lua/MarineCommander.lua", "lua/MarineCommander_Siege19.lua", "post" ) 
 ModLoader.SetupFileHook( "lua/MarineTeam.lua", "lua/MarineTeam_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/Exo.lua", "lua/player/Exo_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/JetpackMarine.lua", "lua/player/JetpackMarine_Siege23.lua", "post" )
+
 
 
 
@@ -51,6 +53,7 @@ ModLoader.SetupFileHook( "lua/SupplyUserMixin.lua", "lua/Mixins/SupplyUserMixin_
 ModLoader.SetupFileHook( "lua/MaturityMixin.lua", "lua/Mixins/MaturityMixin_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/Mixins/RollOutMixin_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/LeapMixin.lua", "lua/Mixins/LeapMixin_Siege23.lua", "post" )
+ModLoader.SetupFileHook( "lua/CorrodeMixin.lua", "lua/Mixins/CorrodeMixin_Siege23.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/InputHandler.lua", "lua/InputHandler_Siege.lua", "post" )
 --ModLoader.SetupFileHook( "lua/AlienWeaponEffects.lua", "lua/AlienWeaponEffects_Siege.lua", "post" )

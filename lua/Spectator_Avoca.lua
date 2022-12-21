@@ -76,7 +76,7 @@ end
 function AvocaSpectator:OnEntityChange(oldId)
     if self.lockedId == oldId then
         local lockee = Shared.GetEntity(self.lockedId)
-        if not lockee or (lockee and not lockee:GetIsAlive()) then
+        if not lockee or (lockee and not (lockee.GetIsAlive and lockee:GetIsAlive())) then
             print("AvocaSpectator OnEntityChange")
             self.lockedId = Entity.invalidId
             self.lastswitch = Shared.GetTime()

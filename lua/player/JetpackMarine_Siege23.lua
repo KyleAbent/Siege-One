@@ -12,8 +12,6 @@ function JetpackMarine:GetAirFriction()
     return kFlyFriction    
 end
 
-
-
 --I did not wish to override by copy pasta uwe cdt ns2 lua
 function JetpackMarine:ModifyVelocity(input, velocity, deltaTime)
 
@@ -29,6 +27,7 @@ function JetpackMarine:ModifyVelocity(input, velocity, deltaTime)
     
         self.onGround = false
         local thrust = math.max(0, -velocity.y) / 6
+        velocityVerticalAccelThrust = verticalAccel * 3 -- Higher Y
         velocity.y = math.min(5, velocity.y + verticalAccel * deltaTime * (1 + thrust * 2.5))
  
     end
@@ -113,3 +112,23 @@ end
 function JetpackMarine:FallingAfterJetpacking()
     return (self.timeJetpackingChanged + 1.5 > Shared.GetTime()) and not self:GetIsOnGround()
 end
+
+--Overriding this to change logic... 
+
+
+ --changing this to base on if fuel is not full (dont want to stop using full just to use it mid air...) -- Kyle
+local origStart = JetpackMarine.HandleJetpackStart
+function JetpackMarine:HandleJetpackStart()
+
+    if not self:GetIsOnGround() and self:GetFuel() < 1 then
+        origStart(self)
+        self.jetpackFuelOnChange = Clamp(self.jetpackFuelOnChange - kJetpackUseFuelRate, 0, 1)
+    else
+        return origStart(self)
+    end
+    --Well I see this working as intended. I don't want someone mid air to take advantage, this counters it. 
+        --Also allows person on ground to recover fuel and use prior to full reocvery
+    
+end
+
+

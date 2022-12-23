@@ -6,6 +6,9 @@ function Marine:GetMaxSpeed(possible)
     if self:GetGameEffectMask(kGameEffect.OnInfestation) then
         orig = orig/2
     end
+    if not self:GetIsParasited() then
+        orig = orig * 1.10
+    end
     return orig
 end
 
@@ -122,3 +125,5 @@ if Server then
     end    
         
 end--Server
+
+

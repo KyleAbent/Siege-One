@@ -17,13 +17,14 @@ end
 
 ----------Debug-------------
 
-
+/*
 function Plugin:ClientConfirmConnect(Client)
     print("djahsdj")
     if not Client:GetIsVirtual() then
-        --Shared.ConsoleCommand("sh_setteam avo 1")
-        --Shared.ConsoleCommand("sh_cheats")  
-       -- Shared.ConsoleCommand("sh_give avo jetpack") 
+        Shared.ConsoleCommand("cheats 1")  
+        Shared.ConsoleCommand("sh_setteam avo 1")
+        Shared.ConsoleCommand("sh_give avo jetpack") 
+       /*
         Shared.ConsoleCommand("sh_randomrr") 
         Shared.ConsoleCommand("sh_direct avo") 
         Shared.ConsoleCommand("sh_go") 
@@ -31,8 +32,10 @@ function Plugin:ClientConfirmConnect(Client)
         bot:Initialize(1, not passive)
         local bot = Server.CreateEntity(CommanderBot.kMapName)
         bot:Initialize(2, not passive)
+        */
     end    
 end
+*/
 
 
 ------------------------------------------------------------

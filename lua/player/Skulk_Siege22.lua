@@ -1,4 +1,4 @@
-
+Skulk.kMaxSpeed = 7.25 * 1.10 --This would be funny to mess with the RTD values --20 --7.25
 
 local origSpeed = Skulk.GetMaxSpeed
 function Skulk:GetMaxSpeed(possible)

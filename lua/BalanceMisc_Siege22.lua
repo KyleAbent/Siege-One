@@ -19,23 +19,23 @@ kLerkFlapEnergyCost = 2 --default 3
 -----------
 -- Jetpack
 --kUpgradedJetpackUseFuelRate = --.19
-kJetpackingAccel = 1 --0.8
-kJetpackUseFuelRate = 8 --.21
-kJetpackReplenishFuelRate = 0.2 --.11
+kJetpackingAccel = 0.8 --0.8
+kJetpackUseFuelRate = .21 --.21
+kJetpackReplenishFuelRate = 0.24 --.11
 
 --Why did I have to make these variabes myself?
-kJetpackverticalAccel = 25 --22
-kJetpackverticalAccelWebbed = 8 --5
-kJetpackverticalAccelYOnly = 30 --23
+kJetpackverticalAccel = 22 --22
+kJetpackverticalAccelWebbed = 5 --5
+kJetpackverticalAccelYOnly = 26 --26
 
-kJetpackFuelReplenishDelayGlobal = .9 --.4
-kJetpackGravityGlobal = 16 ---16
-kJetpackTakeOffTimeGlobal = .1 --.39
+kJetpackFuelReplenishDelayGlobal = .7 --.4
+kJetpackGravityGlobal = -15 -- -16
+kJetpackTakeOffTimeGlobal = .075 --.39
 
-kJetpackFlySpeed = 14 --9
+kJetpackFlySpeed = 10 --9
 kJetpackFlyAcceleration = 32 --28
 
-kJetpackUseFuelRate = .45 --.15
+--kJetpackUseFuelRate = .15 --.15
 
 
 ---FadeBlink

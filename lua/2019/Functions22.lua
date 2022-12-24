@@ -455,6 +455,7 @@ function GetIsImaginatorMarineEnabled()
    end
    return false
 end
+
 function GetIsImaginatorAlienEnabled()     
    local imaginator = GetImaginator()
    if imaginator then
@@ -462,6 +463,7 @@ function GetIsImaginatorAlienEnabled()
    end
    return false
 end
+
 function GetRatioToSiege()
     
     local gameRules = nil

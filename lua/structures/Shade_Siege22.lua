@@ -40,7 +40,7 @@ function Shade:ManageShades()
             local nonCloaked = GetNearestMixin(self:GetOrigin(), "Cloakable", 2, function(ent) return not ent:GetIsCloaked() end)
             if nonCloaked then
                 self:TriggerTeleport(5, self:GetId(), FindFreeSpace(nonCloaked:GetOrigin(), 4), 0)
-                local cyst = GetEntitiesWithinRange("Cyst",self:GetOrigin(), kCystRedeployRange-1)
+                local cyst = GetEntitiesWithinRange("LoneCyst",self:GetOrigin(), kCystRedeployRange-1)
                 if not cyst then
                     local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
                 end

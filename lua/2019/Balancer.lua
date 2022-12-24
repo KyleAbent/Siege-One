@@ -26,6 +26,7 @@ local function On_Contam_chanceWhip(origin,imaginator)
         end
     end
 end
+
 local function On_Contam_chanceShift(origin,imaginator)
     random = math.random(1,100)
     if random <= 10 then
@@ -48,6 +49,7 @@ local function On_Contam_chanceShift(origin,imaginator)
         end
      end
 end
+
 local function On_Contam_chanceShade(origin,imaginator)
     random = math.random(1,100)
     if random <= 10 then
@@ -70,6 +72,7 @@ local function On_Contam_chanceShade(origin,imaginator)
         end
     end
 end
+
 local function On_Contam_chanceCrag(origin,imaginator)
     random = math.random(1,100)
     if random <= 10 then
@@ -92,6 +95,7 @@ local function On_Contam_chanceCrag(origin,imaginator)
         end
     end
 end
+
 local function On_Contam_chanceHydra(origin)
     random = math.random(1,100)
     if random <= 10 then
@@ -101,12 +105,14 @@ local function On_Contam_chanceHydra(origin)
         end
     end
 end
+
 local function On_Contam_chanceRupture(origin)
     random = math.random(1,100)
     if random <= 30 then
        local entity = CreateEntityForTeam(kTechId.Rupture, origin, 2)
     end
 end
+
     function Conductor:SpawnContamination(powerpoint)
             //HasThreeHives is true if 2 are built and 1 is unbuilt. Hmm?
         --if not GetHasThreeHives() or not GetFrontDoorOpen() then

@@ -23,7 +23,7 @@ function CorrodeMixin:CorrodeOnInfestation()
                 self:DoDamageLighting()
             end
             --do armor only if has armor
-            self:DeductHealth(kInfestationCorrodeDamagePerSecond, nil, nil, false, true, true)--just to change this line
+            self:DeductHealth(kInfestationCorrodeDamagePerSecondHealth, nil, nil, false, true, true)--just to change this line
         else--add this line
             self:DeductHealth(kInfestationCorrodeDamagePerSecond, nil, nil, true, false, true)--just to change this line    
         end

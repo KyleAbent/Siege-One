@@ -32,7 +32,7 @@ function Plugin:ClientConfirmConnect(Client)
         bot:Initialize(1, not passive)
         local bot = Server.CreateEntity(CommanderBot.kMapName)
         bot:Initialize(2, not passive)
-        */
+        -- /
     end    
 end
 */
@@ -614,6 +614,32 @@ end
 
 local BringAllCommand = self:BindCommand( "sh_go", "go", Go )
 BringAllCommand:Help( "sh_go - cheats 1 and forceroundstart" )
+
+
+
+----------AutoComm Enable-------------
+
+local function AutoComm( Client, Number )
+
+        if not Number or Number == 1 then
+            local bot = Server.CreateEntity(CommanderBot.kMapName)
+            bot:Initialize(1, not passive)
+            self:NotifyGeneric( nil, "Enabled AutoComm for Marines", true)
+        end
+        if not Number or Number == 2 then    
+            local bot = Server.CreateEntity(CommanderBot.kMapName)
+            bot:Initialize(2, not passive)  
+            self:NotifyGeneric( nil, "Enabled AutoComm for Aliens", true)
+       end
+end
+
+local AutoCommCommand = self:BindCommand( "sh_autocomm", "autocomm", AutoComm )
+AutoCommCommand:Help( "sh_autocomm 1 or 2 or blank - Marines/Aliens AutoComm or both teams" )
+AutoCommCommand:AddParam{ Type = "number", Optional = true }
+
+
+
+
 
 ------------------------------------------------------
 

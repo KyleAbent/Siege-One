@@ -7,7 +7,7 @@ function Marine:GetMaxSpeed(possible)
         orig = orig/2
     end
     if not self:GetIsParasited() then
-        orig = orig * 1.10
+        orig = orig * 1.05
     end
     return orig
 end

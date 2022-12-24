@@ -188,6 +188,11 @@ if Server then
                 Print("Destroying Cyst by Front Door")
         end
         
+        for _, cyst in ipairs( GetEntitiesForTeamWithinRange("LoneCyst", 2, self:GetOrigin(), 17) ) do
+                cyst:Kill()
+                Print("Destroying LoneCyst by Front Door")
+        end
+        
     end
     
      function FrontDoor:OnUpdate(deltaTime)

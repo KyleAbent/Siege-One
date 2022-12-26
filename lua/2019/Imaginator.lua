@@ -210,7 +210,7 @@ local function OrganizedSentryCheck(who, self)
     //local findFree = FindFreeSpace(who:GetOrigin(), 1, 7)//range of battery??
     local sentrysInRange = GetEntitiesForTeamWithinRange("Sentry", 1, who:GetOrigin(), 4)//range of battery??
 
-    if #sentrysInRange >= 4 or GetCheckSentryLimit(nil, origin, nil, nil) then//self.activeIPS >= 8 then //do a check for within range so that each base has its own
+    if #sentrysInRange >= 4 or not GetCheckSentryLimit(nil, who:GetOrigin(), nil, nil) then//self.activeIPS >= 8 then //do a check for within range so that each base has its own
      return
     end
     

@@ -200,6 +200,7 @@ local function OrganizedIPCheck(who, self) //spacecow:CC SPawned on top, IPS spa
       end
 
 end
+
 local function OrganizedSentryCheck(who, self)
        if not who or not who:GetIsBuilt() then
         return
@@ -209,9 +210,10 @@ local function OrganizedSentryCheck(who, self)
     //local findFree = FindFreeSpace(who:GetOrigin(), 1, 7)//range of battery??
     local sentrysInRange = GetEntitiesForTeamWithinRange("Sentry", 1, who:GetOrigin(), 4)//range of battery??
 
-    if #sentrysInRange >= 4 then//self.activeIPS >= 8 then //do a check for within range so that each base has its own
+    if #sentrysInRange >= 4 or GetCheckSentryLimit(nil, origin, nil, nil) then//self.activeIPS >= 8 then //do a check for within range so that each base has its own
      return
     end
+    
 
     --for i = 1, math.abs( 2 - count ) do --one at a time
     //local cost = 20
@@ -229,6 +231,7 @@ local function OrganizedSentryCheck(who, self)
     end
 
 end
+
 local function HaveBatteriesCheckSentrys(self)
     local SentryBatterys = GetEntitiesForTeam( "SentryBattery", 1 )
     if not SentryBatterys then

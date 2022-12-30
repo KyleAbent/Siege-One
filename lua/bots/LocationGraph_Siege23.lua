@@ -1,38 +1,53 @@
-/*
+--Overriding to try and fix server crash
+function LocationGraph:Initialize()
 
-local origTryOne = LocationGraph.InitializeLocationCentroids
-function LocationGraph:InitializeLocationCentroids()
-    self:AddTimedCallback(function() origTryOne(self) print("InitializeLocationCentroids delay") end, 1)
+    PROFILE("LocationGraph:Initialize")
+
+    -- Location Name (From) -> UnorderedSet of directly connected location names (Destinations)
+    self.locationDirectPaths = IterableDict()
+
+    -- Location Name (Source) -> IterableDict (Directly Connected Location -> Gateway point)
+    self.locationGateways = IterableDict()
+
+    -- Location Name -> Position of center of location group (location entities of same name)
+    self.locationCentroids = IterableDict()
+
+    -- <Start Location>_<Dest Location> -> Distance between gateways
+    -- A->B == B->A
+    self.locationGatewayDistances = IterableDict()
+
+    -- Location Name -> Position to go to for exploring
+    self.locationExplorePositions = IterableDict()
+
+    -- Location Names
+    self.techPointLocations = UnorderedSet()
+
+    -- Can also be tech point locations
+    self.resourcePointLocations = UnorderedSet()
+
+    -- TechPoint Location Name -> UnorderedSet<Natural RT Locations>
+    self.techPointLocationsNaturals = IterableDict()
+
+    -- Location Name -> Table of data for determining "safer" building placements
+    self.techPointsSafePlacementData = IterableDict()
+
+    -- Location Name (As Starting Point) -> IterableDict (Location Name -> Depth from starting point)
+    self.exploreDepths = IterableDict()
+
+    -- Location Name (From) -> UnorderedSet of increasing paths.
+    -- Set key (path): <source>_<dest>
+    -- Increasing path is where the dest location has a connection that is also deeper than the dest.
+    self.increasingPaths = IterableDict()
+
+    if #GetLocations() > 0 then
+
+            --Siege override here
+            GetGamerules():DoDelayedStuff(self)
+
+    else
+
+        Print("Warning: No location entities on map! LocationGraph will be empty, and bots won't work!")
+
+    end
+
 end
-
-local origTryTwo = LocationGraph.InitializeExplorePositions
-function LocationGraph:InitializeExplorePositions()
-    self:AddTimedCallback(function() origTryTwo(self) print("InitializeExplorePositions delay") end, 2)
-end
-
-local origTryThree = LocationGraph.InitializeDirectPaths
-function LocationGraph:InitializeDirectPaths()
-    self:AddTimedCallback(function() origTryThree(self) print("InitializeDirectPaths delay") end, 3)
-end
-
-local  origTryFour = LocationGraph.InitializeDirectPaths
-function LocationGraph:InitializeDirectPaths()
-    self:AddTimedCallback(function() origTryFour(self) print("InitializeDirectPaths delay") end, 4)
-end
-
-local  origTryFive = LocationGraph.InitializeExploreDepths
-function LocationGraph:InitializeExploreDepths()
-    self:AddTimedCallback(function() origTryFive(self) print("InitializeExploreDepths delay") end, 6)
-end
-
-local  origTrySix = LocationGraph.InitializeIncreasingPaths
-function LocationGraph:InitializeIncreasingPaths()
-    self:AddTimedCallback(function() origTrySix(self) print("InitializeIncreasingPaths delay") end, 7)
-end
-
-local origTrySeven = LocationGraph.InitializeTechpointNaturalRTLocations
-function LocationGraph:InitializeTechpointNaturalRTLocations()
-    self:AddTimedCallback(function() origTrySeven(self) print("InitializeTechpointNaturalRTLocations delay") end, 8)
-end
-
-*/

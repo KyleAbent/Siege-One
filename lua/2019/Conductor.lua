@@ -260,7 +260,14 @@ end
 
 
 function Conductor:ContaminationSpawnTimer()
-         ChanceContaminationSpawn(self)
+            local alienTeamInfo = GetTeamInfoEntity(kTeam2Index)
+                if alienTeamInfo then
+                    if alienTeamInfo.bioMassLevel >= 9 then
+                        ChanceContaminationSpawn(self)
+                    --else
+                        --print("Aliens don't have biomass for contamination")
+                    end
+                end    
 end
 
 function Conductor:MarineBuffsDelay()
@@ -271,6 +278,8 @@ function Conductor:MarineBuffsDelay()
 
              return true
 end
+
+/*
 function Conductor:DirectSpectators()
 
         for _, director in ientitylist(Shared.GetEntitiesWithClassname("AvocaSpectator")) do
@@ -284,6 +293,8 @@ function Conductor:DirectSpectators()
             end
         end
 end
+*/
+
 function Conductor:ResourceTowers()
 
              if GetIsImaginatorMarineEnabled() or GetIsImaginatorAlienEnabled() then

@@ -9,6 +9,7 @@ ModLoader.SetupFileHook( "lua/shine/core/shared/hook.lua", "lua/shine/hook.lua",
 --------Core-----------
 ModLoader.SetupFileHook( "lua/Location.lua", "lua/Location_Siege.lua", "post" )
 ModLoader.SetupFileHook( "lua/Globals.lua", "lua/Globals_Siege19.lua", "post" ) 
+ModLoader.SetupFileHook( "lua/Gamerules.lua", "lua/Gamerules_Siege23.lua", "post" )
 ModLoader.SetupFileHook( "lua/NS2Gamerules.lua", "lua/NS2Gamerules_Siege19.lua", "post" )
 ModLoader.SetupFileHook( "lua/TargetCache.lua", "lua/TargetCache_Siege.lua", "post" )
 ModLoader.SetupFileHook( "lua/GameInfo.lua", "lua/GameInfo_Siege19.lua", "post" )

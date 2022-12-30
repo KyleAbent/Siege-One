@@ -13,14 +13,20 @@ local function On_Contam_chanceWhip(origin,imaginator)
             if random <= 50 then
                 entity:SetConstructionComplete()
                 //doChain(entity)
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
+                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",origin, kCystRedeployRange) == 0
+                 if notNearCyst then
+                  local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(origin, 1, kCystRedeployRange),2)
+               end
             end
         else
             local whip = GetNearest(origin, "Whip", 2, function(ent) return not ent:GetIsInCombat() end)
             if whip  then 
                 whip:SetOrigin(origin)
                 //doChain(whip)
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(whip:GetOrigin(), 1, kCystRedeployRange),2)
+                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",origin, kCystRedeployRange) == 0
+                 if notNearCyst then
+                  local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(origin, 1, kCystRedeployRange),2)
+               end
                 return 
             end
         end
@@ -36,14 +42,20 @@ local function On_Contam_chanceShift(origin,imaginator)
             if random <= 50 then
                 entity:SetConstructionComplete()
                 //doChain(entity)
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
+                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",origin, kCystRedeployRange) == 0
+                 if notNearCyst then
+                  local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(origin, 1, kCystRedeployRange),2)
+               end
             end
         else
             local shift = GetNearest(origin, "Shift", 2, function(ent) return not ent:GetIsInCombat() end)
             if shift then 
                 shift:SetOrigin(origin)
                 //doChain(shift)
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(shift:GetOrigin(), 1, kCystRedeployRange),2)
+                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",origin, kCystRedeployRange) == 0
+                 if notNearCyst then
+                  local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(origin, 1, kCystRedeployRange),2)
+               end
                 return 
             end
         end
@@ -59,14 +71,20 @@ local function On_Contam_chanceShade(origin,imaginator)
             if random <= 50 then
                 entity:SetConstructionComplete()
                 //doChain(entity)
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
+                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",origin, kCystRedeployRange) == 0
+                 if notNearCyst then
+                  local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(origin, 1, kCystRedeployRange),2)
+               end
             end
         else
             local shade = GetNearest(origin, "Shade", 2, function(ent) return not ent:GetIsInCombat() and not (GetSiegeDoorOpen() and GetIsPointWithinHiveRadius(ent:GetOrigin()) ) end)
             if shade then 
                 shade:SetOrigin(origin)
                 //doChain(shade)
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(shade:GetOrigin(), 1, kCystRedeployRange),2)
+                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",origin, kCystRedeployRange) == 0
+                 if notNearCyst then
+                  local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(origin, 1, kCystRedeployRange),2)
+               end
                 return 
             end
         end
@@ -82,14 +100,20 @@ local function On_Contam_chanceCrag(origin,imaginator)
             if random <= 50 then
                 entity:SetConstructionComplete()
                 //doChain(entity)
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
+                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",origin, kCystRedeployRange) == 0
+                 if notNearCyst then
+                  local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(origin, 1, kCystRedeployRange),2)
+               end
             end
         else
             local crag = GetNearest(origin, "Crag", 2, function(ent) return not ent:GetIsInCombat() and not (GetSiegeDoorOpen() and GetIsPointWithinHiveRadius(ent:GetOrigin()) ) end)
             if crag then 
                 crag:SetOrigin(origin)
                // doChain(crag)
-               local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(crag:GetOrigin(), 1, kCystRedeployRange),2)
+                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",origin, kCystRedeployRange) == 0
+                 if notNearCyst then
+                  local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(origin, 1, kCystRedeployRange),2)
+               end
                 return 
             end
         end

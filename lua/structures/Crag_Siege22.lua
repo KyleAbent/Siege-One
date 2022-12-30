@@ -139,7 +139,7 @@ if Server then
                 local destination = findDestinationForAlienConst(self)
                 if destination then 
                     self:TriggerTeleport(5, self:GetId(), FindFreeSpace(destination:GetOrigin(), 4), 0)
-                    local notNearCyst = #GetEntitiesWithinRange("LoneCyst",self:GetOrigin(), kCystRedeployRange-1) == 0
+                    local notNearCyst = #GetEntitiesWithinRange("LoneCyst",self:GetOrigin(), kCystRedeployRange) == 0
                     if notNearCyst then
                         local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
                     end

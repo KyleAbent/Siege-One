@@ -248,9 +248,19 @@ end
 function Plugin:MapPostLoad()
       --Server.CreateEntity(Timer.kMapName)
       --GetDoorLengthByMapName()
-      Server.CreateEntity(Conductor.kMapName)
-      Server.CreateEntity(Imaginator.kMapName)
+
+    self:CreateTimer( "PostLoad", 8, 1, function() 
+        if not GetConductor() then 
+            Server.CreateEntity(Conductor.kMapName)
+            print("Conductor Created")
+        end
+        if not GetImaginator() then
+            Server.CreateEntity(Imaginator.kMapName)
+            print("Imaginator Created")
+        end    
+      end )
 end
+
 function Plugin:OnFirstThink()
       --GetDoorLengthByMapName()
 end

@@ -111,5 +111,7 @@ ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain.lua", "lua/bots/MarineCo
 ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain_Data.lua", "lua/bots/MarineCommanderBrain_Data_Siege21.lua", "replace" )
 ModLoader.SetupFileHook( "lua/bots/AlienCommanderBrain_Data.lua", "lua/bots/AlienCommanderBrain_Data_Siege21.lua", "replace" )
 
+ModLoader.SetupFileHook( "lua/bots/LocationGraph.lua", "lua/bots/LocationGraph_Siege23.lua", "post" )
+
 --Avoca Spectator Director
 ModLoader.SetupFileHook( "lua/Spectator.lua", "lua/Spectator_Avoca.lua", "post" )

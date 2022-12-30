@@ -4,15 +4,19 @@ if Server then
   local orig = Location.OnTriggerEntered
    function Location:OnTriggerEntered(entity, triggerEnt)
      orig(self, entity, triggerEnt)
+     local imaginator = GetImaginator()
+     if not imaginator then return end
     
          if GetGamerules():GetGameStarted() then
               if (  ( string.find(self.name, "siege") or string.find(self.name, "Siege") )  and not GetTimer():GetSiegeOpenBoolean() ) then
                   entity:Kill() 
                end
+         else
+            return        
          end
          
          
-      if not entity:isa("Commander") and ( GetImaginator():GetIsMarineEnabled() or GetImaginator():GetIsAlienEnabled() ) then
+      if not entity:isa("Commander") and ( imaginator:GetIsMarineEnabled() or imaginator:GetIsAlienEnabled() ) then
             local powerPoint = GetPowerPointForLocation(self.name)
                 if powerPoint ~= nil then
                     if entity:isa("Marine") then --and marine/alien enabled

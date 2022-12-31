@@ -486,7 +486,7 @@ end
 function Conductor:ManageCysts()
     --print("ManageCysts")
     local cystsMax = 0
-    doMax = 4
+    doMax = 1
     --local doMax = math.random(1,4)
      local noncysted = {}
      for _, infestable in ipairs(GetEntitiesWithMixinForTeam("InfestationTracker", 2)) do
@@ -506,9 +506,9 @@ function Conductor:ManageCysts()
         if notNearCyst then
             table.insert(noncysted, infestable)
              cystsMax = cystsMax + 1
-           -- if cystsMax == doMax then
-           --      break 
-           -- end
+            if cystsMax == doMax then
+                break 
+             end
         end
 
      end

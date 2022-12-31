@@ -358,20 +358,6 @@ function Plugin:SetGameState( Gamerules, State, OldState )
      
 end
 
-
-function Plugin:OnPostInitGorge(player,tunnel)
-        local Player = player --who:GetClient():GetControllingPlayer()
-        local client = Player:GetClient()
-        local hasKilled = FindPlayerTunnels(Player,tunnel)
-
-        if hasKilled then
-            self:NotifyOne(client, "Your previously placed PizzaGate has been replaced with this new one", true )
-            return
-        end
-        
-end
-
-Shine.Hook.SetupGlobalHook("HookGorgeViaServer", "OnPostInitGorge", "Replace" )
 -----------------------------------------------------------
 function Plugin:HookNotifyCommanderLimitReached(who)
     local commander = who:GetTeam():GetCommander()

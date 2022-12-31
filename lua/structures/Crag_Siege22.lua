@@ -19,7 +19,11 @@ function Crag:OnInitialized()
     InitMixin(self, LevelsMixin)
     self.cragstacklevel = 0
     self.lastWave = 0
+    if Server then
+        GetImaginator().activeCrags = GetImaginator().activeCrags + 1
+    end    
 end
+
 
 ---------------------------Cragstack overriding original code taken from Crag.lua---------------------
 
@@ -119,19 +123,14 @@ function Crag:InstructSpecificRules()
 end
 
 
-function Crag:OnConstructionComplete()
-	 GetImaginator().activeCrags = GetImaginator().activeCrags + 1;  
-end
-
-function Crag:PreOnKill(attacker, doer, point, direction)
-  if self:GetIsBuilt() then
-    GetImaginator().activeCrags  = GetImaginator().activeCrags- 1;  
-  end
-end
 
 
 if Server then
 
+    function Crag:PreOnKill(attacker, doer, point, direction)
+        GetImaginator().activeCrags  = GetImaginator().activeCrags- 1;  
+    end
+    
     function Crag:ManageCrags()
     
            self:InstructSpecificRules()

@@ -37,7 +37,7 @@ kShellMaturationTime  = 30
 kCystMaturationTime  = 30 --
 kHydraMaturationTime  = 30
 kEggMaturationTime  = 30
-kTunnelEntranceMaturationTime = 45
+--kTunnelEntranceMaturationTime = 45
 kAlienEggsPerHive = 5
 kEggGenerationRate = 9
 

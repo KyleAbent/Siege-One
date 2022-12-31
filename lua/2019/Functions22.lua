@@ -429,6 +429,26 @@ function GetRandomDisabledPower()
     local power = table.random(powers)
     return  power
 end
+
+function GetRandomDisabledPowerWithoutAlienPhaseGate()
+    local powers = {}
+    local isSetup = not GetSetupConcluded()
+    for _, power in ientitylist(Shared.GetEntitiesWithClassname("PowerPoint")) do
+        if power:GetIsDisabled() and not GetIsInSiege(power) and power.activeAlienPGS == 0 then //im afraid this value will be -1 rather than 0 lol
+            if isSetup then // I don't want rooms be built which are yet to be undetermined in setup. ugh. players mark ownership by entering room. then spawn.
+                if power:GetHasBeenToggledDuringSetup() or GetIsOriginInHiveRoom(power:GetOrigin()) then
+                    table.insert(powers,power)
+                end
+            else
+                table.insert(powers,power)
+            end
+        end
+    end
+    if #powers == 0 then return nil end
+    local power = table.random(powers)
+    return  power
+end
+
 function GetIsOriginInHiveRoom(point)  
     local location = GetLocationForPoint(point)
     local hivelocation = nil

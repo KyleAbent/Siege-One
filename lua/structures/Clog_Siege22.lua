@@ -27,13 +27,14 @@ end
 
 
 
+//There's a workaround for this by having destructionallowedtable or something like that
 
 local origonkill = Clog.PreOnKill
 function Clog:PreOnKill(attacker, doer, point, direction)
     self:SetDesiredInfestationRadius(0)
     
       for _, structure in ipairs(GetEntitiesWithMixinForTeamWithinRange("InfestationTracker", 1, self:GetOrigin(), 8)) do
-      structure:AddTimedCallback(function() structure:SetGameEffectMask(kGameEffect.OnInfestation, false) end, 1)
+        structure:AddTimedCallback(function() structure:SetGameEffectMask(kGameEffect.OnInfestation, false) end, 1)
       end
       
       end

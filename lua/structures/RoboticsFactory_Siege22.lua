@@ -11,6 +11,9 @@ function RoboticsFactory:OnInitialized()
     origInit(self)
     InitMixin(self, LevelsMixin)
     InitMixin(self, AvocaMixin)
+    if Server then
+        GetRoomPower(self):ToggleCountMapName(self:GetMapName(),1)
+    end   
 end
 
 
@@ -46,19 +49,10 @@ function RoboticsFactory:GetTechButtons(techId)
 end
 */
 
-function RoboticsFactory:OnPowerOn()
-	GetRoomPower(self):ToggleCountMapName(self:GetMapName(),1)
-end
-
-function RoboticsFactory:OnPowerOff()
-	GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1) 
-end
-
- function RoboticsFactory:PreOnKill(attacker, doer, point, direction)
-      
-	  if self:GetIsPowered() then
-	   GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
-	  end
+if Server then
+     function RoboticsFactory:PreOnKill(attacker, doer, point, direction)
+           GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
+    end
 end
 
 Shared.LinkClassToMap("RoboticsFactory", RoboticsFactory.kMapName, networkVars) 

@@ -16,6 +16,7 @@ Script.Load("lua/2019/ResearchMixinChanges.lua")
 Script.Load("lua/2019/Conductor.lua")
 Script.Load("lua/2019/Balancer.lua")
 Script.Load("lua/2019/Imaginator.lua")
+Script.Load("lua/Modifications/PhaseGate_Aliens_Siege23.lua")
 
 kAlienDefaultLvl = 25
 kAlienDefaultAddXp = 0.25

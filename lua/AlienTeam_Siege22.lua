@@ -27,10 +27,12 @@ function AlienTeam:SpawnHives(techPoint)
         if ent ~= techPoint and ent:GetAttached() == nil then 
             local location = GetLocationForPoint(ent:GetOrigin())
             local mylocation = GetLocationForPoint(techPoint:GetOrigin())
-            if location and mylocation and location == mylocation then
+            if location and mylocation and location.name == mylocation.name then
                 local hive = ent:SpawnCommandStructure(2) 
                       hive:SetConstructionComplete()
             end
+        elseif ent:GetAttached() then
+            Print("Techpoint is already attached?!")
         end
     end
 
@@ -75,6 +77,7 @@ function AlienTeam:InitTechTree()
     self.techTree:AddBuildNode(kTechId.LoneCyst, kTechId.None) 
     self.techTree:AddBuildNode(kTechId.EggBeacon, kTechId.CragHive)
     self.techTree:AddBuildNode(kTechId.StructureBeacon, kTechId.ShiftHive)
+    self.techTree:AddBuildNode(kTechId.AlienPhaseGate, kTechId.BioMassNine)
 
 
     self.techTree:AddMenu(kTechId.CystMenu)

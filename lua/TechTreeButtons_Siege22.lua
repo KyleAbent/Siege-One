@@ -44,6 +44,8 @@ function GetMaterialXYOffset(techId)
       return origIndex(kTechId.DistressBeacon)  
     elseif techId == kTechId.SiegeBeacon then
       return origIndex(kTechId.DistressBeacon)  
+    elseif techId == kTechId.AlienPhaseGate then
+        return origIndex(kTechId.Tunnel)     
     else
         return origIndex(techId)
     end

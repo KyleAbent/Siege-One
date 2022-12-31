@@ -15,21 +15,17 @@ function Shift:OnInitialized()
     InitMixin(self, AvocaMixin)
     InitMixin(self, LevelsMixin)
     self.manageShiftsTime = 0
+    if Server then
+        GetImaginator().activeShifts = GetImaginator().activeShifts + 1;  
+    end    
 end
 
 
 if Server then 
 
-    function Shift:OnConstructionComplete()
-        GetImaginator().activeShifts = GetImaginator().activeShifts + 1;  
-    end
-
 
     function Shift:PreOnKill(attacker, doer, point, direction)
-
-        if self:GetIsBuilt() then
             GetImaginator().activeShifts  = GetImaginator().activeShifts- 1;  
-        end
     end
 
     function Shift:OnOrderComplete(currentOrder)

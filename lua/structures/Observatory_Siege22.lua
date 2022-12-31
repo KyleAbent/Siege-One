@@ -11,6 +11,9 @@ function Observatory:OnInitialized()
     origInit(self)
     InitMixin(self, LevelsMixin)
     InitMixin(self, AvocaMixin)
+    if Server then
+        GetRoomPower(self):ToggleCountMapName(self:GetMapName(),1)
+    end    
 end
 
 
@@ -458,23 +461,10 @@ function Observatory:GetIsPowered()
  end
 
 
-
-function Observatory:OnPowerOn()
-	// GetRoomPower(self).activeObs = GetImaginator().activeObs + 1;  
-	 GetRoomPower(self):ToggleCountMapName(self:GetMapName(), 1)
-end
-
-function Observatory:OnPowerOff()
-	 //GetRoomPower(self).activeObs = GetImaginator().activeObs - 1;  
-	 GetRoomPower(self):ToggleCountMapName(self:GetMapName(), -1)
-end
-
- function Observatory:PreOnKill(attacker, doer, point, direction)
-      
-	  if self:GetIsPowered() then
-	   // GetRoomPower(self).activeObs  = GetImaginator().activeObs- 1;  
-	   GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
-	  end
+if Server then
+     function Observatory:PreOnKill(attacker, doer, point, direction)
+           GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
+    end
 end
 
 Shared.LinkClassToMap("Observatory", Observatory.kMapName, networkVars) 

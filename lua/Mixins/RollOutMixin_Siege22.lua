@@ -16,7 +16,7 @@ end
 --hack it
 origRollOut = RolloutMixin.Rollout
 function RolloutMixin:Rollout(where)
-    print("Rollout hook")
+    --print("Rollout hook")
         freeOrigin = FindFreeSpace(where,2,6)
         self:SetOrigin(freeOrigin)
         self:ClearOrders()

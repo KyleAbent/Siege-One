@@ -12,21 +12,15 @@ function PhaseGate:OnInitialized()
     origInit(self)
     InitMixin(self, LevelsMixin)
     InitMixin(self, AvocaMixin)
+    if Server then
+        GetRoomPower(self):ToggleCountMapName(self:GetMapName(), 1)
+    end    
 end
 
-function PhaseGate:OnPowerOn()
-	 GetRoomPower(self):ToggleCountMapName(self:GetMapName(), 1)
+if Server then
+     function PhaseGate:PreOnKill(attacker, doer, point, direction)
+            GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
+    end
+    
 end
-
-function PhaseGate:OnPowerOff()
-	 GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
-end
-
- function PhaseGate:PreOnKill(attacker, doer, point, direction)
-      
-	  if self:GetIsPowered() then
-	    GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
-	  end
-end
-
 Shared.LinkClassToMap("PhaseGate", PhaseGate.kMapName, networkVars) 

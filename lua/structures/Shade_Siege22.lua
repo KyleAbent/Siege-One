@@ -14,20 +14,24 @@ function Shade:OnInitialized()
     InitMixin(self, AvocaMixin)
     InitMixin(self, LevelsMixin)
     self.manageShadeTime = 0
+    if Server then
+        GetImaginator().activeShades = GetImaginator().activeShades + 1;  
+    end    
 end
 
-local origCons = Shade.OnConstructionComplete
-function Shade:OnConstructionComplete()
-    origCons(self)
-    GetImaginator().activeShades = GetImaginator().activeShades + 1;  
-end
 
-function Shade:PreOnKill(attacker, doer, point, direction)
-    if self:GetIsBuilt() then
-        GetImaginator().activeShades  = GetImaginator().activeShades- 1;  
+
+if Server then
+
+    local origCons = Shade.OnConstructionComplete
+    function Shade:OnConstructionComplete()
+        origCons(self)
+    end
+
+    function Shade:PreOnKill(attacker, doer, point, direction)
+            GetImaginator().activeShades  = GetImaginator().activeShades- 1;  
     end
 end
-
 
 function Shade:ManageShades()
 

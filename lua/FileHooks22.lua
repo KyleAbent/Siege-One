@@ -55,6 +55,8 @@ ModLoader.SetupFileHook( "lua/MaturityMixin.lua", "lua/Mixins/MaturityMixin_Sieg
 ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/Mixins/RollOutMixin_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/LeapMixin.lua", "lua/Mixins/LeapMixin_Siege23.lua", "post" )
 ModLoader.SetupFileHook( "lua/CorrodeMixin.lua", "lua/Mixins/CorrodeMixin_Siege23.lua", "post" )
+ModLoader.SetupFileHook( "lua/TunnelUserMixin.lua", "lua/Mixins/TunnelUserMixin_Siege23.lua", "post" )
+
 
 ModLoader.SetupFileHook( "lua/InputHandler.lua", "lua/InputHandler_Siege.lua", "post" )
 --ModLoader.SetupFileHook( "lua/AlienWeaponEffects.lua", "lua/AlienWeaponEffects_Siege.lua", "post" )
@@ -71,6 +73,7 @@ ModLoader.SetupFileHook( "lua/Clog.lua", "lua/structures/Clog_Siege22.lua", "pos
 ModLoader.SetupFileHook( "lua/ARC.lua", "lua/structures/ARC_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/MAC.lua", "lua/structures/MAC_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/Armory.lua", "lua/structures/Armory_Siege22.lua", "post" )
+ModLoader.SetupFileHook( "lua/PrototypeLab.lua", "lua/structures/PrototypeLab_Siege23.lua", "post" )
 ModLoader.SetupFileHook( "lua/Observatory.lua", "lua/structures/Observatory_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/Sentry.lua", "lua/structures/Sentry_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/structures/SentryBattery_Siege22.lua", "post" )
@@ -83,7 +86,7 @@ ModLoader.SetupFileHook( "lua/Shift.lua", "lua/structures/Shift_Siege22.lua", "p
 ModLoader.SetupFileHook( "lua/Shade.lua", "lua/structures/Shade_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/Hydra.lua", "lua/structures/Hydra_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/Hive.lua", "lua/structures/Hive_Siege22.lua", "post" )
-ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/structures/TunnelEntrance_Siege22.lua", "post" )
+--ModLoader.SetupFileHook( "lua/TunnelEntrance.lua", "lua/structures/TunnelEntrance_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/SentryBattery.lua", "lua/structures/SentryBattery_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/ArmsLab.lua", "lua/structures/ArmsLab_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/PowerPoint.lua", "lua/structures/PowerPoint_Siege22.lua", "post" ) 
@@ -99,13 +102,14 @@ ModLoader.SetupFileHook( "lua/TechTreeButtons.lua", "lua/TechTreeButtons_Siege22
 ModLoader.SetupFileHook( "lua/TechTreeConstants.lua", "lua/TechTreeConstants_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/TechData.lua", "lua/TechData_Siege22.lua", "post" ) 
 ModLoader.SetupFileHook( "lua/TechNode.lua", "lua/TechNode_Siege.lua", "post" )
-
+ModLoader.SetupFileHook( "lua/CommonAlienActions.lua", "lua/CommonAlienActions_Siege23.lua", "post" )
 
 ----------AutoComm--------------
 ModLoader.SetupFileHook( "lua/bots/CommanderBot.lua", "lua/bots/CommanderBot_Siege21.lua", "post" )
 ModLoader.SetupFileHook( "lua/bots/CommanderBrain.lua", "lua/bots/CommanderBrain_Siege21.lua", "post" )
 ModLoader.SetupFileHook( "lua/bots/PlayerBrain.lua", "lua/bots/PlayerBrain_Siege21.lua", "post" )
 ModLoader.SetupFileHook( "lua/bots/VoteManager.lua", "lua/bots/VoteManager_Siege21.lua", "post" )
+ModLoader.SetupFileHook( "lua/bots/PlayerBot_Server.lua", "lua/bots/PlayerBot_Siege23.lua", "post" )
 ModLoader.SetupFileHook( "lua/VotingAddCommanderBots.lua", "lua/VotingAddCommanderBots_Siege22.lua", "post" )
 ModLoader.SetupFileHook( "lua/bots/AlienCommanderBrain.lua", "lua/bots/AlienCommanderBrain_Siege21.lua", "replace" )
 ModLoader.SetupFileHook( "lua/bots/MarineCommanderBrain.lua", "lua/bots/MarineCommanderBrain_Siege21.lua", "replace" )

@@ -10,6 +10,8 @@ function SentryBattery:OnInitialized()
     --end
 end
 
- function SentryBattery:PreOnKill(attacker, doer, point, direction)
-	    GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
+if Server then
+     function SentryBattery:PreOnKill(attacker, doer, point, direction)
+            GetRoomPower(self):ToggleCountMapName(self:GetMapName(),-1)
+    end
 end

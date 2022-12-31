@@ -1,3 +1,6 @@
+
+Script.Load("lua/Mixins/AlienPhaseGateUserMixin.lua")
+
 local networkVars = {
 
 lastredeemorrebirthtime = "time", 
@@ -7,6 +10,7 @@ primaledID = "entityid",
   
  }
  
+AddMixinNetworkVars(AlienPhaseGateUserMixin, networkVars)
  
 local ogCreate = Alien.OnCreate
  
@@ -16,6 +20,8 @@ function Alien:OnCreate()
      self.hasTriggered = false
      self.primaled = false
      self.primaledID = Entity.invalidI 
+     
+     InitMixin(self, AlienPhaseGateUserMixin)
 
      if Server then
         self:AddTimedCallback(Alien.RedemptionTimer, 1) 

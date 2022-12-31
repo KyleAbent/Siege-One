@@ -4,6 +4,7 @@ Script.Load("lua/2019/LoneCyst.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 Script.Load("lua/2019/AlienTechPoint.lua")
+Script.Load("lua/Modifications/PhaseGate_Aliens_Siege23.lua")
 --Script.Load("lua/structures/ARC_Siege22.lua")
 
 
@@ -281,6 +282,27 @@ local kSiege_TechData =
     [kTechDataMaxHealth] = kEggBeaconHealth, 
      [kTechDataSupply] = kLoneCystSupply,
     [kTechDataMaxArmor] = kEggBeaconArmor},
+    
+    
+    { [kTechDataId] = kTechId.AlienPhaseGate, 
+    [kTechDataCooldown] = 0, 
+    [kTechDataTooltipInfo] = "Acts like a Phase Gate, looks like a Tunnel.", 
+    [kTechDataGhostModelClass] = "AlienGhostModel",   
+    --[kTechDataBuildRequiresMethod] = GetCheckLoneCyst,
+    [kTechDataMapName] = AlienPhaseGate.kMapName ,        
+    [kTechDataDisplayName] = "AlienPhaseGate",
+    [kTechDataPointValue] = kTunnelEntrancePointValue,
+    [kTechDataCostKey] = kTunnelEntranceCost,   
+    [kTechDataMaxExtents] = Vector(1.2, 1.2, 1.2),
+    [kTechDataRequiresInfestation] = true, 
+    [kTechDataHotkey] = Move.C,   
+    [kTechDataBuildTime] = kTunnelBuildTime, 
+    [kTechDataModel] = AlienPhaseGate.kModelName,   
+    [kTechDataBuildMethodFailedMessage] = "Cannot place during Setup or In Siege",
+    [kVisualRange] = 8,
+    [kTechDataMaxHealth] = kMatureTunnelEntranceHealth, 
+     [kTechDataSupply] = 0,
+    [kTechDataMaxArmor] = kMatureTunnelEntranceArmor},
     
     
     { [kTechDataId] = kTechId.StructureBeacon, 

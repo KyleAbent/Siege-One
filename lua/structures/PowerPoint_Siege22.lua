@@ -21,6 +21,7 @@ function PowerPoint:OnInitialized()
         self.activeObs = 0
         self.activePGs = 0
         self.activeProtos = 0
+        self.activeAlienPGS = 0
         self:SetInternalPowerState(PowerPoint.kPowerState.socketed)
     end
     
@@ -29,20 +30,24 @@ end
 if Server then
 
     function PowerPoint:ToggleCountMapName(mapname, count)//although onpoweron may never register...?
+    //Should this be clamped? Should never be negative.. errr..
         if not GetGameStarted() or not GetIsImaginatorMarineEnabled() then return end
-        Print("ToggleCountMapName mapname %s, count %s", mapname, count)
-        if string.find(mapname, "armor") then
+        
+        if mapname == "armory" then
             self.activeArmorys = self.activeArmorys + (count)
-        elseif string.find(mapname, "observ") then
+            --Print("Powerpoint location %s, ToggleCountMapName mapname %s, count %s, active count is %s", self.mapname, count) --... GetLocationForPoint(respoint:GetOrigin()) ehh
+        elseif mapname == "observatory"  then
              self.activeObs = self.activeObs + (count)
-        elseif string.find(mapname, "robo") then
+        elseif mapname == "roboticsfactory"  then
              self.activeRobos = self.activeRobos + (count)
-        elseif string.find(mapname, "batter") then
+        elseif mapname == "sentrybattery"  then
              self.activeBatteries = self.activeBatteries + (count)
-        elseif string.find(mapname, "phase") then
+        elseif mapname == "phasegate"  then
              self.activePGs = self.activePGs + (count)
-        elseif string.find(mapname, "prot") then
+       elseif mapname == "prototypelab"  then
              self.activeProtos = self.activeProtos + (count)
+       elseif mapname == "alienphasegate"  then
+             self.activeAlienPGS = self.activeAlienPGS + (count)
         end
     end
     

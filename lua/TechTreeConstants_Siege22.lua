@@ -49,6 +49,7 @@ local kSiege_TechIds =
     'AdvancedBeacon',
     'SiegeBeacon',
     'AlienTechPointHive',
+    'AlienPhaseGate',
     --'DropARC',
 }
 

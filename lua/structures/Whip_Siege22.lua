@@ -16,7 +16,9 @@ function Whip:OnInitialized()
     origIinit(self)
     InitMixin(self, LevelsMixin)
     InitMixin(self, AvocaMixin)
-    GetImaginator().activeWhips = GetImaginator().activeWhips + 1  
+    if Server then
+        GetImaginator().activeWhips = GetImaginator().activeWhips + 1  
+    end    
 end
 
 function Whip:OnConstructionComplete()
@@ -59,11 +61,13 @@ if Server then
 end
 
 
-function Whip:PreOnKill(attacker, doer, point, direction)
-	GetImaginator().activeWhips  = GetImaginator().activeWhips - 1
-end
+
 
 if Server then
+
+    function Whip:PreOnKill(attacker, doer, point, direction)
+        GetImaginator().activeWhips  = GetImaginator().activeWhips - 1
+    end
 
     function Whip:PostDoDamage(target,damage)
         if target then
@@ -208,6 +212,3 @@ function Whip:GetCanBomb(target, targetPoint)
     return true
     
 end
-
-
-    

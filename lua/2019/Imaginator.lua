@@ -11,6 +11,7 @@ local networkVars =
   marineenabled = "private boolean",
   lastMarineBeacon =  "private time",
   lasthealwave = "private time",
+  activeAlienPGs = "integer",
   activeArms = "integer",
   activeWhips = "integer",
   activeCrags = "integer",
@@ -24,6 +25,7 @@ function Imaginator:OnCreate()
    self.marineenabled = false
    self.activeArms = 0
    self.activeWhips = 0
+   self.activeAlienPGs = 0
    self.activeCrags = 0
    self.activeShades = 0
    self.activeShifts = 0
@@ -488,7 +490,12 @@ local function GetAlienSpawnList(self)
 
     local tospawn = {}
     
-    if GetSiegeDoorOpen() then
+    if self.activeAlienPGs < 10 then --number should be based on number of powerpoints? (minus siege?)
+        table.insert(tospawn, kTechId.AlienPhaseGate)
+    end
+    
+    
+    if GetSiegeDoorOpen() then --hmm?? TBD if we're down by Tunnels..
         if self.activeCrags < 13 or self.activeShades < 12 then
             if  self.activeCrags < 13 then
                 table.insert(tospawn, kTechId.Crag)
@@ -500,6 +507,8 @@ local function GetAlienSpawnList(self)
             return finalchoice
         end
     end
+
+
 
     if self.activeShifts < 14 and TresCheck(2,kShiftCost) then
         table.insert(tospawn, kTechId.Shift)
@@ -749,22 +758,33 @@ local function doSpawn(self,tospawn,randomspawn)
 end
 function Imaginator:ActualAlienFormula()
     self:hiveSpawn()
-    local randomspawn = nil
+    local areaToSpawn = nil
     local tospawn = GetAlienSpawnList(self) 
     local success = false
     local entity = nil
+    local power = nil
 
     if tospawn then  
-    local power = ActualAlienFormulaFailSafeOne()
-        if not power then
-            return //recursion
-         end
+
         //print("ActualAlienFormula randomspawn")
-        randomspawn = power:GetRandomSpawnPoint()  //FindFreeSpace(potential, math.random(2.5, 4) , math.random(8, 16), not tospawn == kTechId.Cyst )
-            if randomspawn then 
-                doSpawn(self,tospawn,randomspawn)
-            end
-            success = true
+        if tospawn == kTechId.AlienPhaseGate then
+           power = GetRandomDisabledPowerWithoutAlienPhaseGate()
+            if not power then
+                --Print("DEBUG12345 - ActualAlienFormula - tospawn == AlienPhaseGate, power is false. Preventing Error")
+                return //recursion
+             end
+           areaToSpawn = power:GetRandomSpawnPoint()
+        else
+            power = ActualAlienFormulaFailSafeOne()
+            if not power then
+                return //recursion
+             end
+            areaToSpawn = power:GetRandomSpawnPoint()  //FindFreeSpace(potential, math.random(2.5, 4) , math.random(8, 16), not tospawn == kTechId.Cyst )
+        end
+        if areaToSpawn then 
+            doSpawn(self,tospawn,areaToSpawn)
+        end
+        success = true
     end
     -- if success and entity then self:AdditionalSpawns(entity) end
     return success

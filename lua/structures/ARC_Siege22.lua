@@ -91,9 +91,10 @@ if Server then
     local function CheckForAndActAccordingly(who)
         local stopanddeploy = false
         for _, enemy in ipairs(GetEntitiesWithMixinForTeamWithinRange("Live", 2, who:GetOrigin(), kARCRange)) do
-            if who:GetCanFireAtTarget(enemy, enemy:GetOrigin()) then
-            stopanddeploy = true
-            break
+            //I added this GetIsSighted function requirement because Clogs can receive structural damage yet not be sighted? bug..? o_O
+            if who.GetIsSighted and who:GetCanFireAtTarget(enemy, enemy:GetOrigin()) then
+                stopanddeploy = true
+                break
             end
         end
         --Print("stopanddeploy is %s", stopanddeploy)

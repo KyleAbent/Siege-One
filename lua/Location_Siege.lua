@@ -1,5 +1,15 @@
-//local networkVars = {} shouldCheck = boolean // during setup // either comm enabled or disabled rather than calling functions
+local networkVars = {
+isPowered = "boolean"
+}
 
+local origInit = Location.OnInitialized
+function Location:OnInitialized()
+    origInit(self)
+    self.isPowered = false 
+end
+    
+    
+    
 if Server then
   local orig = Location.OnTriggerEntered
    function Location:OnTriggerEntered(entity, triggerEnt)
@@ -46,3 +56,5 @@ if Server then
          
     end
 end
+
+Shared.LinkClassToMap("Location", Location.kMapName, networkVars)

@@ -29,28 +29,45 @@ SetCachedTechData(kTechId.TeleportShell, kTechDataRequiresInfestation, false)
 SetCachedTechData(kTechId.TeleportEgg, kTechDataRequiresInfestation, false)
 
 
-
-
-//////Come back here!
+//Yes, it doesn't make sense. Why can't powerpoints be reference?
+//I had to add in location network var
+//this logic is backwards but it works lol
 function GetRoomPowerDisabled(techId, origin, normal, commander)
     local location = GetLocationForPoint(origin)
-    local powerpoint = GetPowerPointForLocation(location.name)
-    
-    print("A")
-    if not powerpoint then
+    if not location then
+        //print("did not find location")
         return false
-    end
-    print("B")
-    
-    print("C")
-    if powerpoint:GetIsBuilt() and powerpoint:GetIsDisabled() then
-    print("D")
-        return true
     end    
-    print("E`")
+    local locationName = location.name
+    //Print("location name is %s",locationName)
+    local isPowered = false
+            isPowered = location.isPowered
+            //Print("Found powerpoint for location, isPowered is %s", isPowered)
+            //Print("Location %s isPowered is %s", location.name, isPowered)
     
     
-    return false
+    //print("for loop oveR")
+    
+    //print("A")
+    if not isPowered then
+        //print("is powered")
+        return false
+    //elseif not powerpoint then
+    else
+        //print("did not find powerpoint")
+        return true
+    end
+    //print("B")
+    
+    //print("C")
+    //if powerpoint:GetIsDisabled() then//powerNode:GetIsPowering()
+        //print("D")
+        return false
+    //end    
+    //print("E`")
+    
+    
+    //return false
 
     
 end
@@ -88,6 +105,46 @@ SetCachedTechData(kTechId.Shell, kTechDataBuildRequiresMethod, GetRoomPowerDisab
 SetCachedTechData(kTechId.Spur, kTechDataBuildRequiresMethod, GetRoomPowerDisabled)
 
 SetCachedTechData(kTechId.DrifterEgg, kTechDataBuildRequiresMethod, GetRoomPowerDisabled)
+
+
+
+
+
+
+-----------
+SetCachedTechData(kTechId.Crag, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.Whip, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.Shift, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.Shade, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.Egg, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+
+
+
+SetCachedTechData(kTechId.TeleportHydra, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.TeleportWhip, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.TeleportTunnel, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.TeleportCrag, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.TeleportShade, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.TeleportShift, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.TeleportVeil, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.TeleportShift, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.TeleportSpur, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.TeleportShell, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.TeleportEgg, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+
+
+SetCachedTechData(kTechId.NutrientMist, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+
+
+SetCachedTechData(kTechId.BoneWall, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.Rupture, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+
+SetCachedTechData(kTechId.Veil, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.Shell, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+SetCachedTechData(kTechId.Spur, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+
+SetCachedTechData(kTechId.DrifterEgg, kTechDataBuildMethodFailedMessage, "Room Power must be Disabled")
+
 
 
 

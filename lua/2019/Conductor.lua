@@ -196,6 +196,19 @@ if Server then
             end
             self.manageWhipsTime = Shared.GetTime()
         end
+        
+        if not GetFrontDoorOpen() and not self.manageDoorScanTime or  self.manageDoorScanTime + 10 <= Shared.GetTime() then
+            if GetIsImaginatorMarineEnabled() then
+                 local frontdoor = GetNearest(self:GetOrigin(), "FrontDoor") //self origin lol well ok it works
+                 if frontdoor then
+                    local shade  = GetNearest(frontdoor:GetOrigin(), "Shade")
+                    if shade then
+                        CreateEntity(Scan.kMapName, shade:GetOrigin(), 1)
+                    end    
+                 end
+            end
+            self.manageDoorScanTime = Shared.GetTime()
+        end
   
     end
     
@@ -526,13 +539,13 @@ function Conductor:ManageCrags()
        end
        
        if not focusTarget then
-        print("ManageCrags has no focusTarget")
+        //print("ManageCrags has no focusTarget")
         focusTarget = self:GetCragFocusTarget()
-        print("ManageCrags has found focusTarget")
+        //print("ManageCrags has found focusTarget")
        end
        
        if focusTarget then
-       print("ManageCrags has focusTarget")
+       //print("ManageCrags has focusTarget")
             local origin = FindFreeSpace(focusTarget:GetOrigin(), 4) //dont loop this calculation
             for index, crag in ientitylist(Shared.GetEntitiesWithClassname("Crag")) do
               if not crag.moving  then

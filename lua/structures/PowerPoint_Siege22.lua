@@ -29,6 +29,25 @@ end
 
 if Server then
 
+    local hookSetInt = PowerPoint.SetInternalPowerState
+    function PowerPoint:SetInternalPowerState(powerState)
+        hookSetInt(self, powerState)
+        currentLocationName = GetLocationForPoint(self:GetOrigin())
+        if currentLocationName then
+            currentLocationName = currentLocationName.name
+            local locations = {}
+            for index, location in ientitylist(Shared.GetEntitiesWithClassname("Location")) do
+                if location.name == currentLocationName then
+                    table.insert(locations, location )
+                end    
+            end    
+             for i = 1, #locations do 
+                local location = locations[i]     
+                location.isPowered = self:GetIsPowering()
+             end
+        end     
+    end    
+
     function PowerPoint:ToggleCountMapName(mapname, count)//although onpoweron may never register...?
     //Should this be clamped? Should never be negative.. errr..
         if not GetGameStarted() or not GetIsImaginatorMarineEnabled() then return end

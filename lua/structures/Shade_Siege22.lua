@@ -43,14 +43,14 @@ function Shade:ManageShades()
     end
     
     ////////////During Front Open//////////////////////////////////////
-    if GetFrontDoorOpen() then //Manage ShadeInk
+    --if GetFrontDoorOpen() then //Manage ShadeInk
            //Maybe better to have the origin of scan search for shades within radius
         if GetIsScanWithinRadius(self:GetOrigin()) and GetConductor():GetIsInkAllowed() then
             CreateEntity(ShadeInk.kMapName, self:GetOrigin() + Vector(0, 0.2, 0), 2)
             self:TriggerEffects("shade_ink")
             GetConductor():JustInkedNowSetTimer()
         end
-    end
+    --end
 
 
    /////////////////////During Siege////////////////////////////////////////

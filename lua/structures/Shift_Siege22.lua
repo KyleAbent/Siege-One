@@ -45,30 +45,21 @@ function Shift:GetCanTeleportOverride()
     end
 end
 
-function Shift:ManageShifts()
-
-    if self:GetCanTeleport() then
-        local destination = findDestinationForAlienConst(self)
-        if destination then
-            self:TriggerTeleport(5, self:GetId(), FindFreeSpace(destination:GetOrigin(), 4), 0)
-        end
-    end
-    
-end
 
 local origUpdate = Shift.OnUpdate 
 
 function Shift:OnUpdate(deltaTime)
     origUpdate(self,deltaTime)
+    /*
      if Server then
         if self.manageShiftsTime + kManageShiftsInterval <= Shared.GetTime() then
             if GetIsImaginatorAlienEnabled() and GetConductor():GetIsShiftMovementAllowed() then
-                self:ManageShifts()
                  GetConductor():JustMovedShiftSetTimer()
             end
             self.manageShiftsTime = Shared.GetTime()
         end
      end
+     */
         
 end
 

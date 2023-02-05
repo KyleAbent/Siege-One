@@ -245,6 +245,16 @@ local function grabDoorMapEditorSettings()
 end
 
 ------------------------------------------------------------
+
+function Plugin:MapChange()
+    local locationGraph = GetLocationGraph()
+    print("Attempting to destroy LocationGraph")
+    if locationGraph then
+        Server.DestroyEntity(locationGraph)
+        print("Destroying locationgraph")
+     end
+ end
+    
 function Plugin:MapPostLoad()
       --Server.CreateEntity(Timer.kMapName)
       --GetDoorLengthByMapName()
@@ -358,30 +368,6 @@ function Plugin:SetGameState( Gamerules, State, OldState )
      
 end
 
------------------------------------------------------------
-function Plugin:HookNotifyCommanderLimitReached(who)
-    local commander = who:GetTeam():GetCommander()
-    if commander ~= nil then
-        local client = commander:GetClient()
-        self:NotifyOne(client, "LoneCyst count is 5. Next placement will delete the 1st.", true )
-    end
-end
-
-Shine.Hook.SetupGlobalHook( "NotifyCommanderLimitReached", "HookNotifyCommanderLimitReached", "Replace" )
-
-function Plugin:HookNotifyCommanderKill(who)
-    local commander = who:GetTeam():GetCommander()
-    if commander ~= nil then
-        local client = commander:GetClient()
-        local location = GetLocationForPoint(who:GetOrigin())
-        if location then
-            self:NotifyOne(client, "Deleted LoneCyst in %s", true, location.name )
-        end
-    end
-end
-
-Shine.Hook.SetupGlobalHook( "NotifyCommanderKill", "HookNotifyCommanderKill", "Replace" )
-
 
 ------------------------------------------------------------
 function Plugin:OnNotifyAlienCommander(who) 
@@ -422,10 +408,6 @@ Shine:NotifyDualColour( Player, 255, 165, 0,  "[AutoComm]",  255, 0, 0, String, 
 end
 ------------------------------------------------------------
 ------------------------------------------------------------
-function Plugin:GiveCyst(Player)
-            local ent = CreateEntity(CystSiege.kMapName, Player:GetOrigin(), Player:GetTeamNumber())  
-             ent:SetConstructionComplete()
-end
 ------------------------------------------------------------
 function Plugin:CreateCommands()
 
@@ -606,10 +588,11 @@ local function Go( Client )
     for i = 1, 18 do
         Shared.ConsoleCommand("addbot") 
     end    
+    Shared.ConsoleCommand("sh_autocomm") 
 end
 
 local BringAllCommand = self:BindCommand( "sh_go", "go", Go )
-BringAllCommand:Help( "sh_go - cheats 1 and forceroundstart" )
+BringAllCommand:Help( "sh_go - cheats 1 and forceroundstart and add 18 bots" )
 
 
 

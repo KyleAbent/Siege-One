@@ -279,28 +279,6 @@ function findDestinationForAlienConst(who)
     end
 
 end
-function doChain(entity) 
-    //print("UHHH")
-    local where = entity:GetOrigin()
-    //if not entity:isa("Contamination") and GetIsPointOnInfestation(where) then return end
-    local cyst = GetEntitiesWithinRange("Cyst",where, kCystRedeployRange)
-    if (#cyst >=1) then return end
-    local conductor = GetConductor()
-    local splitPoints = GetCystPoints(entity:GetOrigin(), true, 2)
-    for i = 1, #splitPoints do
-        //if getIsNearHive(splitPoints[i]) or ( not getHasCystNear(splitPoints[i]) and not GetIsPointOnInfestation(splitPoints[i]) ) then
-            local cyst = GetEntitiesWithinRange("Cyst",where, kCystRedeployRange)
-            if not (#cyst >=1) then 
-            local csyt = CreateEntity(Cyst.kMapName,splitPoints[i],2) //FindFreeSpace(splitPoints[i], 1, 7), 2)
-            if not GetSetupConcluded() then csyt:SetConstructionComplete() end
-            if i == #splitPoints then //last one
-                //conductor:SetMostRecentCyst(cyst:GetId())
-                Print("Setting Conductor most recent cyst origin")
-                conductor:SetMostRecentCystOrigin(splitPoints[i])
-            end 
-        end
-    end
-end
 function GetIsPointWithinHiveRadius(point)     
    local hive = GetEntitiesWithinRange("Hive", point, ARC.kFireRange)
    if #hive >= 1 then return true end
@@ -504,26 +482,6 @@ function GetRatioToSiege()
    
     return level 
     
-end
-function AdjustCystsHPArmor()
-    for _, cyst in ientitylist(Shared.GetEntitiesWithClassname("Cyst")) do
-        //if not cyst is king?
-        cyst:AdjustMaxHPOnTier()
-    end
-end
-function TurnLoneCystsIntoRegular()//Bleh a for loop
-    local cysts = {}
-    for _, lonecyst in ientitylist(Shared.GetEntitiesWithClassname("LoneCyst")) do
-        lonecyst:SetTechId(kTechId.Cyst)
-    end
-
-end
-function GetRandomCyst()//Bleh a for loop
-    local cysts = {}
-    for _, cyst in ientitylist(Shared.GetEntitiesWithClassname("Cyst")) do
-        if cyst and cyst:GetIsBuilt() and not cyst.isKing then table.insert(cysts,cyst) end
-    end
-    return table.random(cysts)
 end
 function GetHasHiveType(type)//Bleh a for loop
     for _, hive in ientitylist(Shared.GetEntitiesWithClassname("Hive")) do
@@ -913,13 +871,6 @@ function GetSiegeDoorOpen()
    return boolean
 end
 
-function GetKingCyst() 
-        for index, king in ientitylist(Shared.GetEntitiesWithClassname("KingCyst")) do
-      
-          return king
-            
-    end
-end
 
 function GetFrontDoor() 
         for index, door in ientitylist(Shared.GetEntitiesWithClassname("FrontDoor")) do

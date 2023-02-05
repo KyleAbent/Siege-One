@@ -162,11 +162,6 @@ local choices = {}
              for index, mac in ientitylist(Shared.GetEntitiesWithClassname("MAC")) do
                   if GetIsBusy(mac) then table.insert(choices, mac) break end 
               end   
-         /*
-             for index, cyst in ientitylist(Shared.GetEntitiesWithClassname("Cyst")) do
-                  if not cyst:GetIsBuilt() then table.insert(choices, cyst) break end 
-              end
-      */
     
                      for index, player in ientitylist(Shared.GetEntitiesWithClassname("Player")) do
                   if player ~= self and not player:isa("Spectator")  and not player:isa("ReadyRoomPlayer") 
@@ -356,11 +351,6 @@ local choices = {}
              for index, mac in ientitylist(Shared.GetEntitiesWithClassname("MAC")) do
                   if GetIsBusy(mac) then table.insert(choices, mac) break end 
               end     
-              
-             for index, cyst in ientitylist(Shared.GetEntitiesWithClassname("Cyst")) do
-                  if not cyst:GetIsBuilt() then table.insert(choices, cyst) break end 
-              end  
-              
              for index, drifter in ientitylist(Shared.GetEntitiesWithClassname("Drifter")) do
                   if GetIsBusy(drifter) then table.insert(choices, drifter) break end 
               end  

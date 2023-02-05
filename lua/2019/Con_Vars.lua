@@ -8,5 +8,4 @@ kManageShadeInterval = 16
 kManageCragInterval = 17
 kManageShiftsInterval = 18
 kManageWhipsInterval = 19
-kManageCystsInterval = 20
 kResTowerInterval = 30 -- well if setup then .. bleh

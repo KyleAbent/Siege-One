@@ -74,13 +74,11 @@ function AlienTeam:InitTechTree()
     self.techTree:AddPassive(kTechId.ShiftHiveTwo, kTechId.ShiftHive)
 
 
-    self.techTree:AddBuildNode(kTechId.LoneCyst, kTechId.None) 
     self.techTree:AddBuildNode(kTechId.EggBeacon, kTechId.CragHive)
     self.techTree:AddBuildNode(kTechId.StructureBeacon, kTechId.ShiftHive)
     self.techTree:AddBuildNode(kTechId.AlienPhaseGate, kTechId.BioMassNine)
 
 
-    self.techTree:AddMenu(kTechId.CystMenu)
     self.techTree:AddMenu(kTechId.CragMenu)
     self.techTree:AddMenu(kTechId.WhipMenu)
     self.techTree:AddMenu(kTechId.ShiftMenu)

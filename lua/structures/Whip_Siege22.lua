@@ -61,9 +61,20 @@ if Server then
 end
 
 
-
-
 if Server then
+
+    function Whip:OnConstructionComplete()
+        self:SetGameEffectMask(kGameEffect.OnInfestation,true)
+        self:Root()
+    end
+    
+    function Whip:OnTeleport()
+
+        --if self.rooted then
+            --self:Unroot()
+        --end
+
+    end
 
     function Whip:PreOnKill(attacker, doer, point, direction)
         GetImaginator().activeWhips  = GetImaginator().activeWhips - 1
@@ -86,13 +97,6 @@ if Server then
     
     function Whip:OnOrderComplete(currentOrder)     
         --doChain(self)
-            if GetIsImaginatorAlienEnabled() and not self:GetGameEffectMask(kGameEffect.OnInfestation) then
-                //local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
-                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",self:GetOrigin(), kCystRedeployRange) == 0
-                if notNearCyst then
-                    local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
-                end
-            end
     end
     
     
@@ -100,11 +104,6 @@ if Server then
         if self.moving and GetIsImaginatorAlienEnabled() then  
             self:ClearOrders()
             self:GiveOrder(kTechId.Stop, nil, self:GetOrigin(), nil, true, true)  
-            --doChain(self)
-            local notNearCyst = #GetEntitiesWithinRange("LoneCyst",self:GetOrigin(), kCystRedeployRange) == 0
-            if notNearCyst then
-                local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
-            end
         end
     end
     
@@ -112,55 +111,6 @@ end//Server
 
 Shared.LinkClassToMap("Whip", Whip.kMapName, networkVars)
 
------------------------------------------------------
-Script.Load("lua/InfestationMixin.lua")
-class 'WhipAvoca' (Whip)
-WhipAvoca.kMapName = "whipavoca"
-
-local networkVars = {}
-
-
-AddMixinNetworkVars(InfestationMixin, networkVars)
-function WhipAvoca:GetInfestationRadius()
-    return 1
-end
-function WhipAvoca:OnOrderGiven()
-   if self:GetInfestationRadius() ~= 0 then self:SetInfestationRadius(0) end
-end
-    function WhipAvoca:OnInitialized()
-        Whip.OnInitialized(self)
-        
-        InitMixin(self, InfestationMixin)
-        
-        self:SetTechId(kTechId.Whip)
-    end
-    
-    local origCreate = Whip.OnCreate
-    function Whip:OnCreate()
-        origCreate(self)
-        if Server then
-            InitMixin(self, OwnerMixin)
-        end
-    end
-    
-        function WhipAvoca:GetTechId()
-         return kTechId.Whip
-    end
-   function WhipAvoca:OnGetMapBlipInfo()
-    local success = false
-    local blipType = kMinimapBlipType.Undefined
-    local blipTeam = -1
-    local isAttacked = HasMixin(self, "Combat") and self:GetIsInCombat()
-    blipType = kMinimapBlipType.Whip
-     blipTeam = self:GetTeamNumber()
-    if blipType ~= 0 then
-        success = true
-    end
-    
-    return success, blipType, blipTeam, isAttacked, false --isParasited
-end
-
-Shared.LinkClassToMap("WhipAvoca", WhipAvoca.kMapName, networkVars) 
 
 local originit = Whip.OnInitialized
 function Whip:OnInitialized()

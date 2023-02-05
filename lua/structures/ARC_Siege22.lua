@@ -137,14 +137,23 @@ if Server then
     //Print("SpecificRules isSiegeOpen is %s", isSiegeOpen)
             
     local attacking = self.deployMode == ARC.kDeployMode.Deployed
-
-    local inradius =  not isSiegeOpen and ( GetIsPointWithinChairRadius(self:GetOrigin()) or CheckForAndActAccordingly(self) ) or 
+    local isSetup = not GetFrontDoorOpen()
+    local inradius =  nil
+    
+    if isSetup then
+        inradius = CheckForAndActAccordingly(self)
+    else     
+        inradius =    not isSiegeOpen and ( GetIsPointWithinChairRadius(self:GetOrigin()) or CheckForAndActAccordingly(self) ) or 
                           isSiegeOpen and (  GetIsInSiege(self) and GetIsPointWithinHiveRadius(self:GetOrigin()) )
+    end                      
+
+                          
     local shouldstop = false
     local shouldmove = not shouldstop and not moving and not inradius
     local shouldstop = moving and inradius
     local shouldattack = inradius and not attacking 
     local shouldundeploy = attacking and not inradius and not moving
+
       
       if moving then
         
@@ -161,11 +170,16 @@ if Server then
           
              GiveUnDeploy(self)
            else 
-                if not isSiegeOpen then
-                 MoveToRandomChair(self)
-                elseif where ~= nil then
-                 MoveToHives(self,where)
-                end
+                if isSetup then
+                     self:GiveOrder(kTechId.Move, nil, where, nil, true, true)
+                else
+                    if not isSiegeOpen then
+                     MoveToRandomChair(self)
+                    elseif where ~= nil then
+                     MoveToHives(self,where)
+                    end
+                end    
+                    
            end
            
        elseif shouldattack then
@@ -195,13 +209,25 @@ end//server
 function ARC:ManageArcs()
     local where = nil
 
-    if GetSiegeDoorOpen() and GetConductor().arcSiegeOrig ~= GetConductor():GetOrigin() then
-        //print("ManageArcs SiegeDoorOpen and arcSiegeOrig origin is at conductor origin")
-        where = GetConductor().arcSiegeOrig
+    ---add here for front door during setup
+    if not GetFrontDoorOpen() then
+        --print("ManageArcs front door not open")
+        frontdoor = GetNearest(self:GetOrigin(), "FrontDoor") //self origin lol well ok it works
+        if frontdoor then
+            --print("ManageArcs found front door")
+            where = frontdoor:GetOrigin()
+        end
     end
     
-    if not GetSiegeDoorOpen() then //and power not in siege lol
-        where = FindFreeSpace(GetRandomActivePowerNotInSiege():GetOrigin(), math.random(2,4), math.random(8,24), false ) 
+    if not where then
+        if GetSiegeDoorOpen() and GetConductor().arcSiegeOrig ~= GetConductor():GetOrigin() then
+            //print("ManageArcs SiegeDoorOpen and arcSiegeOrig origin is at conductor origin")
+            where = GetConductor().arcSiegeOrig
+        end
+        
+        if not GetSiegeDoorOpen() then //and power not in siege lol
+            where = FindFreeSpace(GetRandomActivePowerNotInSiege():GetOrigin(), math.random(2,4), math.random(8,24), false ) 
+        end
     end
     
     if where == GetConductor():GetOrigin()  then
@@ -313,7 +339,6 @@ local function CanMoveTo(self, target)
      if not target:isa("Hive") then
         return false
     end
-     if target:isa("Cyst") then return false end
   --  if not target:GetIsSighted() and not GetIsTargetDetected(target) then
  --       return false
   --  end

@@ -2,8 +2,6 @@
 
 
 EvolutionChamber.kUpgradeButtons ={                            
-    [kTechId.CystMenu] = { kTechId.None, kTechId.None, kTechId.None, kTechId.None,
-                                kTechId.None, kTechId.None, kTechId.None, kTechId.None },
                              
     [kTechId.CragMenu] = { kTechId.CragStackOne, kTechId.CragStackTwo, kTechId.CragStackThree, kTechId.None,
                                  kTechId.None, kTechId.None, kTechId.None, kTechId.None },
@@ -22,7 +20,7 @@ EvolutionChamber.kUpgradeButtons ={
 
 function EvolutionChamber:GetTechButtons(techId)
 
-    local techButtons = { kTechId.CystMenu, kTechId.CragMenu, kTechId.WhipMenu, kTechId.ShiftMenu,
+    local techButtons = { kTechId.None, kTechId.CragMenu, kTechId.WhipMenu, kTechId.ShiftMenu,
                                 kTechId.ShadeMenu, kTechId.None, kTechId.None, kTechId.None }
                                 
     local returnButton = kTechId.Return
@@ -42,18 +40,3 @@ function EvolutionChamber:GetTechButtons(techId)
     return techButtons
     
 end
-
-/*
-if Server then
-
-    function EvolutionChamber:OnResearchComplete(researchId)
-        if researchId == kTechId.DoubleCystHP or researchId == kTechId.TripleCystHP 
-        or researchId == kTechId.QuadrupleCystHP or researchId == kTechId.DoubleCystArmor 
-        or researchId == kTechId.TripleCystArmor or researchId == kTechId.QuadrupleCystArmor then
-            AdjustCystsHPArmor()
-        end
-
-    end
-
-end
-*/

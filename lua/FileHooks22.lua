@@ -56,7 +56,8 @@ ModLoader.SetupFileHook( "lua/RolloutMixin.lua", "lua/Mixins/RollOutMixin_Siege2
 ModLoader.SetupFileHook( "lua/LeapMixin.lua", "lua/Mixins/LeapMixin_Siege23.lua", "post" )
 ModLoader.SetupFileHook( "lua/CorrodeMixin.lua", "lua/Mixins/CorrodeMixin_Siege23.lua", "post" )
 ModLoader.SetupFileHook( "lua/TunnelUserMixin.lua", "lua/Mixins/TunnelUserMixin_Siege23.lua", "post" )
-
+ModLoader.SetupFileHook( "lua/InfestationTrackerMixin.lua", "lua/Mixins/InfestationTrackerMixin_Siege23.lua", "replace" )
+--ModLoader.SetupFileHook( "lua/InfestationMixin.lua", "lua/Mixins/InfestationMixin_Siege23.lua", "post" )
 
 ModLoader.SetupFileHook( "lua/InputHandler.lua", "lua/InputHandler_Siege.lua", "post" )
 --ModLoader.SetupFileHook( "lua/AlienWeaponEffects.lua", "lua/AlienWeaponEffects_Siege.lua", "post" )

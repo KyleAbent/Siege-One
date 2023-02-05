@@ -470,7 +470,6 @@ function Imaginator:Imaginations()
         if self.alienenabled then
             self:ShowWarningForToggleAliensOff()
             self.alienenabled = false
-            TurnLoneCystsIntoRegular()
         end
     end
     
@@ -647,15 +646,7 @@ local function getAlienConsBuildOrig(techid)
     if GetSiegeDoorOpen() and techid == kTechId.Crag or techid == kTechId.Shade then//and GetRandomHive() ~= nil (if all hives are down? then game over duh)
         return GetRandomHive()
     else
-         local random = math.random(1,3)
-          --or active gorge tunnel  exit
-          if random == 1 then
-            return GetRandomDisabledPower()
-          elseif random == 2 then 
-            return GetRandomConnectedCyst()//Chance of erroring if entity dies ?
-          elseif random == 3 then
-            return GetRandomConstructEntityNearMostRecentPlacedCyst()//Chance of erroring if entity dies ?
-          end
+        return GetRandomDisabledPower()
     end
  
 end
@@ -751,10 +742,6 @@ local function doSpawn(self,tospawn,randomspawn)
                 if HasMixin(entity, "Research") then
                     entity:TriggerResearches()
                 end
-                  local notNearCyst = #GetEntitiesWithinRange("LoneCyst",entity:GetOrigin(), kCystRedeployRange)  == 0
-                 if notNearCyst then
-                    local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(entity:GetOrigin(), 1, kCystRedeployRange),2)
-                 end
 end
 function Imaginator:ActualAlienFormula()
     self:hiveSpawn()

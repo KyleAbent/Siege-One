@@ -1,6 +1,5 @@
 Script.Load("lua/2019/EggBeacon.lua")
 Script.Load("lua/2019/StructureBeacon.lua")
-Script.Load("lua/2019/LoneCyst.lua")
 Script.Load("lua/Weapons/Alien/PrimalScream.lua")
 Script.Load("lua/Weapons/Alien/AcidRocket.lua")
 Script.Load("lua/2019/AlienTechPoint.lua")
@@ -12,6 +11,11 @@ Script.Load("lua/Modifications/PhaseGate_Aliens_Siege23.lua")
 local kCachedTechCategories
 local kCachedMapNameTechIds
 local kCachedTechData
+
+
+function GetFrontDoorOpen(techId, origin, normal, commander)
+    return GetFrontDoorOpen()
+end
 
 
 function GetCheckAlienTechPoint(techId, origin, normal, commander)
@@ -52,11 +56,6 @@ function GetCheckStructureBeacon(techId, origin, normal, commander)
     end
     
     return num < 1 and not GetWhereIsInSiege(origin) and GetSetupConcluded()
-    
-end
-function GetCheckLoneCyst(techId, origin, normal, commander)
-    
-    return  GetSetupConcluded() and not GetWhereIsInSiege(origin)
     
 end
 
@@ -170,12 +169,7 @@ local kSiege_TechData =
     -- [kTechDataResearchTimeKey] = kPrimalScreamTimeKey, 
     [kTechDataTooltipInfo] = "+Energy to teammates, enzyme cloud"},
     
-    
-    {
-        [kTechDataId] = kTechId.CystMenu,
-        [kTechDataDisplayName] = "CystMenu",
-        [kTechDataTooltipInfo] = "CystMenu",
-    },
+
 
     {
         [kTechDataId] = kTechId.CragMenu,
@@ -264,41 +258,24 @@ local kSiege_TechData =
     [kTechDataBuildMethodFailedMessage] = "1 at a time not in siege",
     [kVisualRange] = 8,
     [kTechDataMaxHealth] = kEggBeaconHealth, [kTechDataMaxArmor] = kEggBeaconArmor},
-    
-    { [kTechDataId] = kTechId.LoneCyst, 
-    [kTechDataCooldown] = kEggBeaconCoolDown, 
-    [kTechDataTooltipInfo] = "A lonely cyst which does not require a parent. Grows by itself overtime. Perfect for stealth. Cannot be placed during Setup or inside Siege. 5 Max on field at once, if you try to place a 6th it will destroy the 1st.", 
-    [kTechDataGhostModelClass] = "AlienGhostModel",   
-    [kTechDataBuildRequiresMethod] = GetCheckLoneCyst,
-    [kTechDataMapName] = LoneCyst.kMapName,        
-    [kTechDataDisplayName] = "Lone Cyst",
-    [kTechDataCostKey] = 10,   
-    [kTechDataRequiresInfestation] = false, 
-    [kTechDataHotkey] = Move.C,   
-    [kTechDataBuildTime] = 20, 
-    [kTechDataModel] = LoneCyst.kModelName,   
-    [kTechDataBuildMethodFailedMessage] = "Cannot place during Setup or In Siege",
-    [kVisualRange] = 8,
-    [kTechDataMaxHealth] = kEggBeaconHealth, 
-     [kTechDataSupply] = kLoneCystSupply,
-    [kTechDataMaxArmor] = kEggBeaconArmor},
+   
     
     
     { [kTechDataId] = kTechId.AlienPhaseGate, 
     [kTechDataCooldown] = 0, 
     [kTechDataTooltipInfo] = "Acts like a Phase Gate, looks like a Tunnel.", 
     [kTechDataGhostModelClass] = "AlienGhostModel",   
-    --[kTechDataBuildRequiresMethod] = GetCheckLoneCyst,
     [kTechDataMapName] = AlienPhaseGate.kMapName ,        
     [kTechDataDisplayName] = "AlienPhaseGate",
     [kTechDataPointValue] = kTunnelEntrancePointValue,
     [kTechDataCostKey] = kTunnelEntranceCost,   
     [kTechDataMaxExtents] = Vector(1.2, 1.2, 1.2),
-    [kTechDataRequiresInfestation] = true, 
+    [kTechDataRequiresInfestation] = false, 
+    [kTechDataBuildRequiresMethod] = GetFrontDoorOpen,
     [kTechDataHotkey] = Move.C,   
     [kTechDataBuildTime] = kTunnelBuildTime, 
     [kTechDataModel] = AlienPhaseGate.kModelName,   
-    [kTechDataBuildMethodFailedMessage] = "Cannot place during Setup or In Siege",
+    [kTechDataBuildMethodFailedMessage] = "Front Door is Not Open",
     [kVisualRange] = 8,
     [kTechDataMaxHealth] = kMatureTunnelEntranceHealth, 
      [kTechDataSupply] = 0,

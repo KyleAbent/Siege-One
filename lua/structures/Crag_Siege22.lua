@@ -104,16 +104,8 @@ function Crag:JustWavedNowSetTimer()
 end
 
 local function ManageHealWave(self)
-    for _, entity in ipairs( GetEntitiesWithMixinForTeamWithinRange("Combat", 2, self:GetOrigin(),Crag.kHealRadius) ) do
-                 if entity ~= self and entity:GetIsInCombat() and entity:GetHealthScalar() <= .9  then
-                         self:TriggerHealWave()
-                         //if self.moving then 
-                            //self:ClearOrders()
-                        //end
-                        self:JustWavedNowSetTimer()
-                        break//Only trigger once , not for every ... lol
-                end
-      end
+    self:TriggerHealWave()
+    self:JustWavedNowSetTimer()
 end
 
 function Crag:InstructSpecificRules()
@@ -122,9 +114,6 @@ function Crag:InstructSpecificRules()
     end
 end
 
-
-
-
 if Server then
 
     function Crag:PreOnKill(attacker, doer, point, direction)
@@ -132,20 +121,9 @@ if Server then
     end
     
     function Crag:ManageCrags()
-    
+           
            self:InstructSpecificRules()
-           if self:GetCanTeleport() then    
-                local destination = findDestinationForAlienConst(self)
-                if destination then 
-                    self:TriggerTeleport(5, self:GetId(), FindFreeSpace(destination:GetOrigin(), 4), 0)
-                    local notNearCyst = #GetEntitiesWithinRange("LoneCyst",self:GetOrigin(), kCystRedeployRange) == 0
-                    if notNearCyst then
-                        local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
-                    end
-                    return
-                end
-            end
-        
+      
     end
 
 

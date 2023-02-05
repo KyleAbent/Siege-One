@@ -40,18 +40,6 @@ function Shade:ManageShades()
 
     if not GetSiegeDoorOpen() then 
 
-        if self:GetCanTeleport() then                                                
-            local nonCloaked = GetNearestMixin(self:GetOrigin(), "Cloakable", 2, function(ent) return not ent:GetIsCloaked() end)
-            if nonCloaked then
-                self:TriggerTeleport(5, self:GetId(), FindFreeSpace(nonCloaked:GetOrigin(), 4), 0)
-                local cyst = GetEntitiesWithinRange("LoneCyst",self:GetOrigin(), kCystRedeployRange)
-                if not cyst then
-                    local csyt = CreateEntity(LoneCyst.kMapName, FindFreeSpace(self:GetOrigin(), 1, kCystRedeployRange),2)
-                end
-                return
-            end
-        end
-
     end
     
     ////////////During Front Open//////////////////////////////////////
@@ -76,7 +64,6 @@ function Shade:ManageShades()
             local hive = GetRandomHive()
             if hive then
                 self:GiveOrder(kTechId.Move, hive:GetId(), FindFreeSpace(hive:GetOrigin(), 4), nil, false, false) 
-                //SetDirectorLockedOnEntity(self)
             end
         end
     

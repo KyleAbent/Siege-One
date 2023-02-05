@@ -12,16 +12,12 @@ function GetMaterialXYOffset(techId)
          return origIndex(kTechId.CragHive)
     elseif techId == kTechId.ShiftHiveTwo then
          return origIndex(kTechId.ShiftHive)
-    elseif techId == kTechId.LoneCyst then
-         return origIndex(kTechId.Cyst)
     elseif techId == kTechId.EggBeacon then
          return origIndex(kTechId.Egg)
     elseif techId == kTechId.StructureBeacon then
          return origIndex(kTechId.Spur)
     elseif techId == kTechId.AlienTechPoint then
           return origIndex(kTechId.Hive)
-    elseif techId == kTechId.CystMenu then
-          return origIndex(kTechId.Cyst)
     elseif techId == kTechId.CragMenu then
           return origIndex(kTechId.Crag)
     elseif techId == kTechId.WhipMenu then

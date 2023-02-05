@@ -15,8 +15,6 @@ local networkVars =
 
 {
     arcSiegeOrig = "vector",//Added a way in to reset this if there's two hives down and 1 hive outside of radius 
-    //mostRecentCyst = "entityid"
-    mostRecentCystOrig = "vector",
     lastInk = "time", //Global in one location rather than local for every shade in many locations
     lastCrag = "time",
     lastShift = "time",
@@ -30,7 +28,6 @@ local networkVars =
 
 function Conductor:OnCreate()
     self.arcSiegeOrig = self:GetOrigin()
-    self.mostRecentCystOrig = self:GetOrigin()
     self.lastInk = Shared.GetTime()
     self.lastCrag = Shared.GetTime()
     self.lastShift = Shared.GetTime()
@@ -84,17 +81,6 @@ end
 function Conductor:JustMovedArcSetTimer()
     self.lastArc = Shared.GetTime()
 end
-/*
-function Conductor:SetMostRecentCyst(cystid)
-    self.mostRecentCyst = cystid//Do I have to hook CystPreOnKill, call cond, get most recent cyst id.. if match then set back to invalid? Hm. Not Sure. Ah.
-end
-*/    
-function Conductor:SetMostRecentCystOrigin(vector)
-    self.mostRecentCystOrig = vector//So I don't have to worry about entity id with cyst and all that hehe
-end
-   function Conductor:GetMostRecentCystOrigin()
-    return self.mostRecentCystOrig
-end 
 function Conductor:GetArcSpotForSiege()
 local inradius = GetIsPointWithinHiveRadius(self.arcSiegeOrig)//#GetEntitiesWithinRange("Hive", self.arcSiegeOrig, ARC.kFireRange - 3) >= 1
     if not inradius then
@@ -180,12 +166,14 @@ if Server then
             self.timeLastMarineBuffs = Shared.GetTime()
         end
 
+        /*
         if not self.phaseCannonTime or self.phaseCannonTime + math.random(27,90) <= Shared.GetTime() then
             if GetIsImaginatorAlienEnabled() then
                 self:ContaminationSpawnTimer()
             end
             self.phaseCannonTime = Shared.GetTime()
         end
+        */
         
         if not self.manageScanTime or self.manageScanTime + kManageScanInterval <= Shared.GetTime() then
             if GetIsImaginatorMarineEnabled() then
@@ -204,15 +192,9 @@ if Server then
         if not self.manageWhipsTime or self.manageWhipsTime + kManageWhipsInterval <= Shared.GetTime() then
             if GetIsImaginatorAlienEnabled() then
                 self:ManageWhips()
+                self:ManageCrags()
             end
             self.manageWhipsTime = Shared.GetTime()
-        end
-        
-        if not self.manageCystsTime or self.manageCystsTime + kManageCystsInterval <= Shared.GetTime() then
-            if GetIsImaginatorAlienEnabled() then
-                self:ManageCysts()
-            end
-            self.manageCystsTime = Shared.GetTime()
         end
   
     end
@@ -326,17 +308,6 @@ local function Touch(who, where, what, number)
          if tower then
             local cost = kExtractorCost
             who:SetAttached(tower)
-            if number == 2 then
-               cost = kHarvesterCost
-             --doChain(tower)
-                local notNearCyst = #GetEntitiesWithinRange("LoneCyst",who:GetOrigin(), kCystRedeployRange) == 0
-                 if notNearCyst then
-                  local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(tower:GetOrigin(), 1, kCystRedeployRange),2)
-                              if not GetSetupConcluded() then
-                                   cyst:SetConstructionComplete()
-                               end
-               end
-            end
            -- tower:GetTeam():SetTeamResources(tower:GetTeam():GetTeamResources() - cost)
             return tower
          end
@@ -483,52 +454,6 @@ local function findFrontDestination(self,who)
 end
 
 
-function Conductor:ManageCysts()
-    --print("ManageCysts")
-    local cystsMax = 0
-    doMax = 1
-    --local doMax = math.random(1,4)
-     local noncysted = {}
-     for _, infestable in ipairs(GetEntitiesWithMixinForTeam("InfestationTracker", 2)) do
-        --print("found something to check for infestation")
-       -- if cystsMax < doMax and not infestable:GetGameEffectMask(kGameEffect.OnInfestation) then
-       /*
-       if not infestable:GetGameEffectMask(kGameEffect.OnInfestation) then
-            --print("Found something not on infestation")
-            table.insert(noncysted, infestable)
-            cystsMax = cystsMax + 1
-            --if cystsMax == doMax then
-                 break 
-           -- end
-        end
-       */
-        local notNearCyst = #GetEntitiesWithinRange("LoneCyst",infestable:GetOrigin(), kCystRedeployRange) == 0
-        if notNearCyst then
-            table.insert(noncysted, infestable)
-             cystsMax = cystsMax + 1
-            if cystsMax == doMax then
-                break 
-             end
-        end
-
-     end
-    
-    --print("Number of non infested is %s", ToString(cystsMax))
-   -- print("Number of non noncysted is %s", ToString(#noncysted))
-     if cystsMax == 0 then return end
-  
-     for _, spawnEnt in ipairs(noncysted) do
-        --print("Spawned cyst on %s", ToString(spawnEnt))
-            local cyst = CreateEntity(LoneCyst.kMapName, FindFreeSpace(spawnEnt:GetOrigin(), 1, kCystRedeployRange),2)
-       // local cyst = CreateEntity(Cyst.kMapName, FindFreeSpace(spawnEnt:GetOrigin(), 1, kCystRedeployRange),2)
-            if not GetSetupConcluded() then
-                cyst:SetConstructionComplete()
-             end
-      end
-
-end
-
-
 function Conductor:ManageWhips()
        
        //Make them all attack one?
@@ -536,13 +461,17 @@ function Conductor:ManageWhips()
        //local random = math.random(1,4)
        local isSetup = not GetFrontDoorOpen() 
        --leave min around hive not all leave. hm.
-       local focusTarget = GetWhipFocusTarget()--GetRandomActivePower()
+       local focusTarget = nil
        local frontdoor = nil
        if isSetup then
             frontdoor = GetNearest(self:GetOrigin(), "FrontDoor") //self origin lol well ok it works
             if frontdoor then  
-               focusTarget = GetRoomPowerTryEnsureSetupAlienOwned(frontdoor)//here is where it can mess up and get the marine occupied room.
+               focusTarget = frontdoor --GetRoomPowerTryEnsureSetupAlienOwned(frontdoor)//here is where it can mess up and get the marine occupied room.
            end
+       end
+       
+       if not focusTarget then
+        focusTarget = GetWhipFocusTarget()--GetRandomActivePower()
        end
        
        if focusTarget then
@@ -558,6 +487,77 @@ function Conductor:ManageWhips()
                      -- CreatePheromone(kTechId.ThreatMarker,power:GetOrigin(), 2)  if get is time up then
                end 
            end
+       end   
+
+end
+
+
+function Conductor:GetCragFocusTarget()
+    local target = nil
+    local siegedoor = GetNearest(self:GetOrigin(), "SiegeDoor")
+    if siegedoor then
+        local patient = GetNearestMixin(siegedoor:GetOrigin(), "Combat", nil, function(ent) return ent:GetIsInCombat() end)
+        if patient then
+            target = patient
+        end
+    end
+    return target
+end
+
+
+function Conductor:ManageCrags()
+       //print("ManageCrags")
+       //Make them all attack one?
+       
+       //local random = math.random(1,4)
+       local isSetup = not GetFrontDoorOpen() 
+       local isSiegeOpen = GetSiegeDoorOpen()
+       --leave min around hive not all leave. hm.
+       local focusTarget = nil
+       local frontdoor = nil
+       if isSetup then
+            frontdoor = GetNearest(self:GetOrigin(), "FrontDoor") //self origin lol well ok it works
+            if frontdoor then  
+               whip = GetNearest(frontdoor:GetOrigin(), "Whip") //self origin lol well ok it works
+               if whip then
+                focusTarget = whip
+               end
+           end
+       end
+       
+       if not focusTarget then
+        print("ManageCrags has no focusTarget")
+        focusTarget = self:GetCragFocusTarget()
+        print("ManageCrags has found focusTarget")
+       end
+       
+       if focusTarget then
+       print("ManageCrags has focusTarget")
+            local origin = FindFreeSpace(focusTarget:GetOrigin(), 4) //dont loop this calculation
+            for index, crag in ientitylist(Shared.GetEntitiesWithClassname("Crag")) do
+              if not crag.moving  then
+                  crag:GiveOrder(kTechId.Move, focusTarget:GetId(), origin, nil, false, false)
+               end 
+           end
+           
+           
+            for index, shift in ientitylist(Shared.GetEntitiesWithClassname("Shift")) do
+              if not shift.moving  then
+                  shift:GiveOrder(kTechId.Move, focusTarget:GetId(), origin, nil, false, false)
+              end 
+           end
+           
+           if not isSiegeOpen then
+                for index, shade in ientitylist(Shared.GetEntitiesWithClassname("Shade")) do
+                  if not shade.moving  then
+                      shade:GiveOrder(kTechId.Move, focusTarget:GetId(), origin, nil, false, false)
+                   end 
+               end
+          end
+           
+           
+           
+           
        end   
 
 end

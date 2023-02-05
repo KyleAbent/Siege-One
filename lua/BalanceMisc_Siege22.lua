@@ -11,7 +11,6 @@ kWhipSupply = 13
 kCragSupply = 13
 kShadeSupply = 13
 kShiftSupply = 13
-kLoneCystSupply = 3
 
 kLerkFlapEnergyCost = 2 --default 3
 

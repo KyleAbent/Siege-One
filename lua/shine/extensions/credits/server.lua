@@ -767,7 +767,7 @@ mapnameof = CragAvoca.kMapName
 techid = kTechId.Crag
 elseif String == "Whip" then
 CreditCost = 10
-mapnameof = WhipAvoca.kMapName
+mapnameof = Whip.kMapName
 techid = kTechId.Whip
 elseif String == "Shift" then
 CreditCost = 10

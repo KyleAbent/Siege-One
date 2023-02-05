@@ -74,7 +74,7 @@ function SiegeDoor:OnUpdate(deltaTime)
             if self.opened then
                 self.opening = false
             else
-                self:SetOrigin(self:GetOrigin() + Vector(0,.01,0) ) 
+                self:SetOrigin(self:GetOrigin() + Vector(0,.1,0) ) 
                 if not self.timeLastPhys or ( self.timeLastPhys + 2 < Shared.GetTime() )  then
                     self:UpdatePosition(waypointreached)//hmm will this spam too much? Im not sure
                     self:MakeSurePlayersCanGoThroughWhenMoving()//hmm will this spam too much? Im not sure
@@ -178,36 +178,6 @@ function FrontDoor:OnInitialized()
 SiegeDoor.OnInitialized(self)
 //self:SetUpdates(true)
 end
-
-if Server then
-
-    local function DestroyCysts(self)
-
-        for _, cyst in ipairs( GetEntitiesForTeamWithinRange("Cyst", 2, self:GetOrigin(), 17) ) do
-                cyst:Kill()
-                Print("Destroying Cyst by Front Door")
-        end
-        
-        //for _, cyst in ipairs( GetEntitiesForTeamWithinRange("LoneCyst", 2, self:GetOrigin(), 17) ) do
-                //cyst:Kill()
-                //Print("Destroying LoneCyst by Front Door")
-        //end
-        
-    end
-    
-     function FrontDoor:OnUpdate(deltaTime)
-          --local gamestarted = GetGamerules():GetGameStarted()
-          --if gamestarted then 
-          SiegeDoor.OnUpdate(self, deltaTime)
-          if not self.opened and not self.opening then
-               if not self.timelasttimerup or self.timelasttimerup + 1 <= Shared.GetTime() then
-                    DestroyCysts(self)
-                end
-          end
-     end
-     
-end
-
 
 Shared.LinkClassToMap("FrontDoor", FrontDoor.kMapName, networkVars)
 

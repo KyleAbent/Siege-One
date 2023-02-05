@@ -281,7 +281,7 @@ function AlienPhaseGate:GetReceivesStructuralDamage()
 end
 
 function AlienPhaseGate:GetDamagedAlertId()
-    return kTechId.MarineAlertStructureUnderAttack
+    return kTechId.AlienAlertStructureUnderAttack
 end
 
 function AlienPhaseGate:GetPlayIdleSound()
